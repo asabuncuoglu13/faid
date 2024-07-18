@@ -1,5 +1,5 @@
 import unittest
-from src.log_utils.yaml_utils import generate, load
+from src.utils.logging.yaml_utils import generate, load
 
 class TestYamlUtils(unittest.TestCase):
   def test_generate(self):
