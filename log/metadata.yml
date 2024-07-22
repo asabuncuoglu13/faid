@@ -1,5 +1,8 @@
 project: faid
 author: Author
-date: '2024-07-18'
+date: '2024-07-22'
 description: ''
 version: 0.1.0
+sensitive_features:
+- Sex
+- Age

@@ -1,22 +1,29 @@
-import argparse
 import os
 import inquirer
+import click
 
 from .utils.logging.yaml_utils import update
 from .utils.logging.faidlog import init_metadata
+from .utils.logging.message import error_msg, warning_msg, info_msg
 from .utils.data.data_utils import load_data, get_feature_names
-from .utils.metrics.fairlearn_utils import fairlearn_metrics
+from .metrics.fairlearn_utils import fairlearn_metrics
 
 def get_data_path():
     """
-    Get the path to the data file
+    List all the files in the specified data folder and return the path of the file selected by the user
     """
-    data_path = inquirer.prompt([
-        inquirer.Text('input_file',
-                      message='Enter the path to the data file:',
-                      validate=lambda _, x: os.path.exists(x))
+    if not os.path.exists('data'):
+        warning_msg("No data folder found")
+        return
+    
+    data_filename = inquirer.prompt([
+        inquirer.List('input_file',
+                    message='Select the data file',
+                    choices=os.listdir('data'),
+                    carousel=True)
     ])
-    return data_path['input_file']
+
+    return os.path.join('data', data_filename['input_file'])
 
 def get_sensitive_features(data):
     """
@@ -35,26 +42,29 @@ def get_sensitive_features(data):
     selected_sensitive_fts = sensitive_fts['features']
     return selected_sensitive_fts
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('mod', type = str, help = 'init, scan')
-    args = parser.parse_args()
-
-    if args.mod == 'init':
+@click.command()
+@click.option('--mod', help='Available options are: init, scan \n init: Initialize the metadata file \n scan: Scan the data for sensitive features.')
+@click.option('--data_path', help='Path to the data file')
+def main(mod, data_path):
+    if mod == 'init':
         # Get the main folder name from os
         init_metadata(project_name=os.path.basename(os.getcwd()))
         return
     
-    if args.mod == 'scan':
-        print("Scanning for sensitive features")
+    if mod == 'scan':
+        info_msg("Scanning for sensitive features")
         # Load data
-        data_path = get_data_path()
+        if not data_path:
+            data_path = get_data_path()
         data = load_data(data_path)
         selected_sensitive_fts = get_sensitive_features(data)
+        while not selected_sensitive_fts:
+            warning_msg("No sensitive features selected. Please select at least one sensitive feature.")
+            selected_sensitive_fts = get_sensitive_features(data)
         update(selected_sensitive_fts, key="sensitive_features")
         print(selected_sensitive_fts)
-        fairness_score = fairlearn_metrics(data, selected_sensitive_fts)
-        update(fairness_score, key="fairness_score")
+        #fairness_score = fairlearn_metrics(data, selected_sensitive_fts)
+        #update(fairness_score, key="fairness_score")
    
 if __name__ == "__main__":
     main()

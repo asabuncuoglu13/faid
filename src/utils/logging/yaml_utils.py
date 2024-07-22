@@ -6,15 +6,8 @@ import sys
 import yaml
 from yaml.parser import ParserError
 from .file_utils import get_project_log_folder, get_default_metadata_file_name
+from .message import error_msg
 # The implementation is based on https://github.com/Anthonyhawkins/yamlmaker/
-
-# %%
-def error_msg(msg):
-  """
-  Print an error message and exit
-  """
-  print(f"Error: {msg}")
-  sys.exit(1)
 
 # %%
 def generate(dataDict, name=None, return_result=False):
@@ -62,8 +55,6 @@ def update(dataDict, key=None, filename=None):
   existing_dataDict = load()
   if key:
     existing_dataDict[key] = dataDict
-  else:
-    existing_dataDict.update(dataDict)
   generate(existing_dataDict)
 
 # %%
