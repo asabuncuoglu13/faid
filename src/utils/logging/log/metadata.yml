@@ -1,0 +1,12 @@
+project: FAID
+version: '02.0'
+description: FAID Test Configuration
+metrics:
+  seed: 42
+  accuracy: '0.8'
+config:
+  learning_rate: 0.02
+  architecture: CNN
+  dataset: CIFAR-100
+  epochs: 10
+  optimizer: Adam

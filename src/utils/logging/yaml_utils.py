@@ -44,7 +44,14 @@ def update(dataDict, key=None, filename=None):
   if not os.path.exists(filepath):
     error_msg(f"File {filepath} not found")
   existing_dataDict = load()
-  existing_dataDict[key] = dataDict
+  # check if key exists
+  if key not in existing_dataDict:
+    existing_dataDict[key] = dataDict
+  else:
+    tmpDict = existing_dataDict[key]
+    for k, v in dataDict.items():
+      tmpDict[k] = v
+    existing_dataDict[key] = tmpDict
   generate(existing_dataDict)
 
 # %%
@@ -66,7 +73,7 @@ def load(name=None):
     error_msg(f"File {filename}.yml is not a valid yaml file")
 
 #  %% Test the functions
-"""
+
 dataDict = {
     "project": "FAID",
     "version": "02.0",
@@ -86,6 +93,7 @@ config = {
 generate(dataDict)
 update(updateDict, key="metrics")
 update(config, key="config")
+update({"optimizer": "Adam"}, key="config")
 print(load()) 
-"""
+
 # %%

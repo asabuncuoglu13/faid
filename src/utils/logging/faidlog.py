@@ -30,64 +30,11 @@ class faidlog:
         else:
             error_msg("The object provided is not a wandb run object.")
 
+    def log(metrics):
+        update({"metrics": metrics})
 
-"""
-class faidlog:
-    @staticmethod
-    def init(func):
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            # Extracting 'project' and 'config' from kwargs
-            project = kwargs.get('project')
-            config = kwargs.get('config')
-            
-            if not project or not config:
-                raise ValueError("Both 'project' and 'config' must be provided.")
-            
-            init_metadata(project)
-            update({"config": config})
-            
-            # Execute the original function
-            return func(*args, **kwargs)
-        
-        return wrapper
-"""  
-"""
-class faidlog:
-    @staticmethod
-    def init(func):
-        @functools.wraps(func)
-        def wrapper():
-            # Execute the original function
-            run = func()
-
-            # Extracting 'project' and 'config' from kwargs
-            project = run.project
-            config = run.config.as_dict()
-            
-            if not project or not config:
-                raise ValueError("Both 'project' and 'config' must be provided.")
-            
-            init_metadata(project)
-            update(config, key="config")
-            
-        return wrapper
-
-# Example usage
-@faidlog.init
-def init_wandb():
-    return wandb.init(
-        # set the wandb project where this run will be logged
-        project= project,
-        # track hyperparameters and run metadata
-        config= config
-    )
-
-init_wandb()
-"""
 # %% Example usage
 import random
-
 project = "test-project-1"
 config = {
     "learning_rate": 0.02,
