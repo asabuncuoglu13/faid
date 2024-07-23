@@ -26,14 +26,15 @@ class faidlog:
             project = initObj.project
             config = initObj.config.as_dict()
             init_metadata(project)
-            update({"config": config})
+            update(config, "config")
         else:
             error_msg("The object provided is not a wandb run object.")
 
     def log(metrics):
-        update({"metrics": metrics})
+        update(metrics, "metrics")
 
 # %% Example usage
+"""
 import random
 project = "test-project-1"
 config = {
@@ -43,11 +44,11 @@ config = {
     "epochs": 10,
 }
 
-# %%
+# initialize wandb run
 run = wandb.init(project= project, config= config)
 faidlog.init(run)
 
-# %% simulate training
+# simulate training
 epochs = 10
 offset = random.random() / 5
 for epoch in range(2, epochs):
@@ -55,7 +56,10 @@ for epoch in range(2, epochs):
     loss = 2 ** -epoch + random.random() / epoch + offset
 
     # log metrics to wandb
-    wandb.log({"acc": acc, "loss": loss})
+    metrics = {"acc": acc, "loss": loss}
+    wandb.log(metrics)
+    faidlog.log(metrics)
 
 # [optional] finish the wandb run, necessary in notebooks
 wandb.finish()
+"""
