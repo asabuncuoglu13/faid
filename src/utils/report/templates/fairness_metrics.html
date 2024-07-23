@@ -9,6 +9,8 @@
         table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
+        .metric { width: 60%; }
+        .value { width: 40%; }
     </style>
 </head>
 <body>
@@ -16,13 +18,13 @@
     <h2>Model Metrics</h2>
     <table>
         <tr>
-            <th>Metric</th>
-            <th>Value</th>
+            <th class="metric">Metric</th>
+            <th class="value">Value</th>
         </tr>
         {% for metric, value in metrics.items() %}
         <tr>
-            <td>{{ metric }}</td>
-            <td>{{ value }}</td>
+            <td class="metric">{{ metric }}</td>
+            <td class="value">{{ value }}</td>
         </tr>
         {% endfor %}
     </table>
@@ -32,13 +34,13 @@
     <h3>{{ metric }}</h3>
     <table>
         <tr>
-            <th>Group</th>
-            <th>Value</th>
+            <th class="metric">Group</th>
+            <th class="value">Value</th>
         </tr>
         {% for group, value in groups.items() %}
         <tr>
-            <td>{{ group }}</td>
-            <td>{{ value }}</td>
+            <td class="metric">{{ group }}</td>
+            <td class="value">{{ value }}</td>
         </tr>
         {% endfor %}
     </table>

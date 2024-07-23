@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RAID Register</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .id {
+            width: 10%;
+        }
+        .description {
+            width: 30%;
+        }
+        .impact {
+            width: 15%;
+        }
+        .likelihood {
+            width: 15%;
+        }
+        .status {
+            width: 15%;
+        }
+        .mitigation {
+            width: 30%;
+        }
+        .action {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+    <h1>RAID Register</h1>
+
+    <h2>Risks</h2>
+    <table>
+        <tr>
+            <th class="id">ID</th>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="likelihood">Likelihood</th>
+            <th class="mitigation">Mitigation</th>
+        </tr>
+        
+        <tr>
+            <td class="id">R1</td>
+            <td class="description">Risk of biased AI model outputs due to unrepresentative training data.</td>
+            <td class="impact">High</td>
+            <td class="likelihood">High</td>
+            <td class="mitigation">Ensure diverse and representative training data; implement bias detection mechanisms.</td>
+        </tr>
+        
+        <tr>
+            <td class="id">R2</td>
+            <td class="description">Risk of non-compliance with AI fairness regulations.</td>
+            <td class="impact">High</td>
+            <td class="likelihood">Medium</td>
+            <td class="mitigation">Stay updated with regulations and ensure compliance throughout the development process.</td>
+        </tr>
+        
+    </table>
+
+    <h2>Assumptions</h2>
+    <table>
+        <tr>
+            <th class="id">ID</th>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="action">Action</th>
+        </tr>
+        
+        <tr>
+            <td class="id">A1</td>
+            <td class="description">Assume that the training data provided is accurate and reliable.</td>
+            <td class="impact">High</td>
+            <td class="action">Perform data validation and quality checks.</td>
+        </tr>
+        
+    </table>
+
+    <h2>Issues</h2>
+    <table>
+        <tr>
+            <th class="id">ID</th>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="status">Status</th>
+            <th class="action">Action</th>
+        </tr>
+        
+        <tr>
+            <td class="id">I1</td>
+            <td class="description">Detected bias in initial AI model outputs.</td>
+            <td class="impact">High</td>
+            <td class="status">Open</td>
+            <td class="action">Investigate the source of bias and retrain the model with improved data.</td>
+        </tr>
+        
+    </table>
+
+    <h2>Dependencies</h2>
+    <table>
+        <tr>
+            <th class="id">ID</th>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="status">Status</th>
+            <th class="action">Action</th>
+        </tr>
+        
+        <tr>
+            <td class="id">D1</td>
+            <td class="description">Dependency on external datasets for training the AI model.</td>
+            <td class="impact">High</td>
+            <td class="status">Pending</td>
+            <td class="action">Ensure timely access to required datasets from data providers.</td>
+        </tr>
+        
+    </table>
+</body>
+</html>

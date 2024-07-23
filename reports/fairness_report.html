@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fairness Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .metric { width: 60%; }
+        .value { width: 40%; }
+    </style>
+</head>
+<body>
+    <h1>Fairness Report</h1>
+    <h2>Model Metrics</h2>
+    <table>
+        <tr>
+            <th class="metric">Metric</th>
+            <th class="value">Value</th>
+        </tr>
+        
+        <tr>
+            <td class="metric">Accuracy</td>
+            <td class="value">0.85</td>
+        </tr>
+        
+        <tr>
+            <td class="metric">Precision</td>
+            <td class="value">0.82</td>
+        </tr>
+        
+        <tr>
+            <td class="metric">Recall</td>
+            <td class="value">0.88</td>
+        </tr>
+        
+    </table>
+
+    <h2>Fairness Metrics by Group</h2>
+    
+    <h3>Accuracy</h3>
+    <table>
+        <tr>
+            <th class="metric">Group</th>
+            <th class="value">Value</th>
+        </tr>
+        
+        <tr>
+            <td class="metric">Group A</td>
+            <td class="value">0.8</td>
+        </tr>
+        
+        <tr>
+            <td class="metric">Group B</td>
+            <td class="value">0.9</td>
+        </tr>
+        
+    </table>
+    
+    <h3>Precision</h3>
+    <table>
+        <tr>
+            <th class="metric">Group</th>
+            <th class="value">Value</th>
+        </tr>
+        
+        <tr>
+            <td class="metric">Group A</td>
+            <td class="value">0.78</td>
+        </tr>
+        
+        <tr>
+            <td class="metric">Group B</td>
+            <td class="value">0.85</td>
+        </tr>
+        
+    </table>
+    
+    <h3>Recall</h3>
+    <table>
+        <tr>
+            <th class="metric">Group</th>
+            <th class="value">Value</th>
+        </tr>
+        
+        <tr>
+            <td class="metric">Group A</td>
+            <td class="value">0.83</td>
+        </tr>
+        
+        <tr>
+            <td class="metric">Group B</td>
+            <td class="value">0.92</td>
+        </tr>
+        
+    </table>
+    
+</body>
+</html>

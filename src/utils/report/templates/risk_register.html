@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RAID Register</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .id {
+            width: 10%;
+        }
+        .description {
+            width: 30%;
+        }
+        .impact {
+            width: 15%;
+        }
+        .likelihood {
+            width: 15%;
+        }
+        .status {
+            width: 15%;
+        }
+        .mitigation {
+            width: 30%;
+        }
+        .action {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+    <h1>RAID Register</h1>
+
+    <h2>Risks</h2>
+    <table>
+        <tr>
+            <th class="id">ID</th>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="likelihood">Likelihood</th>
+            <th class="mitigation">Mitigation</th>
+        </tr>
+        {% for risk in risks %}
+        <tr>
+            <td class="id">{{ risk.id }}</td>
+            <td class="description">{{ risk.description }}</td>
+            <td class="impact">{{ risk.impact }}</td>
+            <td class="likelihood">{{ risk.likelihood }}</td>
+            <td class="mitigation">{{ risk.mitigation }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Assumptions</h2>
+    <table>
+        <tr>
+            <th class="id">ID</th>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="action">Action</th>
+        </tr>
+        {% for assumption in assumptions %}
+        <tr>
+            <td class="id">{{ assumption.id }}</td>
+            <td class="description">{{ assumption.description }}</td>
+            <td class="impact">{{ assumption.impact }}</td>
+            <td class="action">{{ assumption.action }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Issues</h2>
+    <table>
+        <tr>
+            <th class="id">ID</th>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="status">Status</th>
+            <th class="action">Action</th>
+        </tr>
+        {% for issue in issues %}
+        <tr>
+            <td class="id">{{ issue.id }}</td>
+            <td class="description">{{ issue.description }}</td>
+            <td class="impact">{{ issue.impact }}</td>
+            <td class="status">{{ issue.status }}</td>
+            <td class="action">{{ issue.action }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Dependencies</h2>
+    <table>
+        <tr>
+            <th class="id">ID</th>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="status">Status</th>
+            <th class="action">Action</th>
+        </tr>
+        {% for dependency in dependencies %}
+        <tr>
+            <td class="id">{{ dependency.id }}</td>
+            <td class="description">{{ dependency.description }}</td>
+            <td class="impact">{{ dependency.impact }}</td>
+            <td class="status">{{ dependency.status }}</td>
+            <td class="action">{{ dependency.action }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
