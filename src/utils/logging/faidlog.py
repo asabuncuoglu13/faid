@@ -1,6 +1,7 @@
 # %%
 import datetime
 from yaml_utils import generate, update
+from model_card_utils import ModelCard
 
 # %%
 def init_metadata(project_name, author=None, date=None, description=None, version=None):
@@ -40,6 +41,11 @@ class faidlog:
         Returns: None - updates the metadata file, saves the data under the key 'metrics'
         """
         update(metrics, "metrics")
+
+
+    def model_info(info: ModelCard):
+        info = info.get_model_info()
+        update(info, "model_info")
 
 # %% Example usage
 """
