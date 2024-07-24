@@ -1,6 +1,6 @@
 # %%
 from jinja2 import Environment, FileSystemLoader
-from file_utils import get_project_report_folder
+from .file_utils import get_project_report_folder
 
 # %%
 def generate_fairness_report(metrics: dict, group_metrics: dict, output_file: str):

@@ -7,7 +7,7 @@ from spacy.tokens import DocBin
 from spacy.training import Example
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
-from annotate import annotate_text
+from .annotate import annotate_text
 
 # %% Load the nnotation data
 def load_annotation_finetune_data(file_path):

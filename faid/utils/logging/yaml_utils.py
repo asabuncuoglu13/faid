@@ -3,8 +3,8 @@
 import os
 import yaml
 from yaml.parser import ParserError
-from file_utils import get_project_log_folder, get_default_metadata_file_name
-from message import error_msg
+from .file_utils import get_project_log_folder, get_default_metadata_file_name
+from .message import error_msg
 
 # %%
 def generate(dataDict, name=None, return_result=False):

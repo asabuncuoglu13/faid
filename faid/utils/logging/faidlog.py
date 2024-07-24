@@ -1,7 +1,7 @@
 # %%
 import datetime
-from yaml_utils import generate, update
-from model_card_utils import ModelCard
+from .yaml_utils import generate, update
+from .model_card_utils import ModelCard
 
 # %%
 def init_metadata(project_name, author=None, date=None, description=None, version=None):
