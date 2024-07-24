@@ -1,5 +1,5 @@
 # %%
-class ModelCardUtils:
+class ModelCard:
     def __init__(self, model_info=None):
         if model_info is None:
             model_info = {}
@@ -82,7 +82,7 @@ class ModelCardUtils:
 
 
 # %% Create test cases
-model_info = ModelCardUtils()
+model_info = ModelCard()
 model_info.set_model_detail("model_name", "BERT")
 model_info.set_model_parameter("num_layers", 12)
 model_info.add_quantitative_metric({"type": "accuracy", "value": 0.95})
