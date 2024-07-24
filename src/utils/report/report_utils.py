@@ -72,7 +72,7 @@ def generate_data_card(dataset_info, output_file):
         file.write(html_content)
 
 # %% Example usa of generation methods
-
+"""
 overall_metrics = {
     'Accuracy': 0.85,
     'Precision': 0.82,
@@ -95,7 +95,9 @@ group_metrics = {
 }
 
 generate_fairness_report(overall_metrics, group_metrics, 'fairness_report.html')
+"""
 
+"""
 raid_data = {
     'risks': [
         {
@@ -141,7 +143,9 @@ raid_data = {
     ]
 }
 generate_raid_register_report(raid_data, 'raid_register.html')
+"""
 
+"""
 dataset_info = {
 	"dataset_name": "Financial Sentiment Analysis Dataset",
 	"summary": "A dataset for sentiment analysis in the financial domain, including news articles and analyst reports.",
@@ -220,3 +224,5 @@ dataset_info = {
 }
 
 generate_data_card(dataset_info, 'data_card.html')
+"""
+# %%

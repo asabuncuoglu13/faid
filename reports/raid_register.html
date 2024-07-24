@@ -96,18 +96,19 @@
             <th class="impact">Impact</th>
             <th class="status">Status</th>
             <th class="action">Action</th>
+            <th>Report</th> <!-- New column for report buttons -->
         </tr>
         
-        <tr>
+        <tr id="I1">
             <td class="id">I1</td>
             <td class="description">Detected bias in initial AI model outputs.</td>
             <td class="impact">High</td>
             <td class="status">Open</td>
             <td class="action">Investigate the source of bias and retrain the model with improved data.</td>
+            <td><button onclick="formatAndCopyIssue('I1')">Report Fairness Issue</button></td>
         </tr>
         
     </table>
-
     <h2>Dependencies</h2>
     <table>
         <tr>
@@ -128,4 +129,52 @@
         
     </table>
 </body>
+
+
+<!-- Step 3: JavaScript for Formatting and Copying Issue Data -->
+<script>
+    function formatAndCopyIssue(issueId) {
+        // Find the issue row and extract data
+        const issueRow = document.getElementById(issueId);
+        const issue = {
+            id: issueRow.querySelector('.id').textContent,
+            description: issueRow.querySelector('.description').textContent,
+            impact: issueRow.querySelector('.impact').textContent,
+            status: issueRow.querySelector('.status').textContent,
+            action: issueRow.querySelector('.action').textContent,
+        };
+    
+        // Format the issue data into the markdown template
+        const formattedText = `
+            ---
+            name: Fairness Issues
+            about: Report unfair behaviour (bias, discrimination, accessibility, etc.) displayed by the system
+            title: "[FAIRNESS] Issue ID: ${issue.id}"
+            labels: ''
+            assignees: ''
+            
+            ---
+            
+            # Current Behaviour
+            
+            ${issue.description}
+            
+            # Affected Protected Characteristics
+            
+            (Describe here)
+            
+            # Possible Solution
+            
+            ${issue.action}
+        `;
+    
+        // Copy the formatted text to the clipboard
+        navigator.clipboard.writeText(formattedText).then(() => {
+            alert('Issue report copied to clipboard.');
+        }, (err) => {
+            console.error('Could not copy text: ', err);
+        });
+    }
+</script>
+
 </html>
