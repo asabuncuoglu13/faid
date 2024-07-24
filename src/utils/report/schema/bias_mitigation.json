@@ -1,0 +1,37 @@
+{
+    "post_training_bias_metrics": {
+        "facets": [
+            {
+                "name": "Sensitive Attribute",
+                "metrics": [
+                    {
+                        "description": "Accuracy Difference (AD)",
+                        "name": "AD",
+                        "value": 0.0
+                    }
+                ],
+                "value_or_threshold": "0",
+                "label": "Target",
+                "label_value_or_threshold": "1"
+            }
+        ]
+    },
+    "pre_training_bias_metrics": {
+        "facets": [
+            {
+                "name": "Sensitive Attribute",
+                "metrics": [
+                    {
+                        "description": "Conditional Demographic Disparity in Labels (CDDL)",
+                        "name": "CDDL",
+                        "value": 0.0
+                    }
+                ],
+                "value_or_threshold": "0",
+                "label": "Target",
+                "label_value_or_threshold": "1"
+            }
+        ]
+    },
+    "version": "1.0"
+}

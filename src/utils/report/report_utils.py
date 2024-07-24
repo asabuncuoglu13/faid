@@ -71,6 +71,29 @@ def generate_data_card(dataset_info, output_file):
     with open(output_file, 'w') as file:
         file.write(html_content)
 
+
+# %%
+def generate_model_card(model_info, output_file):
+    """
+    Generates an HTML model card from model info using Jinja2 template.
+
+    Parameters:
+    - model_info: Dictionary containing all model information.
+    - output_file: Path to the output HTML file.
+    """
+
+    # Load Jinja2 template
+    env = Environment(loader=FileSystemLoader('.'))
+    template = env.get_template('templates/model_card_template.html')
+
+    # Render the template with metrics
+    html_content = template.render(model_info)
+
+    output_file = get_project_report_folder() + output_file
+    # Write the rendered HTML to a file
+    with open(output_file, 'w') as file:
+        file.write(html_content)
+
 # %% Example usa of generation methods
 """
 overall_metrics = {
@@ -225,4 +248,129 @@ dataset_info = {
 
 generate_data_card(dataset_info, 'data_card.html')
 """
+
+model_info = {
+    "schema_version": "0.0.1",
+    "model_details": {
+        "name": "Example Model Name",
+        "overview": "This is a brief one-line description of the model.",
+        "documentation": "Here is a thorough description of the model, including its purpose and usage.",
+        "owners": [
+            {
+                "name": "Owner Name",
+                "contact": "owner@example.com"
+            }
+        ],
+        "version": {
+            "name": "1.0",
+            "date": "2023-01-01",
+            "diff": "Initial version."
+        },
+        "licenses": [
+            {
+                "identifier": "MIT",
+                "custom_text": ""
+            }
+        ],
+        "references": [
+            {
+                "reference": "http://example.com/model-reference"
+            }
+        ],
+        "citations": [
+            {
+                "style": "APA",
+                "citation": "Author, A. (Year). Title of document. Publisher."
+            }
+        ],
+        "path": "/path/to/model"
+    },
+    "model_parameters": {
+        "model_architecture": "CNN",
+        "data": [
+            {
+                "name": "Dataset Name",
+                "link": "http://example.com/dataset",
+                "sensitive": {
+                    "sensitive_data": ["Personal Information"]
+                },
+                "graphics": {
+                    "description": "Sample images from the dataset",
+                    "collection": [
+                        {
+                            "name": "Sample Image",
+                            "image": "base64EncodedString"
+                        }
+                    ]
+                },
+                "description": "This dataset includes..."
+            }
+        ],
+        "input_format": "JPEG",
+        "input_format_map": [
+            {
+                "key": "image",
+                "value": "JPEG"
+            }
+        ],
+        "output_format": "Probability",
+        "output_format_map": [
+            {
+                "key": "label",
+                "value": "Probability"
+            }
+        ]
+    },
+    "quantitative_analysis": {
+        "performance_metrics": [
+            {
+                "type": "Accuracy",
+                "value": "95%",
+                "slice": "Validation Set",
+                "confidence_interval": {
+                    "lower_bound": "94%",
+                    "upper_bound": "96%"
+                }
+            }
+        ],
+        "graphics": {
+            "description": "Performance metrics graphs",
+            "collection": [
+                {
+                    "name": "Accuracy Over Time",
+                    "image": "base64EncodedString"
+                }
+            ]
+        }
+    },
+    "considerations": {
+        "users": [
+            {
+                "description": "Data scientists and ML engineers"
+            }
+        ],
+        "use_cases": [
+            {
+                "description": "Image classification for identifying objects."
+            }
+        ],
+        "limitations": [
+            {
+                "description": "Struggles with low-light images."
+            }
+        ],
+        "tradeoffs": [
+            {
+                "description": "Higher accuracy for increased computational cost."
+            }
+        ],
+        "ethical_considerations": [
+            {
+                "name": "Bias in Training Data",
+                "mitigation_strategy": "Use a diverse dataset."
+            }
+        ]
+    }
+}
+generate_model_card(model_info, 'data_card.html')
 # %%
