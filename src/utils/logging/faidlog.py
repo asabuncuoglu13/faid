@@ -1,8 +1,6 @@
 # %%
 import datetime
-import wandb
 from yaml_utils import generate, update
-from message import error_msg
 
 # %%
 def init_metadata(project_name, author=None, date=None, description=None, version=None):
@@ -21,21 +19,34 @@ def init_metadata(project_name, author=None, date=None, description=None, versio
 
 # %%
 class faidlog:
-    def init(initObj):
-        if  isinstance(initObj, wandb.sdk.wandb_run.Run):
-            project = initObj.project
-            config = initObj.config.as_dict()
-            init_metadata(project)
-            update(config, "config")
-        else:
-            error_msg("The object provided is not a wandb run object.")
+    """
+    A class to log fairness metrics.
+    """
+    @staticmethod
+    def init(project_name, config):
+        """
+        Initialize the fairness logging using the commonly used metadata tracking tools (wandb, mlflow, etc.)
+        Takes a dictionary with the project name and configuration.
+        project_name: str
+        config: dictionary
+        """
+        init_metadata(project_name)
+        update(config, "config")
 
     def log(metrics):
+        """
+        Log the fairness metrics
+        metrics: a dictionary of metrics
+        Returns: None - updates the metadata file, saves the data under the key 'metrics'
+        """
         update(metrics, "metrics")
 
 # %% Example usage
 """
 import random
+import wandb
+import mlflow
+
 project = "test-project-1"
 config = {
     "learning_rate": 0.02,
@@ -46,19 +57,23 @@ config = {
 
 # initialize wandb run
 run = wandb.init(project= project, config= config)
-faidlog.init(run)
+mlflow.set_experiment(project)
+faidlog.init(project_name= project, config= config)
 
-# simulate training
-epochs = 10
-offset = random.random() / 5
-for epoch in range(2, epochs):
-    acc = 1 - 2 ** -epoch - random.random() / epoch - offset
-    loss = 2 ** -epoch + random.random() / epoch + offset
+with mlflow.start_run():
+    # Log the hyperparameters
+    # simulate training
+    epochs = 10
+    offset = random.random() / 5
+    for epoch in range(2, epochs):
+        acc = 1 - 2 ** -epoch - random.random() / epoch - offset
+        loss = 2 ** -epoch + random.random() / epoch + offset
 
-    # log metrics to wandb
-    metrics = {"acc": acc, "loss": loss}
-    wandb.log(metrics)
-    faidlog.log(metrics)
+        # log metrics to wandb
+        metrics = {"acc": acc, "loss": loss}
+        wandb.log(metrics)
+        mlflow.log_params(metrics)
+        faidlog.log(metrics)
 
 # [optional] finish the wandb run, necessary in notebooks
 wandb.finish()

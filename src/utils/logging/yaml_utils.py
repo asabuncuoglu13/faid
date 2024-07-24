@@ -5,7 +5,6 @@ import yaml
 from yaml.parser import ParserError
 from file_utils import get_project_log_folder, get_default_metadata_file_name
 from message import error_msg
-# The implementation is based on https://github.com/Anthonyhawkins/yamlmaker/
 
 # %%
 def generate(dataDict, name=None, return_result=False):
@@ -19,6 +18,7 @@ def generate(dataDict, name=None, return_result=False):
 
   filepath = get_project_log_folder() + filename + ".yml"
 
+  # The implementation is based on https://github.com/Anthonyhawkins/yamlmaker/
   yaml.SafeDumper.org_represent_str = yaml.SafeDumper.represent_str
 
   def multi_str(dumper, data):
