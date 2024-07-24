@@ -1,13 +1,10 @@
 # %%
 
 import os
-import subprocess
-import sys
 import yaml
 from yaml.parser import ParserError
-from .file_utils import get_project_log_folder, get_default_metadata_file_name
-from .message import error_msg
-# The implementation is based on https://github.com/Anthonyhawkins/yamlmaker/
+from file_utils import get_project_log_folder, get_default_metadata_file_name
+from message import error_msg
 
 # %%
 def generate(dataDict, name=None, return_result=False):
@@ -21,6 +18,7 @@ def generate(dataDict, name=None, return_result=False):
 
   filepath = get_project_log_folder() + filename + ".yml"
 
+  # The implementation is based on https://github.com/Anthonyhawkins/yamlmaker/
   yaml.SafeDumper.org_represent_str = yaml.SafeDumper.represent_str
 
   def multi_str(dumper, data):
@@ -28,17 +26,10 @@ def generate(dataDict, name=None, return_result=False):
       return dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
     return dumper.org_represent_str(data)
   yaml.add_representer(str, multi_str, Dumper=yaml.SafeDumper)
-  yaml.SafeDumper.ignore_aliases = lambda *args: True
 
   if return_result:
     return yaml.safe_dump(dataDict, sort_keys=False, default_flow_style=False)
 
-  if os.path.exists(filepath):
-    existing_dataDict = load(filename)
-    if not existing_dataDict:
-      existing_dataDict = {}
-    existing_dataDict.update(dataDict)
-    dataDict = existing_dataDict
   with open(filepath, 'w') as file:
     yaml.safe_dump(dataDict, file, sort_keys=False, default_flow_style=False)
 
@@ -53,8 +44,14 @@ def update(dataDict, key=None, filename=None):
   if not os.path.exists(filepath):
     error_msg(f"File {filepath} not found")
   existing_dataDict = load()
-  if key:
+  # check if key exists
+  if key not in existing_dataDict:
     existing_dataDict[key] = dataDict
+  else:
+    tmpDict = existing_dataDict[key]
+    for k, v in dataDict.items():
+      tmpDict[k] = v
+    existing_dataDict[key] = tmpDict
   generate(existing_dataDict)
 
 # %%
@@ -76,7 +73,7 @@ def load(name=None):
     error_msg(f"File {filename}.yml is not a valid yaml file")
 
 #  %% Test the functions
-""" 
+
 dataDict = {
     "project": "FAID",
     "version": "02.0",
@@ -86,8 +83,17 @@ updateDict = {
     "seed": 42,
     "accuracy": "0.8"
 }
+
+config = {
+    "learning_rate": 0.02,
+    "architecture": "CNN",
+    "dataset": "CIFAR-100",
+    "epochs": 10,
+}
 generate(dataDict)
 update(updateDict, key="metrics")
+update(config, key="config")
+update({"optimizer": "Adam"}, key="config")
 print(load()) 
-"""
+
 # %%
