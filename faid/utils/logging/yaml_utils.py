@@ -4,7 +4,7 @@ import os
 import yaml
 from yaml.parser import ParserError
 from .file_utils import get_project_log_folder, get_default_metadata_file_name
-from .message import error_msg
+from .message import error_msg, warning_msg
 
 # %%
 def generate(dataDict, name=None, return_result=False):
@@ -38,11 +38,18 @@ def update(dataDict, key=None, filename=None):
   """
   Update a yaml file
   """
+  if not isinstance(dataDict, dict):
+    error_msg("Data must be a dictionary. If you are initializing the config from Huggingface, you can use the config.to_dict() method.")
+    return
   if not filename:
     filename = get_default_metadata_file_name()
   filepath = get_project_log_folder() + filename + ".yml"
   if not os.path.exists(filepath):
-    error_msg(f"File {filepath} not found")
+    warning_msg(f"File {filepath} not found. Creating a new file.")
+    if key:
+      dataDict = {key: dataDict}
+    generate(dataDict, filename)
+    return
   existing_dataDict = load()
   # check if key exists
   if key not in existing_dataDict:

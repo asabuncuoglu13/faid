@@ -1,7 +1,7 @@
 # %%
 import datetime
-from .yaml_utils import generate, update
-from .model_card_utils import ModelCard
+from .utils.logging.yaml_utils import generate, update
+from .utils.logging.model_card_utils import ModelCard
 
 # %%
 def init_metadata(project_name, author=None, date=None, description=None, version=None):
@@ -24,7 +24,7 @@ class faidlog:
     A class to log fairness metrics.
     """
     @staticmethod
-    def init(project_name, config):
+    def init(project_name:str, config:dict):
         """
         Initialize the fairness logging using the commonly used metadata tracking tools (wandb, mlflow, etc.)
         Takes a dictionary with the project name and configuration.
@@ -33,16 +33,27 @@ class faidlog:
         """
         init_metadata(project_name)
         update(config, "config")
-
-    def log(metrics):
+    
+    @staticmethod
+    def log(params:dict, key:str="metrics", add_to_model_card=False, add_to_fairness_report=False, add_to_data_card=False, add_to_risk_register=False):
         """
         Log the fairness metrics
-        metrics: a dictionary of metrics
-        Returns: None - updates the metadata file, saves the data under the key 'metrics'
+        params: Any value that can be stored in a dictionary
+        key: str - the key to store the data under in the metadata file
+        Returns: None - updates the metadata file
         """
-        update(metrics, "metrics")
+        if add_to_model_card:
+            update(params, key, "model")
+        elif add_to_fairness_report:
+            update(params, key, "fairness")
+        elif add_to_data_card:
+            update(params, key, "data")
+        elif add_to_risk_register:
+            update(params, key, "risk")
+        else:
+            update(params, key)
 
-
+    @staticmethod
     def model_info(info: ModelCard):
         info = info.get_model_info()
         update(info, "model_info")

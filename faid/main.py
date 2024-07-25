@@ -3,7 +3,7 @@ import inquirer
 import click
 
 from .utils.logging.yaml_utils import update
-from .utils.logging.faidlog import init_metadata
+from .faidlog import init_metadata
 from .utils.logging.message import error_msg, warning_msg, info_msg
 from .utils.data.data_utils import load_data, get_feature_names
 from .metrics.fairlearn_utils import fairlearn_metrics
