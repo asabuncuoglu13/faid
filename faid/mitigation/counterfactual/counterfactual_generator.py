@@ -1,5 +1,4 @@
 # %%
-import pandas as pd
 import random
 import nltk
 import re

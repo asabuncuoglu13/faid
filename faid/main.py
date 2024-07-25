@@ -6,7 +6,7 @@ from .utils.logging.yaml_utils import update
 from .faidlog import init_metadata
 from .utils.logging.message import error_msg, warning_msg, info_msg
 from .utils.data.data_utils import load_data, get_feature_names
-from .metrics.fairlearn_utils import fairlearn_metrics
+from .metrics.classification import tabular_classification
 
 def get_data_path():
     """
@@ -51,8 +51,8 @@ def main(mod, data_path):
         init_metadata(project_name=os.path.basename(os.getcwd()))
         return
     
-    if mod == 'scan':
-        info_msg("Scanning for sensitive features")
+    if mod == 'scan-data':
+        info_msg("Scanning for sensitive features in the data.")
         # Load data
         if not data_path:
             data_path = get_data_path()
@@ -63,7 +63,7 @@ def main(mod, data_path):
             selected_sensitive_fts = get_sensitive_features(data)
         update(selected_sensitive_fts, key="sensitive_features")
         print(selected_sensitive_fts)
-        #fairness_score = fairlearn_metrics(data, selected_sensitive_fts)
+        #fairness_score = tabular_classification(data, selected_sensitive_fts)
         #update(fairness_score, key="fairness_score")
    
 if __name__ == "__main__":

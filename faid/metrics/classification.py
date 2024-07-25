@@ -12,20 +12,31 @@ from fairlearn.metrics import MetricFrame
 from sklearn.preprocessing import LabelEncoder
 
 # %%
-"""
-import pandas as pd
-data = pd.read_csv('../../../data/german_credit_data.csv')
-data.head()
-"""
+def tabular_classification(data:pd.DataFrame, sens_feats:list, clf:object):
+    """
+    Function to calculate fairness metrics for tabular data
 
-# %%
+    Parameters
+    ----------
+    data: pd.DataFrame
+        Dataframe containing the data
+    sens_feats: list
+        List of sensitive features
+    clf: sklearn classifier model
+        ML model object - Default is RandomForestClassifier
 
-def fairlearn_metrics(data, sens_feats):
+    Returns
+    -------
+    dict
+        Dictionary containing the fairness metrics
+    """
    # Process data through regular ML Model
     num_feats = data.select_dtypes(include=['int64', 'float64']).columns
     cat_feats = data.select_dtypes(include=['object']).columns
+
     num_df = data[num_feats]
     cat_df = data[cat_feats]
+
     # Label encoding
     le = LabelEncoder()
     for i in cat_df:
@@ -37,7 +48,10 @@ def fairlearn_metrics(data, sens_feats):
     # Train/Test splits
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
     # Model Training
-    clf = RandomForestClassifier()
+    
+    if not clf:
+        clf = RandomForestClassifier()
+
     clf.fit(X_train, y_train)
     predictions = clf.predict(X_test)
     
@@ -66,3 +80,10 @@ def fairlearn_metrics(data, sens_feats):
     }
 
     return config
+
+# %% Example usage
+"""
+import pandas as pd
+data = pd.read_csv('../../../data/german_credit_data.csv')
+data.head()
+"""
