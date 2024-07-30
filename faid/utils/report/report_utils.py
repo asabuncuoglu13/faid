@@ -3,7 +3,7 @@ from jinja2 import Environment, FileSystemLoader
 from .file_utils import get_project_report_folder
 
 # %%
-def generate_fairness_report(metrics: dict, group_metrics: dict, output_file: str):
+def generate_fairness_report(output_file: str, sample_data:dict=None, metrics: dict=None, group_metrics: dict=None):
     """
     Generates an HTML report from fairness metrics using Jinja2 template.
 
@@ -14,11 +14,11 @@ def generate_fairness_report(metrics: dict, group_metrics: dict, output_file: st
     """
 
     # Load Jinja2 template
-    env = Environment(loader=FileSystemLoader('.'))
-    template = env.get_template('templates/fairness_metrics.html')
+    env = Environment(loader=FileSystemLoader('faid/utils/report/templates'))
+    template = env.get_template('fairness_metrics.html')
 
     # Render the template with metrics
-    html_content = template.render(metrics=metrics, group_metrics=group_metrics)
+    html_content = template.render(sample_data=sample_data, metrics=metrics, group_metrics=group_metrics)
 
     output_file = get_project_report_folder() + output_file
     # Write the rendered HTML to a file
@@ -117,7 +117,7 @@ group_metrics = {
     }
 }
 
-generate_fairness_report(overall_metrics, group_metrics, 'fairness_report.html')
+generate_fairness_report(metrics=overall_metrics, group_metrics=group_metrics, 'fairness_report.html')
 """
 
 """
@@ -249,6 +249,7 @@ dataset_info = {
 generate_data_card(dataset_info, 'data_card.html')
 """
 
+"""
 model_info = {
     "schema_version": "0.0.1",
     "model_details": {
@@ -373,4 +374,5 @@ model_info = {
     }
 }
 generate_model_card(model_info, 'data_card.html')
+"""
 # %%

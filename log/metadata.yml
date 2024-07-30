@@ -1,6 +1,6 @@
-project: project_name
+project: financial-sentiment-analysis
 author: Author
-date: '2024-07-25'
+date: '2024-07-30'
 description: ''
 version: 0.1.0
 config:
@@ -64,7 +64,7 @@ config:
   decoder_start_token_id: null
   task_specific_params: null
   problem_type: null
-  _name_or_path: ''
+  _name_or_path: yiyanghkust/finbert-tone
   transformers_version: 4.41.1
   vocab_size: 30873
   hidden_size: 768
@@ -82,16 +82,3 @@ config:
   use_cache: true
   classifier_dropout: null
   model_type: bert
-sample_results:
-  0:
-    sentence: growth is strong and we have plenty of liquidity.
-    label: Positive
-    score: 1.0
-  1:
-    sentence: there is a shortage of capital, and we need extra financing.
-    label: Negative
-    score: 0.9952379465103149
-  2:
-    sentence: formulation patents might protect Vasotec to a limited extent.
-    label: Neutral
-    score: 0.9979718327522278

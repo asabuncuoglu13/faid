@@ -39,7 +39,7 @@ def update(dataDict, key=None, filename=None):
   Update a yaml file
   """
   if not isinstance(dataDict, dict):
-    error_msg("Data must be a dictionary. If you are initializing the config from Huggingface, you can use the config.to_dict() method.")
+    error_msg("The log data must be a dictionary. If you are initializing the config from Huggingface, you can use the config.to_dict() method.")
     return
   if not filename:
     filename = get_default_metadata_file_name()
@@ -80,7 +80,7 @@ def load(name=None):
     error_msg(f"File {filename}.yml is not a valid yaml file")
 
 #  %% Test the functions
-
+"""
 dataDict = {
     "project": "FAID",
     "version": "02.0",
@@ -102,5 +102,5 @@ update(updateDict, key="metrics")
 update(config, key="config")
 update({"optimizer": "Adam"}, key="config")
 print(load()) 
-
+"""
 # %%
