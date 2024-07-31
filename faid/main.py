@@ -4,9 +4,8 @@ import click
 
 from .utils.logging.yaml_utils import update
 from .faidlog import init_metadata
-from .utils.logging.message import error_msg, warning_msg, info_msg
+from .utils.logging.message import warning_msg, info_msg
 from .utils.data.data_utils import load_data, get_feature_names
-from .metrics.classification import tabular_classification
 
 def get_data_path():
     """
@@ -63,8 +62,6 @@ def main(mod, data_path):
             selected_sensitive_fts = get_sensitive_features(data)
         update(selected_sensitive_fts, key="sensitive_features")
         print(selected_sensitive_fts)
-        #fairness_score = tabular_classification(data, selected_sensitive_fts)
-        #update(fairness_score, key="fairness_score")
    
 if __name__ == "__main__":
     main()

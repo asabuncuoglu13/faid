@@ -1,6 +1,6 @@
 import os
 
-default_metadata_file_name = "metadata"
+default_metadata_file_name = "project"
 slash = '\\' if os.name == "nt" else "/"
 
 def get_default_metadata_file_name():

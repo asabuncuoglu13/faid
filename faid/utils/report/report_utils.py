@@ -1,9 +1,10 @@
 # %%
 from jinja2 import Environment, FileSystemLoader
 from .file_utils import get_project_report_folder
+from ..logging.yaml_utils import load
 
 # %%
-def generate_fairness_report(output_file: str, sample_data:dict=None, metrics: dict=None, group_metrics: dict=None):
+def generate_fairness_report(output_file:str="fairness_report.html", sample_data:dict=None, metrics: dict=None, group_metrics: dict=None):
     """
     Generates an HTML report from fairness metrics using Jinja2 template.
 
@@ -18,6 +19,8 @@ def generate_fairness_report(output_file: str, sample_data:dict=None, metrics: d
     template = env.get_template('fairness_metrics.html')
 
     # Render the template with metrics
+    if not sample_data:
+        sample_data = load("fairness")
     html_content = template.render(sample_data=sample_data, metrics=metrics, group_metrics=group_metrics)
 
     output_file = get_project_report_folder() + output_file

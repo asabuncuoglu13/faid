@@ -5,21 +5,6 @@ from .utils.logging.message import error_msg
 from .utils.logging.model_card_utils import ModelCard
 
 # %%
-def init_metadata(project_name, author=None, date=None, description=None, version=None):
-    """
-    Initialize the metadata
-    """
-    metadata = {
-        "project": project_name,
-        "author": author if author else "Author",
-        "date": date if date else datetime.date.today().isoformat(),
-        "description": description if description else "",
-        "version": version if version else "0.1.0"
-    }
-    generate(metadata)
-    return metadata  # Return the metadata dictionary
-
-# %%
 class faidlog:
     """
     A class to log fairness metrics.
@@ -39,22 +24,35 @@ class faidlog:
     }
 
     @staticmethod
-    def init(project_name:str, model=None, config:dict=None):
+    def init_project(project_name:str, author:str=None, date:str=None, description:str=None, version:str=None):
+        """
+        Initialize the metadata
+        """
+        metadata = {
+            "project": project_name,
+            "author": author if author else "Author",
+            "date": date if date else datetime.date.today().isoformat(),
+            "description": description if description else "",
+            "version": version if version else "0.1.0"
+        }
+        generate(metadata)
+        return metadata  # Return the metadata dictionary
+
+    @staticmethod
+    def init_project_with_config(project_name:str, config:dict):
         """
         Initialize the fairness logging using the commonly used metadata tracking tools (wandb, mlflow, etc.)
         Takes a dictionary with the project name and configuration.
         project_name: str
-        model: Huggingface model
         config: dictionary
         """
-        init_metadata(project_name)
-        if model and hasattr(model, faidlog.keys["config_key"]):
-            update(model.config.to_dict(), key=faidlog.keys["config_key"])
-        if config:
-            update(config, key=faidlog.keys["config_key"])
+        generate({
+            "project": project_name,
+            faidlog.keys["config_key"]: config
+        })  
     
     @staticmethod
-    def log(params:dict, key:str="metrics", add_to_model_card=False, add_to_fairness_report=False, add_to_data_card=False, add_to_risk_register=False):
+    def log(params:dict, key:str, add_to_model_card:bool=False, add_to_fairness_report:bool=False, add_to_data_card:bool=False, add_to_risk_register:bool=False):
         """
         Log the fairness metrics
         params: Any value that can be stored in a dictionary
@@ -63,14 +61,19 @@ class faidlog:
         """
         if add_to_model_card:
             update(params, key=key, filename=faidlog.files["model_yml_file"])
+            print(f"Added {key} to model card")
         elif add_to_fairness_report:
             update(params, key=key, filename=faidlog.files["fairness_yml_file"])
+            print(f"Added {key} to fairness report")
         elif add_to_data_card:
             update(params, key=key, filename=faidlog.files["data_yml_file"])
+            print(f"Added {key} to data card")
         elif add_to_risk_register:
             update(params, key=key, filename=faidlog.files["risk_yml_file"])
+            print(f"Added {key} to risk register")
         else:
             update(params, key=key)
+            print(f"Added {key} to project metadata")
 
     @staticmethod
     def model_info(info: ModelCard):

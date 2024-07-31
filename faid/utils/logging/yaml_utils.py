@@ -34,32 +34,26 @@ def generate(dataDict, name=None, return_result=False):
     yaml.safe_dump(dataDict, file, sort_keys=False, default_flow_style=False)
 
 # %%
-def update(dataDict, key=None, filename=None):
+def update(yamlData, key, filename=None):
   """
   Update a yaml file
   """
-  if not isinstance(dataDict, dict):
-    error_msg("The log data must be a dictionary. If you are initializing the config from Huggingface, you can use the config.to_dict() method.")
-    return
   if not filename:
     filename = get_default_metadata_file_name()
   filepath = get_project_log_folder() + filename + ".yml"
+
   if not os.path.exists(filepath):
     warning_msg(f"File {filepath} not found. Creating a new file.")
-    if key:
-      dataDict = {key: dataDict}
-    generate(dataDict, filename)
+    yamlData = {key: yamlData}
+    generate(yamlData, filename)
     return
-  existing_dataDict = load()
-  # check if key exists
-  if key not in existing_dataDict:
-    existing_dataDict[key] = dataDict
-  else:
-    tmpDict = existing_dataDict[key]
-    for k, v in dataDict.items():
-      tmpDict[k] = v
-    existing_dataDict[key] = tmpDict
-  generate(existing_dataDict)
+  
+  existing_dataDict = load(filename)
+
+  if key and key in existing_dataDict:
+    existing_dataDict[key] = yamlData
+  
+  generate(existing_dataDict, filename)
 
 # %%
 def load(name=None):
