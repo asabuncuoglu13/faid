@@ -2,10 +2,27 @@ import os
 import inquirer
 import click
 
-from .utils.logging.yaml_utils import update
+from .logging.yaml_utils import update
 from .faidlog import init_metadata
-from .utils.logging.message import warning_msg, info_msg
-from .utils.data.data_utils import load_data, get_feature_names
+from .logging.message import warning_msg, info_msg
+
+def load_data(data_path):
+    """
+    Load data from the specified path
+    """
+    import pandas as pd
+    try:
+        data = pd.read_csv(data_path)
+        return data
+    except Exception as e:
+        warning_msg(f"Error loading data: {e}")
+        return None
+    
+def get_feature_names(data):
+    """
+    Get the feature names from the data
+    """
+    return data.columns.tolist()
 
 def get_data_path():
     """
