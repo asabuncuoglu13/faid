@@ -1,8 +1,8 @@
 # %%
 import datetime
-from .utils.logging.yaml_utils import generate, update, load
-from .utils.logging.message import error_msg
-from .utils.logging.model_card_utils import ModelCard
+from .logging.yaml_utils import generate, update, load
+from .logging.message import error_msg
+from .logging.model_card_utils import ModelCard
 
 # %%
 class faidlog:
