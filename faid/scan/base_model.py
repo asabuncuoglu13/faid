@@ -40,5 +40,71 @@ def get_fairness_score(model_name: str, html=False):
     else:
         print(f'Could not find a fairness score for {model_name}. Check https://crfm.stanford.edu/helm/ (Stanford HELM Leaderboard) for a list of models')
         return None
+    
+# %%
+def get_fairness_metric_explanations():
+    import pandas as pd
+
+    path = __file__.replace('base_model.py', '../data/evals.csv')
+    benchmark = pd.read_csv(path)
+
+    return benchmark
+
+# %% display benchmark as a dropdown html
+
+def fairness_metric_dropdown():
+
+    df = get_fairness_metric_explanations()
+
+    html_code = """
+    <select id="dropdown" onchange="displayDetails()">
+        <option value="">Select an option</option>
+    """
+    for idx, row in df.iterrows():
+        html_code += f'<option value="{idx}">{row[0]}</option>\n'
+
+    html_code += """
+    </select>
+
+    <div id="details"></div>
+
+    <script type="text/javascript">
+    function displayDetails() {
+        var data = %s;
+        var selectedIndex = document.getElementById('dropdown').value;
+        var detailsDiv = document.getElementById('details');
+
+        if (selectedIndex === "") {
+            detailsDiv.innerHTML = "";
+            return;
+        }
+
+        var details = data[selectedIndex];
+        var html = "<ul>";
+        for (var key in details) {
+            if (key !== 'Option') {
+                html += "<li><strong>" + key + ":</strong> " + details[key] + "</li>";
+            }
+        }
+        html += "</ul>";
+
+        detailsDiv.innerHTML = html;
+    }
+    </script>
+    """ % df.to_dict(orient='index')
+
+    # check if Ipython is available
+    try:
+        get_ipython()
+    except NameError:
+        print("In Jupyter Notebook, this function displays the dropdown menu. In other environments, it returns the HTML code.")
+        return html_code
+    else:
+        from IPython.display import display, HTML, Javascript
+        display(HTML(html_code))
+
 # %% test use case
 # html_out = get_fairness_score(get_base_model_name_from_hf("NousResearch/Llama-2-13b-hf"), html=True)
+
+
+# %%
