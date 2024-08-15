@@ -2,6 +2,7 @@
 from jinja2 import Environment, FileSystemLoader
 from .file_utils import get_project_report_folder
 from ..logging.yaml_utils import load
+import os
 
 # %%
 def generate_fairness_report(output_file:str="fairness_report.html", sample_data:dict=None, metrics: dict=None, group_metrics: dict=None):
@@ -15,7 +16,8 @@ def generate_fairness_report(output_file:str="fairness_report.html", sample_data
     """
 
     # Load Jinja2 template
-    env = Environment(loader=FileSystemLoader('faid/utils/report/templates'))
+    current_folder_location = os.path.dirname(os.path.abspath(__file__))
+    env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('fairness_metrics.html')
 
     # Render the template with metrics
@@ -40,7 +42,8 @@ def generate_raid_register_report(raid_data, output_file):
     """
 
     # Load Jinja2 template
-    env = Environment(loader=FileSystemLoader('.'))
+    current_folder_location = os.path.dirname(os.path.abspath(__file__))
+    env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('templates/risk_register.html')
 
     # Render the template with metrics
@@ -63,7 +66,8 @@ def generate_data_card(dataset_info, output_file):
     """
 
     # Load Jinja2 template
-    env = Environment(loader=FileSystemLoader('.'))
+    current_folder_location = os.path.dirname(os.path.abspath(__file__))
+    env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('templates/data_card_template.html')
 
     # Render the template with metrics
@@ -86,7 +90,8 @@ def generate_model_card(model_info, output_file):
     """
 
     # Load Jinja2 template
-    env = Environment(loader=FileSystemLoader('.'))
+    current_folder_location = os.path.dirname(os.path.abspath(__file__))
+    env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('templates/model_card_template.html')
 
     # Render the template with metrics
