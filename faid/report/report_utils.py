@@ -1,11 +1,15 @@
 # %%
 from jinja2 import Environment, FileSystemLoader
+import pandas as pd
 from .file_utils import get_project_report_folder
 from ..logging.yaml_utils import load
 import os
 
 # %%
-def generate_fairness_report(output_file:str="fairness_report.html", sample_data:dict=None, metrics: dict=None, group_metrics: dict=None):
+def generate_fairness_report(output_file:str="fairness_report.html", 
+                             sample_data:pd.DataFrame=pd.DataFrame(), 
+                             metrics: dict=None, group_metrics: 
+                             dict=None):
     """
     Generates an HTML report from fairness metrics using Jinja2 template.
 
@@ -14,16 +18,18 @@ def generate_fairness_report(output_file:str="fairness_report.html", sample_data
     - group_metrics: Dictionary containing fairness metrics by group.
     - output_file: Path to the output HTML file.
     """
-
+    
     # Load Jinja2 template
     current_folder_location = os.path.dirname(os.path.abspath(__file__))
     env = Environment(loader=FileSystemLoader(current_folder_location))
-    template = env.get_template('fairness_metrics.html')
+    template = env.get_template('templates/fairness_template.html')
 
     # Render the template with metrics
-    if not sample_data:
+    if sample_data.empty:
         sample_data = load("fairness")
-    html_content = template.render(sample_data=sample_data, metrics=metrics, group_metrics=group_metrics)
+        sample_data  = pd.DataFrame(sample_data["sample_results"])
+
+    html_content = template.render(sample_data=sample_data.to_html(), metrics=metrics, group_metrics=group_metrics)
 
     output_file = get_project_report_folder() + output_file
     # Write the rendered HTML to a file

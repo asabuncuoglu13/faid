@@ -5,9 +5,93 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- This dataset card template is from Google's The Data Cards Playbook. https://sites.research.google/datacardsplaybook/-->
 	<!-- The original card template was published as Word document and we converted it to a HTML template. -->
+	 <style>
+		body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .report-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #e0e0e0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            th, td {
+                display: block;
+                width: 100%;
+            }
+
+            th {
+                background-color: #f4f4f4;
+                text-align: center;
+            }
+
+            td {
+                border-top: none;
+            }
+
+            td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+                color: #333;
+            }
+        }
+	</style>
 	<title>{{ dataset_name }}</title>
 </head>
 <body>
+	<div class="report-container">
 	<h1>{{ dataset_name }} (Acronym)</h1>
 	<p>{{ summary }}</p>
 
@@ -184,5 +268,6 @@
 
 	<h3>Typical Data Point</h3>
 	<p>{{ typical_data_point }}</p>
+	</div>
 </body>
 </html>

@@ -1,268 +1,321 @@
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
 <html lang="en">
+
 <head>
-<style>
-  h1 {text-align: center;}
-  .row {
-    display: flex;
-  }
-  .col {
-    flex: 1;
-  }
-  .card {
-    padding: 1em;
-    border: 1px solid #DADCE0;
-    margin: 10px;
-  }
-  .img-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    text-align: center;
-  }
-  .img-item {
-    flex: 1;
-  }
-  .center {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  table {
-    margin-bottom: 10px;
-  }
-  table th {
-    background: #eee;
-  }
-  table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-  th, td {
-    border: 1px solid #ccc;
-    height: 30px;
-    text-align: left;
-    padding: 5px 10px
-  }
-  caption { font-weight: bold; }
-</style>
-<title>
-  Model Card for Example Model Name
-</title>
-</head>
-<body>
-  <h1>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .report-container {
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: #666;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #e0e0e0;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0f0f0;
+      color: #333;
+      font-weight: bold;
+    }
+
+    td {
+      background-color: #fff;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+
+      th,
+      td {
+        display: block;
+        width: 100%;
+      }
+
+      th {
+        background-color: #f4f4f4;
+        text-align: center;
+      }
+
+      td {
+        border-top: none;
+      }
+
+      td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
+    }
+  </style>
+  <title>
     Model Card for Example Model Name
-  </h1>
+  </title>
+</head>
+
+<body>
+  <div class="report-container">
+    <h1>
+      Model Card for Example Model Name
+    </h1>
     <div class="row">
-    
+
       <div class="col card">
         <h2>Model Details</h2>
-          <h3>Overview</h3>
-              This is a brief one-line description of the model.
-          <h3>Version</h3>
-              
-  
-    <div>name: 1.0</div>
+        <h3>Overview</h3>
+        This is a brief one-line description of the model.
+        <h3>Version</h3>
 
-              
-  
-    <div>date: 2023-01-01</div>
 
-              
-  
-    <div>diff: Initial version.</div>
+        <div>name: 1.0</div>
 
-          
-          <h3>Documentation</h3>
-              Here is a thorough description of the model, including its purpose and usage.
-          <h3>Owners</h3>
-            
-              Owner Name, owner@example.com
-            
-          
-          
-            <h3>Licenses</h3>
-              <ul>
 
-                <li>MIT</li>
 
-              </ul>
-          
-            <h3>References</h3>
-              <ul>
-              
-                <li><a href="http://example.com/model-reference">http://example.com/model-reference</a></li>
-              
-              </ul>
-          
-            <h3>Citations</h3>
-              <ul>
-              
-                <li>Author, A. (Year). Title of document. Publisher.</li>
-              
-              </ul>
-        </div>
-      
-      
-        <div class="col card">
-          <h2>Model Parameters</h2>
-            
-              <h3>Model Architecture</h3>
-                <div style="white-space:pre-wrap;">CNN</div>
-            <h3>Input Format</h3>
-              <div style="white-space:pre-wrap;">JPEG</div>
-            
-              <h3>Input Format</h3>
-              <table>
-              <tr><th>Key</th><th>Value</th></tr>
-              
-              <tr><td>image</td><td>JPEG</td></tr></table>
-            <h3>Output Format</h3>
-              <div style="white-space:pre-wrap;">Probability</div>
-            
-              <h3>Output Format</h3>
-              <table>
-              <tr><th>Key</th><th>Value</th></tr>
-              
-              <tr><td>label</td><td>Probability</td></tr></table>
-        </div>
-      
-      
+        <div>date: 2023-01-01</div>
+
+
+
+        <div>diff: Initial version.</div>
+
+
+        <h3>Documentation</h3>
+        Here is a thorough description of the model, including its purpose and usage.
+        <h3>Owners</h3>
+
+        Owner Name, owner@example.com
+
+
+
+        <h3>Licenses</h3>
+        <ul>
+
+          <li>MIT</li>
+
+        </ul>
+
+        <h3>References</h3>
+        <ul>
+
+          <li><a href="http://example.com/model-reference">http://example.com/model-reference</a></li>
+
+        </ul>
+
+        <h3>Citations</h3>
+        <ul>
+
+          <li>Author, A. (Year). Title of document. Publisher.</li>
+
+        </ul>
+      </div>
+
+
+      <div class="col card">
+        <h2>Model Parameters</h2>
+
+        <h3>Model Architecture</h3>
+        <div style="white-space:pre-wrap;">CNN</div>
+        <h3>Input Format</h3>
+        <div style="white-space:pre-wrap;">JPEG</div>
+
+        <h3>Input Format</h3>
+        <table>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+
+          <tr>
+            <td>image</td>
+            <td>JPEG</td>
+          </tr>
+        </table>
+        <h3>Output Format</h3>
+        <div style="white-space:pre-wrap;">Probability</div>
+
+        <h3>Output Format</h3>
+        <table>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+
+          <tr>
+            <td>label</td>
+            <td>Probability</td>
+          </tr>
+        </table>
+      </div>
+
+
       <div class="col card">
         <h2>Considerations</h2>
-          
-            <h3>Intended Users</h3>
-              
-  
-  <ul>
-  
-    <li>Data scientists and ML engineers</li>
-  
-  </ul>
 
-          
-          
-            <h3>Use Cases</h3>
-              
-  
-  <ul>
-  
-    <li>Image classification for identifying objects.</li>
-  
-  </ul>
+        <h3>Intended Users</h3>
 
-          
-          
-            <h3>Limitations</h3>
-              
-  
-  <ul>
-  
-    <li>Struggles with low-light images.</li>
-  
-  </ul>
 
-          
-          
-            <h3>Tradeoffs</h3>
-              
-  
-  <ul>
-  
-    <li>Higher accuracy for increased computational cost.</li>
-  
-  </ul>
+        <ul>
 
-          
-          
-            <h3>Ethical Considerations</h3>
-              <ul>
-                <li>
-                  <div>Risk: Bias in Training Data</div>
-                  <div>Mitigation Strategy: Use a diverse dataset.</div>
-                </li> </ul>
+          <li>Data scientists and ML engineers</li>
+
+        </ul>
+
+
+
+        <h3>Use Cases</h3>
+
+
+        <ul>
+
+          <li>Image classification for identifying objects.</li>
+
+        </ul>
+
+
+
+        <h3>Limitations</h3>
+
+
+        <ul>
+
+          <li>Struggles with low-light images.</li>
+
+        </ul>
+
+
+
+        <h3>Tradeoffs</h3>
+
+
+        <ul>
+
+          <li>Higher accuracy for increased computational cost.</li>
+
+        </ul>
+
+
+
+        <h3>Ethical Considerations</h3>
+        <ul>
+          <li>
+            <div>Risk: Bias in Training Data</div>
+            <div>Mitigation Strategy: Use a diverse dataset.</div>
+          </li>
+        </ul>
       </div>
-      
+
     </div>
-    
-      
-  <div class="col card">
-    <h2>Datasets</h2>
-    
+
+
+    <div class="col card">
+      <h2>Datasets</h2>
+
       <div class="row">
         <div class="col card">
           <h3>Dataset Name</h3>
-            <p>This dataset includes...</p>
-            <a href="http://example.com/dataset">http://example.com/dataset</a>
-            
-              
-  <div class="img-container">
-  
-  
-    <div class="img-item">
-      <img src='data:image/jpeg;base64,base64EncodedString' alt='Sample Image' />
-    </div>
-  
-  </div>
+          <p>This dataset includes...</p>
+          <a href="http://example.com/dataset">http://example.com/dataset</a>
 
-            
+
+          <div class="img-container">
+
+
+            <div class="img-item">
+              <img src='data:image/jpeg;base64,base64EncodedString' alt='Sample Image' />
+            </div>
+
+          </div>
+
+
         </div>
       </div>
-    
-  </div>
-
-    
-    
-      
-<div class="col card">
-  <h2>Quantitative Analysis</h2>
-  
-    
-<table class="center">
-  <caption>Performance Metrics</caption>
-  <tr><th>Name</th><th>Value</th></tr>
-
-  <tr><td>
-Accuracy, Validation Set
-</td><td>
-95% (94%, 96%)
-</td></tr>
-
-</table>
-
-  
-  
-    
-  <div class="row">
-    <div class="col">
-      <p>Performance metrics graphs</p>
-      
-  <div class="img-container">
-  
-  
-    <div class="img-item">
-      <img src='data:image/jpeg;base64,base64EncodedString' alt='Accuracy Over Time' />
-    </div>
-  
-  </div>
 
     </div>
+
+
+
+
+    <div class="col card">
+      <h2>Quantitative Analysis</h2>
+
+
+      <table class="center">
+        <caption>Performance Metrics</caption>
+        <tr>
+          <th>Name</th>
+          <th>Value</th>
+        </tr>
+
+        <tr>
+          <td>
+            Accuracy, Validation Set
+          </td>
+          <td>
+            95% (94%, 96%)
+          </td>
+        </tr>
+
+      </table>
+
+
+
+
+      <div class="row">
+        <div class="col">
+          <p>Performance metrics graphs</p>
+
+          <div class="img-container">
+
+
+            <div class="img-item">
+              <img src='data:image/jpeg;base64,base64EncodedString' alt='Accuracy Over Time' />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  
-</div>
-
-    
 </body>
+
 </html>

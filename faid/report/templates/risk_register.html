@@ -3,18 +3,91 @@
 <head>
     <title>RAID Register</title>
     <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+          color: #333;
+        }
+    
+        .report-container {
+          max-width: 900px;
+          margin: 20px auto;
+          background-color: #fff;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          border-radius: 8px;
+        }
+    
+        h1 {
+          font-size: 24px;
+          color: #333;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+    
+        h2 {
+          font-size: 20px;
+          color: #666;
+          margin-bottom: 15px;
+          border-bottom: 2px solid #e0e0e0;
+          padding-bottom: 5px;
+        }
+    
         table {
-            width: 100%;
-            border-collapse: collapse;
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 20px;
         }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-            word-wrap: break-word;
+    
+        table,
+        th,
+        td {
+          border: 1px solid #e0e0e0;
         }
+    
+        th,
+        td {
+          padding: 12px;
+          text-align: left;
+        }
+    
         th {
-            background-color: #f2f2f2;
+          background-color: #f0f0f0;
+          color: #333;
+          font-weight: bold;
+        }
+    
+        td {
+          background-color: #fff;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 600px) {
+    
+          th,
+          td {
+            display: block;
+            width: 100%;
+          }
+    
+          th {
+            background-color: #f4f4f4;
+            text-align: center;
+          }
+    
+          td {
+            border-top: none;
+          }
+    
+          td:before {
+            content: attr(data-label);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+          }
         }
         .id {
             width: 10%;
@@ -40,6 +113,7 @@
     </style>
 </head>
 <body>
+    <div class="report-container">
     <h1>RAID Register</h1>
 
     <h2>Risks</h2>
@@ -120,10 +194,9 @@
         </tr>
         {% endfor %}
     </table>
+    </div>
 </body>
 
-
-<!-- Step 3: JavaScript for Formatting and Copying Issue Data -->
 <script>
     function formatAndCopyIssue(issueId) {
         // Find the issue row and extract data
