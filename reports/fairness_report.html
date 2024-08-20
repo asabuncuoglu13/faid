@@ -11,92 +11,134 @@
         th { background-color: #f2f2f2; }
         .metric { width: 60%; }
         .value { width: 40%; }
+        .text { width: 70%; }
+        .label { width: 30%; }
     </style>
 </head>
 <body>
     <h1>Fairness Report</h1>
-    <h2>Model Metrics</h2>
+    
+    <h2>Sample Data</h2>
     <table>
         <tr>
-            <th class="metric">Metric</th>
-            <th class="value">Value</th>
+            <th>Samples</th>
         </tr>
         
         <tr>
-            <td class="metric">Accuracy</td>
-            <td class="value">0.85</td>
+            <td class="label">text : formulation patents might protect Vasotec to a limited extent.</td>
         </tr>
         
         <tr>
-            <td class="metric">Precision</td>
-            <td class="value">0.82</td>
+            <td class="label">label : Neutral</td>
         </tr>
         
         <tr>
-            <td class="metric">Recall</td>
-            <td class="value">0.88</td>
+            <td class="label">score : 0.9979718327522278</td>
         </tr>
         
     </table>
+    
 
+    
+
+    
     <h2>Fairness Metrics by Group</h2>
-    
-    <h3>Accuracy</h3>
-    <table>
-        <tr>
-            <th class="metric">Group</th>
-            <th class="value">Value</th>
-        </tr>
         
-        <tr>
-            <td class="metric">Group A</td>
-            <td class="value">0.8</td>
-        </tr>
+        <h3>accuracy</h3>
+        <table>
+            <tr>
+                <th class="metric">Group</th>
+                <th class="value">Value</th>
+            </tr>
+            
+            <tr>
+                <td class="metric">0</td>
+                <td class="value">0.8354935194416749</td>
+            </tr>
+            
+            <tr>
+                <td class="metric">1</td>
+                <td class="value">0.8704600484261501</td>
+            </tr>
+            
+        </table>
         
-        <tr>
-            <td class="metric">Group B</td>
-            <td class="value">0.9</td>
-        </tr>
+        <h3>false positive rate</h3>
+        <table>
+            <tr>
+                <th class="metric">Group</th>
+                <th class="value">Value</th>
+            </tr>
+            
+            <tr>
+                <td class="metric">0</td>
+                <td class="value">0.05850706119704102</td>
+            </tr>
+            
+            <tr>
+                <td class="metric">1</td>
+                <td class="value">0.027888446215139442</td>
+            </tr>
+            
+        </table>
         
-    </table>
-    
-    <h3>Precision</h3>
-    <table>
-        <tr>
-            <th class="metric">Group</th>
-            <th class="value">Value</th>
-        </tr>
+        <h3>false negative rate</h3>
+        <table>
+            <tr>
+                <th class="metric">Group</th>
+                <th class="value">Value</th>
+            </tr>
+            
+            <tr>
+                <td class="metric">0</td>
+                <td class="value">0.4682080924855491</td>
+            </tr>
+            
+            <tr>
+                <td class="metric">1</td>
+                <td class="value">0.28703703703703703</td>
+            </tr>
+            
+        </table>
         
-        <tr>
-            <td class="metric">Group A</td>
-            <td class="value">0.78</td>
-        </tr>
+        <h3>selection rate</h3>
+        <table>
+            <tr>
+                <th class="metric">Group</th>
+                <th class="value">Value</th>
+            </tr>
+            
+            <tr>
+                <td class="metric">0</td>
+                <td class="value">0.18095712861415753</td>
+            </tr>
+            
+            <tr>
+                <td class="metric">1</td>
+                <td class="value">0.2966101694915254</td>
+            </tr>
+            
+        </table>
         
-        <tr>
-            <td class="metric">Group B</td>
-            <td class="value">0.85</td>
-        </tr>
+        <h3>count</h3>
+        <table>
+            <tr>
+                <th class="metric">Group</th>
+                <th class="value">Value</th>
+            </tr>
+            
+            <tr>
+                <td class="metric">0</td>
+                <td class="value">4012.0</td>
+            </tr>
+            
+            <tr>
+                <td class="metric">1</td>
+                <td class="value">826.0</td>
+            </tr>
+            
+        </table>
         
-    </table>
-    
-    <h3>Recall</h3>
-    <table>
-        <tr>
-            <th class="metric">Group</th>
-            <th class="value">Value</th>
-        </tr>
-        
-        <tr>
-            <td class="metric">Group A</td>
-            <td class="value">0.83</td>
-        </tr>
-        
-        <tr>
-            <td class="metric">Group B</td>
-            <td class="value">0.92</td>
-        </tr>
-        
-    </table>
     
 </body>
 </html>

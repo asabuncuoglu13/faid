@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- This dataset card template is from Google's The Data Cards Playbook. https://sites.research.google/datacardsplaybook/-->
+	<!-- The original card template was published as Word document and we converted it to a HTML template. -->
+	<title>{{ dataset_name }}</title>
+</head>
+<body>
+	<h1>{{ dataset_name }} (Acronym)</h1>
+	<p>{{ summary }}</p>
+
+	<h3>Dataset Link</h3>
+	<p><a href="{{ dataset_link }}">Dataset Link</a></p>
+
+	<h3>Data Card Author(s)</h3>
+	{% for author in authors %}
+	<p><strong>Name, Team:</strong> {{ author.name }}, {{ author.team }} ({{ author.role }})</p>
+	{% endfor %}
+
+	<h2>Authorship</h2>
+	<h3>Publishers</h3>
+	<p><strong>Organization Name:</strong> {{ publishing_organization }}</p>
+
+	<h3>Industry Type(s)</h3>
+	<ul>
+		{% for industry in industry_types %}
+		<li>{{ industry }}</li>
+		{% endfor %}
+	</ul>
+
+	<h3>Contact Detail(s)</h3>
+	<p><strong>Publishing POC:</strong> {{ publishing_poc.name }}</p>
+	<p><strong>Affiliation:</strong> {{ publishing_poc.affiliation }}</p>
+	<p><strong>Contact:</strong> {{ publishing_poc.contact }}</p>
+	<p><strong>Mailing List:</strong> {{ publishing_poc.mailing_list }}</p>
+	<p><strong>Website:</strong> <a href="{{ publishing_poc.website }}">{{ publishing_poc.website }}</a></p>
+
+	<h3>Dataset Owners</h3>
+	<p><strong>Team(s):</strong> {{ dataset_owners.team }}</p>
+
+	<h3>Contact Detail(s)</h3>
+	<p><strong>Dataset Owner(s):</strong> {{ dataset_owners.name }}</p>
+	<p><strong>Affiliation:</strong> {{ dataset_owners.affiliation }}</p>
+	<p><strong>Contact:</strong> {{ dataset_owners.contact }}</p>
+	<p><strong>Group Email:</strong> <a href="mailto:{{ dataset_owners.group_email }}">{{ dataset_owners.group_email }}</a></p>
+	<p><strong>Website:</strong> <a href="{{ dataset_owners.website }}">{{ dataset_owners.website }}</a></p>
+
+	<h3>Author(s)</h3>
+	{% for author in dataset_authors %}
+	<p>{{ author.name }}, {{ author.title }}, {{ author.affiliation }}, {{ author.year }}</p>
+	{% endfor %}
+
+	<h3>Funding Sources</h3>
+	<ul>
+		{% for institution in funding_sources %}
+		<li>{{ institution }}</li>
+		{% endfor %}
+	</ul>
+
+	<h2>Dataset Overview</h2>
+	<h3>Data Subject(s)</h3>
+	<ul>
+		{% for subject in data_subjects %}
+		<li>{{ subject }}</li>
+		{% endfor %}
+	</ul>
+
+	<h3>Dataset Snapshot</h3>
+	<table>
+		<tr>
+			<th>Category</th>
+			<th>Data</th>
+		</tr>
+		{% for category, data in dataset_snapshot.items() %}
+		<tr>
+			<td>{{ category }}</td>
+			<td>{{ data }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+	<h3>Content Description</h3>
+	<p>{{ content_description }}</p>
+
+	<h3>Descriptive Statistics</h3>
+	<table>
+		<tr>
+			<th>Statistic</th>
+			{% for field_name in descriptive_statistics.fields %}
+			<th>{{ field_name }}</th>
+			{% endfor %}
+		</tr>
+		{% for stat in descriptive_statistics.stats %}
+		<tr>
+			<td>{{ stat.name }}</td>
+			{% for value in stat.values %}
+			<td>{{ value }}</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</table>
+
+	<h3>Sensitivity of Data</h3>
+	<h4>Sensitivity Type(s)</h4>
+	<ul>
+		{% for type in sensitivity_types %}
+		<li>{{ type }}</li>
+		{% endfor %}
+	</ul>
+
+	<h4>Field(s) with Sensitive Data</h4>
+	<p>Intentional Collected Sensitive Data</p>
+	<ul>
+		{% for field in intentional_sensitive_data %}
+		<li>{{ field.name }}: {{ field.description }}</li>
+		{% endfor %}
+	</ul>
+	<p>Unintentionally Collected Sensitive Data</p>
+	<ul>
+		{% for field in unintentional_sensitive_data %}
+		<li>{{ field.name }}: {{ field.description }}</li>
+		{% endfor %}
+	</ul>
+
+	<h3>Security and Privacy Handling</h3>
+	<p>{{ security_privacy_handling }}</p>
+
+	<h3>Risk Type(s)</h3>
+	<ul>
+		{% for risk in risk_types %}
+		<li>{{ risk }}</li>
+		{% endfor %}
+	</ul>
+
+	<h3>Risk(s) and Mitigation(s)</h3>
+	<p>{{ risks_mitigations }}</p>
+
+	<h2>Dataset Version and Maintenance</h2>
+	<p><strong>Maintenance Status:</strong> {{ maintenance_status }}</p>
+	<p><strong>Current Version:</strong> {{ version_details.current_version }}</p>
+	<p><strong>Last Updated:</strong> {{ version_details.last_updated }}</p>
+	<p><strong>Release Date:</strong> {{ version_details.release_date }}</p>
+
+	<h3>Maintenance Plan</h3>
+	<p>{{ maintenance_plan }}</p>
+
+	<h3>Next Planned Update(s)</h3>
+	<p><strong>Version affected:</strong> {{ next_update.version_affected }}</p>
+	<p><strong>Next data update:</strong> {{ next_update.next_data_update }}</p>
+	<p><strong>Next version:</strong> {{ next_update.next_version }}</p>
+	<p><strong>Next version update:</strong> {{ next_update.next_version_update }}</p>
+
+	<h3>Expected Change(s)</h3>
+	<p>{{ expected_changes }}</p>
+
+	<h2>Example of Data Points</h2>
+	<h3>Primary Data Modality</h3>
+	<p>{{ primary_data_modality }}</p>
+
+	<h3>Sampling of Data Points</h3>
+	<ul>
+		{% for link in sampling_data_points %}
+		<li><a href="{{ link.url }}">{{ link.name }}</a></li>
+		{% endfor %}
+	</ul>
+
+	<h3>Data Fields</h3>
+	<table>
+		<tr>
+			<th>Field Name</th>
+			<th>Field Value</th>
+			<th>Description</th>
+		</tr>
+		{% for field in data_fields %}
+		<tr>
+			<td>{{ field.name }}</td>
+			<td>{{ field.value }}</td>
+			<td>{{ field.description }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+	<h3>Typical Data Point</h3>
+	<p>{{ typical_data_point }}</p>
+</body>
+</html>
