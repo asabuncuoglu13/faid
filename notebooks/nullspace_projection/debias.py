@@ -1,16 +1,8 @@
-from typing import Dict
-
 import numpy as np
 import scipy
 import classifier
-
-# import svm_classifier
-
-REGRESSION = False
-from typing import List
+from typing import List, Dict
 from tqdm import tqdm
-import random
-
 
 def get_nullspace_projection(W: np.ndarray) -> np.ndarray:
     """
@@ -31,7 +23,6 @@ def debias_by_specific_directions(directions: List[np.ndarray], input_dim: int):
         P = P.dot(P_v)
 
     return P
-
 
 def get_debiasing_projection(classifier_class, cls_params: Dict, num_classifiers: int, input_dim: int,
                              is_autoregressive: bool,
@@ -56,12 +47,9 @@ def get_debiasing_projection(classifier_class, cls_params: Dict, num_classifiers
     P = np.eye(input_dim)
     X_train_cp = X_train.copy()
     X_test_cp = X_test.copy()
-    labels_set = list(set(y_train.tolist()))
-    main_task_labels = list(set(y_train_main.tolist()))
 
     if noise:
         print("Adding noise.")
-        mean = np.mean(np.abs(X_train))
         mask_train = 0.0075 * (np.random.rand(*X_train.shape) - 0.5)
 
         X_train_cp += mask_train
@@ -76,14 +64,6 @@ def get_debiasing_projection(classifier_class, cls_params: Dict, num_classifiers
         idx = np.random.rand(x_t.shape[0]) < random_subset
         x_t = x_t[idx]
         y_t = y_t[idx]
-
-        #if by_class:
-        #    cls = np.random.choice(Y_train_main)  # random.choice(main_task_labels) UNCOMMENT FOR EQUAL CHANCE FOR ALL Y
-        #    relevant_idx_train = Y_train_main == cls
-        #    relevant_idx_dev = Y_dev_main == cls
-        #else:
-        #    relevant_idx_train = np.ones(x_t.shape[0], dtype=bool)
-        #    relevant_idx_dev = np.ones(X_dev_cp.shape[0], dtype=bool)
 
         acc = clf.train_network(x_t, y_t, X_test_cp, y_test)
         pbar.set_description("iteration: {}, accuracy: {}".format(i, acc))
