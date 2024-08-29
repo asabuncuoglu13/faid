@@ -34,7 +34,7 @@ jobs:
         run: |
           echo "Generating report..."
           # Add your report generation logic here
-          python -c "print('Generating reports...'); from faid import faidlog; faidlog.generate_all_reports()"
+          python -c "print('Generating reports...'); from faid.faidlog import faidlog; faidlog.generate_all_reports()"
           echo "Report generated successfully"
       
       - name: Upload HTML Reports
