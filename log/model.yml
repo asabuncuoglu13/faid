@@ -4,7 +4,7 @@ hf_model_card:
   - financial-sentiment-analysis
   - sentiment-analysis
   widget:
-  - text: growth is strong and we have plenty of liquidity
+  - text: growth is strong and we have plenty of liquidity I hope
 hf_model_config:
   return_dict: true
   output_hidden_states: false
