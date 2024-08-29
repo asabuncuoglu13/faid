@@ -2,7 +2,7 @@ sample_results:
   0:
     text: growth is strong and we have plenty of liquidity.
     label: Positive
-    score: 1.0
+    score: 0.9999998807907104
   1:
     text: there is a shortage of capital, and we need extra financing.
     label: Negative

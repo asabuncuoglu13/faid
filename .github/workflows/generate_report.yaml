@@ -1,0 +1,45 @@
+name: Report generation workflow
+
+# The workflow triggers on pushes to the log directory
+# It runs the generate_report.py script, which processes the YAML files and generates the HTML reports in the reports/ directory.
+
+on:
+  push:
+    paths:
+      - 'log/**.yml'
+
+jobs:
+  Deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: checkout repo content
+        uses: actions/checkout@v4
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-deployment.txt
+
+      - name: generate report
+        run: |
+          echo "Generating report..."
+          # Add your report generation logic here
+          python -c "print('Generating reports...'); from faid.faidlog import faidlog; faidlog.generate_all_reports()"
+          echo "Report generated successfully"
+      
+      - name: Upload HTML Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: html-reports
+          path: reports/*.html
+

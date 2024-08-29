@@ -96,43 +96,46 @@
 <body>
 <div class="report-container">
     <h1>Fairness Report</h1>
-    
+    {% if sample_data %}
     <h2>Sample Data</h2>
-    <table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>text</th>
-      <td>growth is strong and we have plenty of liquidity.</td>
-      <td>there is a shortage of capital, and we need extra financing.</td>
-      <td>formulation patents might protect Vasotec to a limited extent.</td>
-    </tr>
-    <tr>
-      <th>label</th>
-      <td>Positive</td>
-      <td>Negative</td>
-      <td>Neutral</td>
-    </tr>
-    <tr>
-      <th>score</th>
-      <td>1.0</td>
-      <td>0.995238</td>
-      <td>0.997972</td>
-    </tr>
-  </tbody>
-</table>
-    
+    {{sample_data | safe}}
+    {% endif %}
 
-    
+    {% if metrics %}
+    <h2>Model Metrics</h2>
+    <table>
+        <tr>
+            <th class="metric">Metric</th>
+            <th class="value">Value</th>
+        </tr>
+        {% for metric, value in metrics.items() %}
+        <tr>
+            <td class="metric">{{ metric }}</td>
+            <td class="value">{{ value }}</td>
+        </tr>
+        {% endfor %}
+        
+    </table>
+    {% endif %}
 
-    
+    {% if group_metrics %}
+    <h2>Fairness Metrics by Group</h2>
+        {% for metric, groups in group_metrics.items() %}
+        <h3>{{ metric }}</h3>
+        <table>
+            <tr>
+                <th class="metric">Group</th>
+                <th class="value">Value</th>
+            </tr>
+            {% for group, value in groups.items() %}
+            <tr>
+                <td class="metric">{{ group }}</td>
+                <td class="value">{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
+    {% endif %}
 </div>
 </body>
 </html>
