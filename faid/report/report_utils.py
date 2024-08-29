@@ -6,10 +6,10 @@ from ..logging.yaml_utils import load
 import os
 
 # %%
-def generate_fairness_report(output_file:str="fairness_report.html", 
-                             sample_data:pd.DataFrame=pd.DataFrame(), 
-                             metrics: dict=None, group_metrics: 
-                             dict=None):
+def generate_fairness_report(sample_data:pd.DataFrame=pd.DataFrame(), 
+                             metrics: dict=None, 
+                             group_metrics: dict=None,
+                             output_file:str="fairness_report.html"):
     """
     Generates an HTML report from fairness metrics using Jinja2 template.
 
@@ -28,6 +28,7 @@ def generate_fairness_report(output_file:str="fairness_report.html",
     if sample_data.empty:
         sample_data = load("fairness")
         sample_data  = pd.DataFrame(sample_data["sample_results"])
+        print(sample_data)
 
     html_content = template.render(sample_data=sample_data.to_html(), metrics=metrics, group_metrics=group_metrics)
 
@@ -37,7 +38,7 @@ def generate_fairness_report(output_file:str="fairness_report.html",
         file.write(html_content)
 
 # %%
-def generate_raid_register_report(raid_data, output_file):
+def generate_raid_register_report(raid_data:dict={}, output_file:str="risk_register.html"):
     """
     Generates an HTML report from fairness metrics using Jinja2 template.
 
@@ -52,6 +53,9 @@ def generate_raid_register_report(raid_data, output_file):
     env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('templates/risk_register.html')
 
+    if raid_data == {}:  # Load the data from the yaml file
+        raid_data = load("risks")
+        print(raid_data)
     # Render the template with metrics
     html_content = template.render(raid_data)
 
@@ -61,7 +65,7 @@ def generate_raid_register_report(raid_data, output_file):
         file.write(html_content)
 
 # %%
-def generate_data_card(dataset_info, output_file):
+def generate_data_card(dataset_info:dict={}, output_file:str="data_card.html"):
     """
     Generates an HTML report from fairness metrics using Jinja2 template.
 
@@ -76,6 +80,9 @@ def generate_data_card(dataset_info, output_file):
     env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('templates/data_card_template.html')
 
+    if dataset_info == {}:  # Load the data from the yaml file
+        dataset_info = load("data")
+        print(dataset_info)
     # Render the template with metrics
     html_content = template.render(dataset_info)
 
@@ -86,7 +93,7 @@ def generate_data_card(dataset_info, output_file):
 
 
 # %%
-def generate_model_card(model_info, output_file):
+def generate_model_card(model_info:dict={}, output_file:str="model_card.html"):
     """
     Generates an HTML model card from model info using Jinja2 template.
 
@@ -100,6 +107,9 @@ def generate_model_card(model_info, output_file):
     env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('templates/model_card_template.html')
 
+    if model_info == {}:  # Load the data from the yaml file
+        model_info = load("model")
+        print(model_info)
     # Render the template with metrics
     html_content = template.render(model_info)
 

@@ -114,13 +114,16 @@
 		{% endfor %}
 	</ul>
 
+	{% if publishing_poc %}
 	<h3>Contact Detail(s)</h3>
 	<p><strong>Publishing POC:</strong> {{ publishing_poc.name }}</p>
 	<p><strong>Affiliation:</strong> {{ publishing_poc.affiliation }}</p>
 	<p><strong>Contact:</strong> {{ publishing_poc.contact }}</p>
 	<p><strong>Mailing List:</strong> {{ publishing_poc.mailing_list }}</p>
 	<p><strong>Website:</strong> <a href="{{ publishing_poc.website }}">{{ publishing_poc.website }}</a></p>
+	{% endif %}
 
+	{% if dataset_owners %}
 	<h3>Dataset Owners</h3>
 	<p><strong>Team(s):</strong> {{ dataset_owners.team }}</p>
 
@@ -130,18 +133,25 @@
 	<p><strong>Contact:</strong> {{ dataset_owners.contact }}</p>
 	<p><strong>Group Email:</strong> <a href="mailto:{{ dataset_owners.group_email }}">{{ dataset_owners.group_email }}</a></p>
 	<p><strong>Website:</strong> <a href="{{ dataset_owners.website }}">{{ dataset_owners.website }}</a></p>
+	{% endif %}
 
+	{% if dataset_authors %}
 	<h3>Author(s)</h3>
 	{% for author in dataset_authors %}
 	<p>{{ author.name }}, {{ author.title }}, {{ author.affiliation }}, {{ author.year }}</p>
 	{% endfor %}
+	{% endif %}
 
+	{% if funding_sources %}
 	<h3>Funding Sources</h3>
 	<ul>
 		{% for institution in funding_sources %}
 		<li>{{ institution }}</li>
 		{% endfor %}
 	</ul>
+	{% endif %}
+
+	{% if data_subjects %}
 
 	<h2>Dataset Overview</h2>
 	<h3>Data Subject(s)</h3>
@@ -150,7 +160,10 @@
 		<li>{{ subject }}</li>
 		{% endfor %}
 	</ul>
+	
+	{% endif %}
 
+	{% if dataset_snapshot %}
 	<h3>Dataset Snapshot</h3>
 	<table>
 		<tr>
@@ -164,10 +177,14 @@
 		</tr>
 		{% endfor %}
 	</table>
+	{% endif %}
 
+	{% if content_description %}
 	<h3>Content Description</h3>
 	<p>{{ content_description }}</p>
+	{% endif %}
 
+	{% if descriptive_statistics %}
 	<h3>Descriptive Statistics</h3>
 	<table>
 		<tr>
@@ -185,6 +202,9 @@
 		</tr>
 		{% endfor %}
 	</table>
+	{% endif %}
+
+	{% if sensitivity_types %}
 
 	<h3>Sensitivity of Data</h3>
 	<h4>Sensitivity Type(s)</h4>
@@ -193,63 +213,93 @@
 		<li>{{ type }}</li>
 		{% endfor %}
 	</ul>
+	
+	{% endif %}
 
 	<h4>Field(s) with Sensitive Data</h4>
+	{% if intentional_sensitive_data %}
 	<p>Intentional Collected Sensitive Data</p>
 	<ul>
 		{% for field in intentional_sensitive_data %}
 		<li>{{ field.name }}: {{ field.description }}</li>
 		{% endfor %}
 	</ul>
+	{% endif %}
+
+	{% if unintentional_sensitive_data %}
 	<p>Unintentionally Collected Sensitive Data</p>
 	<ul>
 		{% for field in unintentional_sensitive_data %}
 		<li>{{ field.name }}: {{ field.description }}</li>
 		{% endfor %}
 	</ul>
+	{% endif %}
 
+	{% if security_privacy_handling %}
 	<h3>Security and Privacy Handling</h3>
 	<p>{{ security_privacy_handling }}</p>
+	{% endif %}
 
+	{% if risk_types %}
 	<h3>Risk Type(s)</h3>
 	<ul>
 		{% for risk in risk_types %}
 		<li>{{ risk }}</li>
 		{% endfor %}
 	</ul>
+	{% endif %}
 
+	{% if risks_mitigations %}
 	<h3>Risk(s) and Mitigation(s)</h3>
 	<p>{{ risks_mitigations }}</p>
+	{% endif %}
 
+	
 	<h2>Dataset Version and Maintenance</h2>
+	{% if maintenance_status %}
 	<p><strong>Maintenance Status:</strong> {{ maintenance_status }}</p>
+	{% endif %}
+
+	{% if version_details %}
 	<p><strong>Current Version:</strong> {{ version_details.current_version }}</p>
 	<p><strong>Last Updated:</strong> {{ version_details.last_updated }}</p>
 	<p><strong>Release Date:</strong> {{ version_details.release_date }}</p>
+	{% endif %}
 
+	{% if maintenance_plan %}
 	<h3>Maintenance Plan</h3>
 	<p>{{ maintenance_plan }}</p>
+	{% endif %}
 
+	{% if next_update %}
 	<h3>Next Planned Update(s)</h3>
 	<p><strong>Version affected:</strong> {{ next_update.version_affected }}</p>
 	<p><strong>Next data update:</strong> {{ next_update.next_data_update }}</p>
 	<p><strong>Next version:</strong> {{ next_update.next_version }}</p>
 	<p><strong>Next version update:</strong> {{ next_update.next_version_update }}</p>
+	{% endif %}
 
+	{% if expected_changes %}
 	<h3>Expected Change(s)</h3>
 	<p>{{ expected_changes }}</p>
+	{% endif %}
 
+	{% if primary_data_modality %}
 	<h2>Example of Data Points</h2>
 	<h3>Primary Data Modality</h3>
 	<p>{{ primary_data_modality }}</p>
+	{% endif %}
 
+	{% if sampling_data_points %}
 	<h3>Sampling of Data Points</h3>
 	<ul>
 		{% for link in sampling_data_points %}
 		<li><a href="{{ link.url }}">{{ link.name }}</a></li>
 		{% endfor %}
 	</ul>
+	{% endif %}
 
+	{% if field %}
 	<h3>Data Fields</h3>
 	<table>
 		<tr>
@@ -265,9 +315,12 @@
 		</tr>
 		{% endfor %}
 	</table>
+	{% endif %}
 
+	{% if typical_data_point %}
 	<h3>Typical Data Point</h3>
 	<p>{{ typical_data_point }}</p>
+	{% endif %}
 	</div>
 </body>
 </html>

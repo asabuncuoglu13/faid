@@ -3,6 +3,7 @@ import datetime
 from .logging.yaml_utils import generate, update, load
 from .logging.message import error_msg
 from .logging.model_card_utils import ModelCard
+from .report.report_utils import generate_data_card, generate_fairness_report, generate_model_card, generate_raid_register_report
 
 # %%
 class faidlog:
@@ -14,7 +15,7 @@ class faidlog:
         "fairness_yml_file": "fairness",
         "model_yml_file": "model",
         "data_yml_file": "data",
-        "risk_yml_file": "risk",
+        "risk_yml_file": "risks",
     }
     
     keys = {
@@ -22,6 +23,11 @@ class faidlog:
         "model_info_key": "model_info",
         "sample_data_key" : "sample_results"
     }
+
+    @staticmethod
+    def __str__() -> str:
+        print("Fairness Logging")
+        return "Fairness Logging"
 
     @staticmethod
     def init_project(project_name:str, author:str=None, date:str=None, description:str=None, version:str=None):
@@ -74,6 +80,17 @@ class faidlog:
         else:
             update(params, key=key)
             print(f"Added {key} to project metadata")
+
+    @staticmethod
+    def generate_all_reports():
+        """
+        Generate all the reports
+        """
+        #generate_model_card()
+        generate_data_card()
+        generate_fairness_report()
+        generate_raid_register_report()
+        print("All reports generated")
 
     @staticmethod
     def model_info(info: ModelCard):
