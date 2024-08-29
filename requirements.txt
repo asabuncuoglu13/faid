@@ -100,6 +100,7 @@ frozenlist==1.4.1
 fsspec==2024.3.1
 funcy==2.0
 gast==0.6.0
+gensim==4.3.3
 giskard==2.14.0
 gitdb==4.0.11
 GitPython==3.1.43
@@ -204,6 +205,7 @@ pexpect==4.9.0
 phik==0.12.4
 pillow==10.3.0
 platformdirs==3.11.0
+plotly==5.23.0
 ply==3.11
 preshed==3.0.9
 prettytable==3.10.2
@@ -251,6 +253,7 @@ scikit-learn==1.5.0
 scipy==1.11.4
 scmrepo==3.3.5
 seaborn==0.13.2
+semantic-version==2.10.0
 semver==3.0.2
 sentencepiece==0.2.0
 sentry-sdk==2.5.1
@@ -322,6 +325,7 @@ wasabi==1.1.3
 wcwidth==0.2.13
 weasel==0.4.1
 webencodings==0.5.1
+wefe==0.4.1
 Werkzeug==3.0.3
 widgetsnbextension==4.0.11
 wordcloud==1.9.3

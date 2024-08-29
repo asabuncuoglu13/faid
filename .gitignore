@@ -164,5 +164,5 @@ cython_debug/
 #.idea/
 
 logs/
-notebooks/
+notebooks/reference
 reports/
