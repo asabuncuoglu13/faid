@@ -1,0 +1,259 @@
+Below is a Jinja template for displaying the algorithmic transparency record in a report format:
+
+```jinja
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithmic Transparency Record</title>
+    <style>
+		body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .report-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #e0e0e0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .section h2 {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .section h3 {
+            color: #666;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .content {
+            margin-left: 20px;
+        }
+        .key {
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            th, td {
+                display: block;
+                width: 100%;
+            }
+
+            th {
+                background-color: #f4f4f4;
+                text-align: center;
+            }
+
+            td {
+                border-top: none;
+            }
+
+            td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+                color: #333;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Algorithmic Transparency Record</h1>
+
+    <div class="section">
+        <h2>Tier 1 Information</h2>
+        <div class="content">
+            <p><span class="key">Name:</span> {{ Tier_1_Information.Name }}</p>
+            <p><span class="key">Description:</span> {{ Tier_1_Information.Description }}</p>
+            <p><span class="key">Website URL:</span> <a href="{{ Tier_1_Information.Website_URL }}">{{ Tier_1_Information.Website_URL }}</a></p>
+            <p><span class="key">Contact Email:</span> <a href="mailto:{{ Tier_1_Information.Contact_email }}">{{ Tier_1_Information.Contact_email }}</a></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Owner and Responsibility</h2>
+        <div class="content">
+            <p><span class="key">Organisation or Department:</span> {{ Tier_2_Owner_and_Responsibility.Organisation_or_department }}</p>
+            <p><span class="key">Team:</span> {{ Tier_2_Owner_and_Responsibility.Team }}</p>
+            <p><span class="key">Senior Responsible Owner:</span> {{ Tier_2_Owner_and_Responsibility.Senior_responsible_owner }}</p>
+            <p><span class="key">External Supplier Involvement:</span> {{ Tier_2_Owner_and_Responsibility.External_supplier_involvement }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Description and Rationale</h2>
+        <div class="content">
+            <p><span class="key">Detailed Description:</span> {{ Tier_2_Description_and_Rationale.Detailed_description }}</p>
+            <p><span class="key">Scope:</span> {{ Tier_2_Description_and_Rationale.Scope }}</p>
+            <p><span class="key">Benefit:</span> {{ Tier_2_Description_and_Rationale.Benefit }}</p>
+            <p><span class="key">Previous Process:</span> {{ Tier_2_Description_and_Rationale.Previous_process }}</p>
+            <p><span class="key">Alternatives Considered:</span> {{ Tier_2_Description_and_Rationale.Alternatives_considered }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Decision Making Process</h2>
+        <div class="content">
+            <p><span class="key">Process Integration:</span> {{ Tier_2_Decision_making_Process.Process_integration }}</p>
+            <p><span class="key">Provided Information:</span> {{ Tier_2_Decision_making_Process.Provided_information }}</p>
+            <p><span class="key">Frequency and Scale of Usage:</span> {{ Tier_2_Decision_making_Process.Frequency_and_scale_of_usage }}</p>
+            <p><span class="key">Human Decisions and Review:</span> {{ Tier_2_Decision_making_Process.Human_decisions_and_review }}</p>
+            <p><span class="key">Required Training:</span> {{ Tier_2_Decision_making_Process.Required_training }}</p>
+            <p><span class="key">Appeals and Review:</span> {{ Tier_2_Decision_making_Process.Appeals_and_review }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Tool Specification</h2>
+        <div class="content">
+            <p><span class="key">System Architecture:</span> {{ Tier_2_Tool_Specification.System_architecture }}</p>
+            <p><span class="key">Phase:</span> {{ Tier_2_Tool_Specification.Phase }}</p>
+            <p><span class="key">Maintenance:</span> {{ Tier_2_Tool_Specification.Maintenance }}</p>
+            <p><span class="key">Models:</span> {{ Tier_2_Tool_Specification.Models }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Model Specification: Complaint Detection</h2>
+        <div class="content">
+            <p><span class="key">Model Name:</span> {{ Tier_2_Model_Specification_Complaint_Detection.Model_name }}</p>
+            <p><span class="key">Model Version:</span> {{ Tier_2_Model_Specification_Complaint_Detection.Model_version }}</p>
+            <p><span class="key">Model Task:</span> {{ Tier_2_Model_Specification_Complaint_Detection.Model_task }}</p>
+            <p><span class="key">Model Input:</span> {{ Tier_2_Model_Specification_Complaint_Detection.Model_input }}</p>
+            <p><span class="key">Model Output:</span> {{ Tier_2_Model_Specification_Complaint_Detection.Model_output }}</p>
+            <p><span class="key">Model Architecture:</span> {{ Tier_2_Model_Specification_Complaint_Detection.Model_architecture }}</p>
+            <p><span class="key">Model Performance:</span> {{ Tier_2_Model_Specification_Complaint_Detection.Model_performance }}</p>
+            <p><span class="key">Datasets:</span> {{ Tier_2_Model_Specification_Complaint_Detection.Datasets }}</p>
+            <p><span class="key">Dataset Purposes:</span> {{ Tier_2_Model_Specification_Complaint_Detection.Dataset_purposes }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Model Specification: NAE Detection</h2>
+        <div class="content">
+            <p><span class="key">Model Name:</span> {{ Tier_2_Model_Specification_NAE_Detection.Model_name }}</p>
+            <p><span class="key">Model Version:</span> {{ Tier_2_Model_Specification_NAE_Detection.Model_version }}</p>
+            <p><span class="key">Model Task:</span> {{ Tier_2_Model_Specification_NAE_Detection.Model_task }}</p>
+            <p><span class="key">Model Input:</span> {{ Tier_2_Model_Specification_NAE_Detection.Model_input }}</p>
+            <p><span class="key">Model Output:</span> {{ Tier_2_Model_Specification_NAE_Detection.Model_output }}</p>
+            <p><span class="key">Model Architecture:</span> {{ Tier_2_Model_Specification_NAE_Detection.Model_architecture }}</p>
+            <p><span class="key">Model Performance:</span> {{ Tier_2_Model_Specification_NAE_Detection.Model_performance }}</p>
+            <p><span class="key">Datasets:</span> {{ Tier_2_Model_Specification_NAE_Detection.Datasets }}</p>
+            <p><span class="key">Dataset Purposes:</span> {{ Tier_2_Model_Specification_NAE_Detection.Dataset_purposes }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Model Specification: Suicide and Self-harm Ideation Content Detection</h2>
+        <div class="content">
+            <p><span class="key">Model Name:</span> {{ Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection.Model_name }}</p>
+            <p><span class="key">Model Version:</span> {{ Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection.Model_version }}</p>
+            <p><span class="key">Model Task:</span> {{ Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection.Model_task }}</p>
+            <p><span class="key">Model Input:</span> {{ Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection.Model_input }}</p>
+            <p><span class="key">Model Output:</span> {{ Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection.Model_output }}</p>
+            <p><span class="key">Model Architecture:</span> {{ Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection.Model_architecture }}</p>
+            <p><span class="key">Model Performance:</span> {{ Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection.Model_performance }}</p>
+            <p><span class="key">Datasets:</span> {{ Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection.Datasets }}</p>
+            <p><span class="key">Dataset Purposes:</span> {{ Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection.Dataset_purposes }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Model Specification: Names Identification</h2>
+        <div class="content">
+            <p><span class="key">Model Name:</span> {{ Tier_2_Model_Specification_Names_identification.Model_name }}</p>
+            <p><span class="key">Model Version:</span> {{ Tier_2_Model_Specification_Names_identification.Model_version }}</p>
+            <p><span class="key">Model Task:</span> {{ Tier_2_Model_Specification_Names_identification.Model_task }}</p>
+            <p><span class="key">Model Input:</span> {{ Tier_2_Model_Specification_Names_identification.Model_input }}</p>
+            <p><span class="key">Model Output:</span> {{ Tier_2_Model_Specification_Names_identification.Model_output }}</p>
+            <p><span class="key">Model Architecture:</span> {{ Tier_2_Model_Specification_Names_identification.Model_architecture }}</p>
+            <p><span class="key">Model Performance:</span> {{ Tier_2_Model_Specification_Names_identification.Model_performance }}</p>
+            <p><span class="key">Datasets:</span> {{ Tier_2_Model_Specification_Names_identification.Datasets }}</p>
+            <p><span class="key">Dataset Purposes:</span> {{ Tier_2_Model_Specification_Names_identification.Dataset_purposes }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Data Specification</h2>
+        <div class="content">
+            <p><span class="key">Source Data Name:</span> {{ Tier_2_Data_Specification.Source_data_name }}</p>
+            <p><span class="key">Data Modality:</span> {{ Tier_2_Data_Specification.Data_modality }}</p>
+            <p><span class="key">Data Description:</span> {{ Tier_2_Data_Specification.Data_description }}</p>
+            <p><span class="key">Data Quantities:</span> {{ Tier_2_Data_Specification.Data_quantities }}</p>
+            <p><span class="key">Sensitive Attributes:</span> {{ Tier_2_Data_Specification.Sensitive_attributes }}</p>
+            <p><span class="key">Data Completeness and Representativeness:</span> {{ Tier_2_Data_Specification.Data_completeness_and_representative-ness }}</p>
+            <p><span class="key">Source Data URL:</span> <a href="{{ Tier_2_Data_Specification.Source_data_URL }}">{{ Tier_2_Data_Specification.Source_data_URL }}</a></p>
+            <p><span class="key">Data Collection:</span> {{ Tier_2_Data_Specification.Data_collection }}</p>
+            <p><span class="key">Data Cleaning:</span> {{ Tier_2_Data_Specification.Data_cleaning }}</p>
+            <p><span class="key">Data Sharing Agreements:</span> {{ Tier_2_Data_Specification.Data_sharing_agreements }}</p>
+            <p><span class="key">Data Access and Storage:</span> {{ Tier_2_Data_Specification.Data_access_and_storage }}</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tier 2 - Risks, Mitigations, and Impact Assessments</h2>
+        <div class="content">
+            <p><span class="key">Impact Assessment:</span> {{ Tier_2_Risks_Mitigations_and_Impact_Assessments.Impact_assessment }}</p>
+            <p><span class="key">Risks and Mitigations:</span> {{ Tier_2_Risks_Mitigations_and_Impact_Assessments.Risks_and_mitigations }}</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -40,11 +40,10 @@ def generate_fairness_report(sample_data:pd.DataFrame=pd.DataFrame(),
 # %%
 def generate_raid_register_report(raid_data:dict={}, output_file:str="risk_register.html"):
     """
-    Generates an HTML report from fairness metrics using Jinja2 template.
+    Generates an HTML report from risk data in format format using Jinja2 template.
 
     Parameters:
-    - metrics: Dictionary containing overall model metrics.
-    - group_metrics: Dictionary containing fairness metrics by group.
+    - raid_data: Dictionary containing RAID (Risks, Assumptions, Issues, Dependencies) data.
     - output_file: Path to the output HTML file.
     """
 
@@ -67,11 +66,10 @@ def generate_raid_register_report(raid_data:dict={}, output_file:str="risk_regis
 # %%
 def generate_data_card(dataset_info:dict={}, output_file:str="data_card.html"):
     """
-    Generates an HTML report from fairness metrics using Jinja2 template.
+    Generates an HTML report from data card information using Jinja2 template.
 
     Parameters:
-    - metrics: Dictionary containing overall model metrics.
-    - group_metrics: Dictionary containing fairness metrics by group.
+    - dataset_info: Dictionary containing dataset information.
     - output_file: Path to the output HTML file.
     """
 
@@ -112,6 +110,32 @@ def generate_model_card(model_info:dict={}, output_file:str="model_card.html"):
         print(model_info)
     # Render the template with metrics
     html_content = template.render(model_info)
+
+    output_file = get_project_report_folder() + output_file
+    # Write the rendered HTML to a file
+    with open(output_file, 'w') as file:
+        file.write(html_content)
+
+# %%
+def generate_transparency_report(transparency_data:dict={}, output_file:str="transparency.html"):
+    """
+    Generates an HTML report from transparency data using Jinja2 template.
+
+    Parameters:
+    - transparency_data: Dictionary containing transparency information.
+    - output_file: Path to the output HTML file.
+    """
+
+    # Load Jinja2 template
+    current_folder_location = os.path.dirname(os.path.abspath(__file__))
+    env = Environment(loader=FileSystemLoader(current_folder_location))
+    template = env.get_template('templates/transparency.html')
+
+    if transparency_data == {}:  # Load the data from the yaml file
+        raid_data = load("transparency")
+        print(raid_data)
+    # Render the template with metrics
+    html_content = template.render(raid_data)
 
     output_file = get_project_report_folder() + output_file
     # Write the rendered HTML to a file
