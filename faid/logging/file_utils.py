@@ -15,7 +15,7 @@ def get_default_metadata_file_name_with_ext():
   Get the default metadata file
   """
   return default_metadata_file_name + ".yml"
-# %%
+
 def get_project_log_folder():
     """
     Get the name of the project
