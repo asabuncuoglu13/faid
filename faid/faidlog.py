@@ -1,5 +1,7 @@
 # %%
-import datetime
+import sys
+import pkg_resources
+from datetime import datetime
 from .logging.yaml_utils import generate, update, load
 from .logging.message import error_msg
 from .logging.model_card_utils import ModelCard
@@ -189,6 +191,77 @@ class faidlog:
             "typical_data_point": metadata.get("typical_data_point", "")
         }
         return dataset_info
+
+    class ExperimentContext:
+        """
+        A class to represent an experiment context.
+        """
+
+        def __init__(self, name=None, description=""):
+
+            datestr = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+            if name is None:
+                # create a random name
+                name = f"Experiment-{datestr}"
+            self.name = name
+            self.description = description
+            self.start_time = datestr
+            self.end_time = None
+            self.libraries = self._get_imported_libraries()
+            self.metadata = {}
+
+        def _get_imported_libraries(self):
+            # Get all imported modules
+            imported_modules = [m.__name__ for m in sys.modules.values() if m]
+            # include only modules that are not in the standard library
+            imported_modules = [m for m in imported_modules if m not in sys.builtin_module_names]
+            # remove module submodules
+            imported_modules = [m.split('.')[0] for m in imported_modules]
+            # remove duplicates
+            imported_modules = list(set(imported_modules))
+            
+            # Get the version of each imported module if available
+            modules_with_versions = {}
+            for module_name in imported_modules:
+                # if module_name does not start with _
+                if module_name.startswith('_'):
+                    continue
+                try:
+                    version = pkg_resources.get_distribution(module_name).version
+                    modules_with_versions[module_name] = version
+                except pkg_resources.DistributionNotFound:
+                    pass
+            
+            return sorted(modules_with_versions.items())
+
+        def add_metadata(self, key, value):
+            """Add custom metadata to the experiment context."""
+            self.metadata[key] = value
+
+        def end_experiment(self):
+            """Mark the end of the experiment."""
+            self.end_time = datetime.now()
+
+        def get_summary(self):
+            """Get a summary of the experiment."""
+            summary = {
+                "Experiment Name": self.name,
+                "Description": self.description,
+                "Start Time": self.start_time,
+                "End Time": self.end_time,
+                "Libraries": self.libraries,
+                "Metadata": self.metadata
+            }
+            return summary
+        
+        def log_summary(self):
+            """Log a summary of the experiment."""
+            summary = self.get_summary()
+            faidlog.log(summary, key=self.name)
+
+        def __str__(self):
+            summary = self.get_summary()
+            return "\n".join(f"{key}: {value}" for key, value in summary.items())
 
 
 
