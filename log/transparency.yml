@@ -1,0 +1,93 @@
+Tier_1_Information:
+  Name: "Sentiment Signal for Financial Market Analysis"
+  Description: "A tool that analyzes social media and news sentiment to predict market trends and aid in financial decision-making."
+  Website_URL: "https://www.financial-sentiment-signal.com"
+  Contact_email: "support@financial-sentiment-signal.com"
+
+Tier_2_Owner_and_Responsibility:
+  Organisation_or_department: "FinTech Solutions Ltd."
+  Team: "AI and Data Science Team"
+  Senior_responsible_owner: "John Doe, Chief Data Officer"
+  External_supplier_involvement: "None"
+
+Tier_2_Description_and_Rationale:
+  Detailed_description: "The sentiment signal tool uses machine learning to analyze the sentiment of financial news and social media posts related to specific stocks or markets. The tool provides real-time sentiment scores, which are used to inform trading strategies."
+  Scope: "Global financial markets, focusing on equities, commodities, and currencies."
+  Benefit: "Improves decision-making by providing an additional layer of data analysis, potentially leading to better trading outcomes."
+  Previous_process: "Manual analysis of news articles and social media by analysts."
+  Alternatives_considered: "Rule-based sentiment analysis, technical analysis without sentiment integration."
+
+Tier_2_Decision_making_Process:
+  Process_integration: "Integrated into the trading decision workflow via an API that feeds sentiment scores into the trading platform."
+  Provided_information: "Real-time sentiment scores, historical sentiment trends, and sentiment-driven signals."
+  Frequency_and_scale_of_usage: "Used continuously during trading hours, covering thousands of financial assets."
+  Human_decisions_and_review: "Traders use the sentiment scores as part of their decision-making process, with final decisions made by humans."
+  Required_training: "Traders are trained on interpreting sentiment scores and integrating them into their strategies."
+  Appeals_and_review: "Traders can review and appeal the sentiment analysis by cross-referencing with raw data sources."
+
+Tier_2_Tool_Specification:
+  System_architecture: "Cloud-based microservices architecture with data ingestion, processing, and API delivery layers."
+  Phase: "Production"
+  Maintenance: "Regular updates to sentiment models and data sources; continuous monitoring for performance and accuracy."
+  Models: "Sentiment analysis models, trend prediction models, anomaly detection models."
+
+Tier_2_Model_Specification_Complaint_Detection:
+  Model_name: "Financial Sentiment Analyzer"
+  Model_version: "v1.3"
+  Model_task: "Classify sentiment of financial-related text as positive, negative, or neutral."
+  Model_input: "Text data from news articles, social media posts, and financial reports."
+  Model_output: "Sentiment score between -1 (very negative) and +1 (very positive)."
+  Model_architecture: "Transformer-based language model fine-tuned for financial text."
+  Model_performance: "Accuracy: 85%, F1 Score: 0.83"
+  Datasets: "Financial News Dataset, Social Media Financial Dataset"
+  Dataset_purposes: "Training and validation of sentiment models."
+
+Tier_2_Model_Specification_NAE_Detection:
+  Model_name: "Non-actionable Entity Detection"
+  Model_version: "v2.0"
+  Model_task: "Identify and filter out non-relevant entities from financial text."
+  Model_input: "Text data from news articles and social media."
+  Model_output: "Binary label indicating whether an entity is actionable or not."
+  Model_architecture: "BERT-based classification model."
+  Model_performance: "Precision: 92%, Recall: 89%"
+  Datasets: "Entity Recognition Dataset, Financial Entity Dataset"
+  Dataset_purposes: "Training for entity recognition and filtering."
+
+Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection:
+  Model_name: "Sensitive Content Filter"
+  Model_version: "v1.0"
+  Model_task: "Detect and flag content related to suicide or self-harm."
+  Model_input: "Text data from social media platforms."
+  Model_output: "Binary label for sensitive content."
+  Model_architecture: "LSTM-based classification model."
+  Model_performance: "Accuracy: 94%, F1 Score: 0.90"
+  Datasets: "Sensitive Content Dataset"
+  Dataset_purposes: "To ensure compliance with content guidelines and prevent harm."
+
+Tier_2_Model_Specification_Names_identification:
+  Model_name: "Financial Entity Name Recognizer"
+  Model_version: "v3.1"
+  Model_task: "Identify and extract names of companies, currencies, and commodities from text."
+  Model_input: "Text data from various financial news sources."
+  Model_output: "List of identified entities with confidence scores."
+  Model_architecture: "CRF-based Named Entity Recognition model."
+  Model_performance: "Precision: 88%, Recall: 85%"
+  Datasets: "Financial Entity Dataset, Company Name Dataset"
+  Dataset_purposes: "Training and evaluation of named entity recognition models."
+
+Tier_2_Data_Specification:
+  Source_data_name: "Financial News and Social Media Data"
+  Data_modality: "Text"
+  Data_description: "Text data collected from news articles, social media platforms, and financial reports."
+  Data_quantities: "Approximately 100 million records per month."
+  Sensitive_attributes: "Content may include sensitive financial information, opinions, and predictions."
+  Data_completeness_and_representative-ness: "Data is collected from a wide range of sources to ensure diversity and representativeness."
+  Source_data_URL: "https://data.financial-sentiment-signal.com"
+  Data_collection: "Data is collected using web scraping tools and APIs."
+  Data_cleaning: "Data is pre-processed to remove noise, irrelevant content, and duplicates."
+  Data_sharing_agreements: "Data is shared with partners under strict confidentiality agreements."
+  Data_access_and_storage: "Data is stored in a secure cloud environment with access controls in place."
+
+Tier_2_Risks_Mitigations_and_Impact_Assessments:
+  Impact_assessment: "Potential impact on trading decisions and market movements; assessed as moderate."
+  Risks_and_mitigations: "Risk of model bias leading to incorrect sentiment predictions; mitigated by regular model retraining and performance monitoring."
