@@ -1,0 +1,120 @@
+{
+    "Statistical Metric": {
+        "metrics": {
+            "Accuracy": "Measures the overall correctness of the model.",
+            "True Positive Rate": "Proportion of actual positives that are correctly identified.",
+            "False Positive Rate": "Proportion of actual negatives that are incorrectly identified as positives.",
+            "True Negative Rate": "Proportion of actual negatives that are correctly identified.",
+            "False Negative Rate": "Proportion of actual positives that are incorrectly identified as negatives.",
+            "Positive Predictive Value": "Proportion of positive results that are true positives.",
+            "Negative Predictive Value": "Proportion of negative results that are true negatives."
+        }
+    },
+    "Fairness Metric": {
+        "Classification": [
+            "Balance For Negative Class",
+            "Balance For Positive Class",
+            "Conditional Statistical Parity",
+            "Conditional Use Accuracy Equality",
+            "Equal Negative Predictive Value",
+            "Equal Opportunity",
+            "Equalized Odds",
+            "Fairness Through Awareness",
+            "Fairness Through Unawareness",
+            "Overall Accuracy Equality",
+            "Predictive Equality",
+            "Predictive Parity",
+            "Statistical Parity",
+            "Test Fairness",
+            "Total Fairness",
+            "Treatment Equality",
+            "Well Calibration"
+        ],
+        "Regression": [
+            "Equal Accuracy For Regression",
+            "Equal Opportunity For Regression",
+            "Individual Fairness For Regression",
+            "Loss-Based Fairness",
+            "Loss-Class Fairness Notion",
+            "Mean Difference",
+            "Pairwise Equal Accuracy",
+            "Pairwise Equal Opportunity",
+            "Pairwise Fairness Notion",
+            "Pairwise Statistical Parity",
+            "Statistical Parity For Regression",
+            "Symmetric Equal Accuracy"
+        ]
+    },
+    "Fairness Metric Explanation": {
+        "Balance For Negative Class": "Ensures that the balance of negative class predictions is the same across different groups.",
+        "Balance For Positive Class": "Ensures that the balance of positive class predictions is the same across different groups.",
+        "Conditional Statistical Parity": "Achieves statistical parity conditioned on certain variables.",
+        "Conditional Use Accuracy Equality": "Ensures that the positive and negative predictive values are equal across groups when conditioned on certain variables.",
+        "Equal Negative Predictive Value": "Ensures that the negative predictive value is the same across different groups.",
+        "Equal Opportunity": "Ensures that the true positive rate is the same across different groups.",
+        "Equalized Odds": "Ensures that both the true positive rate and false positive rate are the same across different groups.",
+        "Fairness Through Awareness": "Ensures fairness by explicitly considering sensitive attributes in the model.",
+        "Fairness Through Unawareness": "Ensures fairness by not considering sensitive attributes in the model.",
+        "Overall Accuracy Equality": "Ensures that the overall accuracy is the same across different groups.",
+        "Predictive Equality": "Ensures that the false positive rate is the same across different groups.",
+        "Predictive Parity": "Ensures that the positive predictive value is the same across different groups.",
+        "Statistical Parity": "Ensures that the probability of a positive outcome is the same across different groups.",
+        "Test Fairness": "Ensures fairness based on statistical tests.",
+        "Total Fairness": "Ensures fairness across all aspects of the model.",
+        "Treatment Equality": "Ensures that the treatment of individuals is the same across different groups.",
+        "Well Calibration": "Ensures that the predicted probabilities reflect the actual likelihoods of the outcome across different groups.",
+        "Equal Accuracy For Regression": "Ensures that the accuracy of regression predictions is the same across different groups.",
+        "Equal Opportunity For Regression": "Ensures that the opportunity for positive outcomes in regression is the same across different groups.",
+        "Individual Fairness For Regression": "Ensures fairness at the individual level for regression tasks.",
+        "Loss-Based Fairness": "Ensures fairness based on the loss function used in the model.",
+        "Loss-Class Fairness Notion": "Ensures fairness based on different classes of loss functions.",
+        "Mean Difference": "Measures fairness based on the mean difference in predictions across groups.",
+        "Pairwise Equal Accuracy": "Ensures that the accuracy is the same for pairs of individuals across different groups.",
+        "Pairwise Equal Opportunity": "Ensures that the opportunity for positive outcomes is the same for pairs of individuals across different groups.",
+        "Pairwise Fairness Notion": "Ensures fairness based on pairwise comparisons of individuals.",
+        "Pairwise Statistical Parity": "Ensures statistical parity based on pairwise comparisons of individuals.",
+        "Statistical Parity For Regression": "Ensures that the probability of a positive outcome in regression is the same across different groups.",
+        "Symmetric Equal Accuracy": "Ensures that the accuracy is symmetrically equal across different groups."
+    },
+    "FairnessNotion": {
+        "GroupFairnessNotion": {
+            "IndependenceClassFairness": {
+                "StatisticalParity": "All groups should have the same likelihood of receiving a positive outcome.",
+                "ConditionalStatisticalParity": "A more nuanced version where groups may be treated differently, but fairness is achieved through conditioning on certain factors."
+            },
+            "SeparationClassFairness": {
+                "EqualizedOdds": "All groups should have equal true positive rates and false positive rates.",
+                "EqualOpportunity": "All groups should have equal true positive rates.",
+                "PredictiveEquality": "All groups should have equal false positive rates."
+            },
+            "SufficiencyClassFairness": {
+                "ConditionalUseAccuracyEquality": "All groups should have equal positive and negative predictive values.",
+                "PredictiveParity": "All groups should have equal positive predictive values.",
+                "WellCalibration": "All groups should be well-calibrated, meaning the predicted probabilities reflect the actual likelihoods of the outcome."
+            }
+        },
+        "RelaxedFairnessNotion": {
+            "OverallAccuracyEquality": "Fairness based on overall accuracy for different groups.",
+            "TreatmentEquality": "All groups should have the same treatment regardless of the underlying characteristics.",
+            "ThresholdedFairnessNotion": {
+                "StatisticalTestBasedFairness": "Fairness is determined through statistical tests that give numeric values representing fairness."
+            }
+        }
+    },
+    "Bias": {
+        "RepresentationBias": "Occurs when the training data is not representative of the target population.",
+        "HistoricalBias": "Biases rooted in historical inequalities that are reflected in the data.",
+        "PopulationBias": "When the population sampled for training does not reflect the true population.",
+        "SamplingBias": "Bias introduced by how the data is collected, leading to an over-representation or under-representation of some groups.",
+        "OmittedVariableBias": "Occurs when an important variable is left out, leading to biased results.",
+        "MaskingBias": "Occurs when relationships between variables are hidden or misrepresented due to aggregation or omission.",
+        "IntersectionalBias": "Bias arising when groups at the intersection of multiple characteristics are overlooked or misrepresented.",
+        "AlgorithmicBias": "Bias that results from the way the algorithm processes data and makes decisions."
+    },
+    "MLTask": {
+        "Classification": "Predicts a category or class label for a given input.",
+        "Regression": "Predicts a continuous value for a given input.",
+        "Clustering": "Groups similar data points together based on their features.",
+        "Generativ Modeling": "Models the underlying distribution of the data to generate new samples."
+    }
+}
