@@ -61,17 +61,17 @@ def load(name=None):
   Load a yaml file
   """
   if not name:
-    filename = get_project_log_folder() + get_default_metadata_file_name()
+    filename = get_project_log_folder() + get_default_metadata_file_name() + ".yml"
   else:
-    filename = get_project_log_folder() + name
+    filename = name
 
   try:
-    with open(filename + ".yml", 'r') as file:
+    with open(filename, 'r') as file:
       return yaml.safe_load(file)
   except FileNotFoundError:
-    error_msg(f"File {filename}.yml not found")
+    error_msg(f"File {filename} not found")
   except ParserError:
-    error_msg(f"File {filename}.yml is not a valid yaml file")
+    error_msg(f"File {filename} is not a valid yaml file")
 
 #  %% Test the functions
 """
