@@ -1,7 +1,17 @@
 project: financial-sentiment-analysis
-config:
-  language: en
-  tags:
-  - financial-sentiment-analysis
-  - sentiment-analysis
+description: |
+  This project is about analyzing the sentiment of financial news articles. The goal is to predict the stock price movement based on the sentiment of the news articles.
+tags: [
+  financial-sentiment-analysis,
+  sentiment-analysis
+  ]
+authors:
+  0:
+    name: John Doe
+    team: ''
+    role: ''
+  1:
+    name: Jane Doe
+    team: ''
+    role: ''
 hardware: [cpu]

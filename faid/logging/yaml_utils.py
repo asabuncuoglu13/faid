@@ -14,6 +14,9 @@ def generate(dataDict, filename:str="log/project.yml", return_result=False):
   if not os.path.exists(get_project_log_folder()):
     os.makedirs(get_project_log_folder())
   
+  if not filename.endswith(".yml"):
+    filename = "log/" + filename + ".yml"
+  
   # The implementation is based on https://github.com/Anthonyhawkins/yamlmaker/
   yaml.SafeDumper.org_represent_str = yaml.SafeDumper.represent_str
 
@@ -34,6 +37,9 @@ def update(yamlData, key, filename:str="log/project.yml"):
   """
   Update a yaml file
   """
+  if not filename.endswith(".yml"):
+    filename = "log/" + filename + ".yml"
+  
   if not os.path.exists(filename):
     warning_msg(f"File {filename} not found. Creating a new file.")
     yamlData = {key: yamlData}
@@ -52,6 +58,10 @@ def load(filename:str="log/project.yml"):
   """
   Load a yaml file
   """
+  # if filename does not contain .yml extension, add it
+  if not filename.endswith(".yml"):
+    filename = "log/" + filename + ".yml"
+
   try:
     with open(filename, 'r') as file:
       return yaml.safe_load(file)

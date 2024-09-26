@@ -5,7 +5,7 @@ from datetime import datetime
 from .logging.yaml_utils import generate, update, load
 from .logging.message import error_msg
 from .logging.model_card_utils import ModelCard
-from .report.report_utils import generate_data_card, generate_fairness_report, generate_model_card, generate_raid_register_report
+from .report.report_utils import generate_data_card, generate_fairness_report, generate_model_card, generate_raid_register_report, generate_project_overview_report
 
 # %%
 class faidlog:
@@ -116,11 +116,19 @@ class faidlog:
         """
         Generate all the reports
         """
-        #generate_model_card()
+        generate_project_overview_report()
+        generate_model_card()
         generate_data_card()
         generate_fairness_report()
         generate_raid_register_report()
         print("All reports generated")
+
+    @staticmethod
+    def generate_project_overview_report(project_info:dict={}):
+        """
+        Generate the project overview report
+        """
+        generate_project_overview_report(project_info)
 
     @staticmethod
     def model_info(info: ModelCard):
@@ -317,6 +325,9 @@ class faidlog:
             self.end_time = None
             self.libraries = self._get_imported_libraries()
             self.metadata = {}
+            self.tags = []
+            self.authors = []
+            self.hardware = {}
 
         def _get_imported_libraries(self):
             # Get all imported modules
@@ -350,15 +361,30 @@ class faidlog:
             """Mark the end of the experiment."""
             self.end_time = datetime.now()
 
+        def set_tags(self, tags: list):
+            """Set tags for the experiment."""
+            self.tags = tags
+        
+        def set_authors(self, authors: list):
+            """Set authors for the experiment."""
+            self.authors = authors
+
+        def set_hardware(self, hardware: dict):
+            """Set hardware information for the experiment."""
+            self.hardware = hardware
+
         def get_summary(self):
             """Get a summary of the experiment."""
             summary = {
-                "Experiment Name": self.name,
-                "Description": self.description,
-                "Start Time": self.start_time,
-                "End Time": self.end_time,
-                "Libraries": self.libraries,
-                "Metadata": self.metadata
+                "project": self.name,
+                "description": self.description,
+                "tags": self.tags,
+                "start_time": self.start_time,
+                "end_time": self.end_time,
+                "libraries": self.libraries,
+                "metadata": self.metadata,
+                "authors": self.authors,
+                "hardware": self.hardware,
             }
             return summary
         

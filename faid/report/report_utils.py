@@ -6,6 +6,31 @@ from ..logging.yaml_utils import load
 import os
 
 # %%
+def generate_project_overview_report(project_info:dict={}, output_file:str="project_overview.html"):
+    """
+    Generates an HTML report from project information using Jinja2 template.
+
+    Parameters:
+    - project_info: Dictionary containing project information.
+    - output_file: Path to the output HTML file.
+    """
+
+    # Load Jinja2 template
+    current_folder_location = os.path.dirname(os.path.abspath(__file__))
+    env = Environment(loader=FileSystemLoader(current_folder_location))
+    template = env.get_template('templates/project_overview_template.html')
+
+    if project_info == {}:  # Load the data from the yaml file
+        project_info = load("project")
+        print(project_info)
+    # Render the template with metrics
+    html_content = template.render(project_info)
+
+    output_file = get_project_report_folder() + output_file
+    # Write the rendered HTML to a file
+    with open(output_file, 'w') as file:
+        file.write(html_content)
+# %%
 def generate_fairness_report(sample_data:pd.DataFrame=pd.DataFrame(), 
                              metrics: dict=None, 
                              group_metrics: dict=None,
