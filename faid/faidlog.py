@@ -14,10 +14,10 @@ class faidlog:
     """
 
     files ={        
-        "fairness_yml_file": "fairness.yml",
-        "model_yml_file": "model.yml",
-        "data_yml_file": "data.yml",
-        "risk_yml_file": "risks.yml",
+        "fairness_yml_file": "log/fairness.yml",
+        "model_yml_file": "log/model.yml",
+        "data_yml_file": "log/data.yml",
+        "risk_yml_file": "log/risks.yml",
     }
     
     keys = {

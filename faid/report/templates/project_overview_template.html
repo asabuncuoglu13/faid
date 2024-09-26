@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />-->
+	<script src="fairness_info.js"></script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+			color: #333;
+		}
+
+		.report-container {
+			max-width: 900px;
+			margin: 20px auto;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			border-radius: 8px;
+		}
+
+		h1 {
+			font-size: 24px;
+			color: #333;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		h2 {
+			font-size: 20px;
+			color: #666;
+			margin-bottom: 15px;
+			border-bottom: 2px solid #e0e0e0;
+			padding-bottom: 5px;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 20px;
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid #e0e0e0;
+		}
+
+		th,
+		td {
+			padding: 12px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f0f0f0;
+			color: #333;
+			font-weight: bold;
+		}
+
+		td {
+			background-color: #fff;
+		}
+
+		/* Responsive Design */
+		@media (max-width: 600px) {
+
+			th,
+			td {
+				display: block;
+				width: 100%;
+			}
+
+			th {
+				background-color: #f4f4f4;
+				text-align: center;
+			}
+
+			td {
+				border-top: none;
+			}
+
+			td:before {
+				content: attr(data-label);
+				font-weight: bold;
+				display: block;
+				margin-bottom: 5px;
+				color: #333;
+			}
+		}
+		.chip {
+			display: inline-block;
+			padding: 0 25px;
+			height: 50px;
+			font-size: 16px;
+			line-height: 50px;
+			border-radius: 25px;
+			background-color: #f1f1f1;
+		}
+
+
+		/*.material-symbols-outlined {
+			font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24
+		}*/
+	</style>
+	<title>{{ project_name }}</title>
+</head>
+
+<body>
+	<div class="report-container">
+
+		<h1>{{ project_name }}</h1>
+		<p>{{ summary }}</p>
+
+		<p>
+			{% for tag in tags %}
+			<span class="chip">{{ tag }}</span>
+			{% endfor %}
+		</p>
+
+		<h3>Training System Specs Overview</h3>
+		<p>{{ hardware }} <span id="hardware">&#9432;</span></p>
+
+		<h3>Project Owners</h3>
+		{% for author in authors %}
+		<p><strong>Name, Team:</strong> {{ author.name }}, {{ author.team }} ({{ author.role }})</p>
+		{% endfor %}
+
+	</div>
+	<script>
+		function display_info_box(key) {
+			document.getElementById(key).addEventListener("mouseover", function () {
+				let hoverBox = document.createElement("div");
+				hoverBox.style.position = "absolute";
+				hoverBox.style.backgroundColor = "#fff";
+				hoverBox.style.border = "1px solid #ccc";
+				hoverBox.style.padding = "10px";
+				hoverBox.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
+				hoverBox.style.maxWidth = "480px";
+				hoverBox.innerHTML = get_fairness_info_by_key(key);
+				document.body.appendChild(hoverBox);
+
+				this.addEventListener("mousemove", function (e) {
+					hoverBox.style.top = e.pageY + 10 + "px";
+					hoverBox.style.left = e.pageX + 10 + "px";
+				});
+
+				hoverBox.addEventListener("mouseover", function () {
+					hoverBox.style.display = "block";
+				});
+
+				hoverBox.addEventListener("mouseout", function () {
+					document.body.removeChild(hoverBox);
+				});
+			});
+		}
+		display_info_box("hardware");
+	</script>
+</body>
+
+</html>

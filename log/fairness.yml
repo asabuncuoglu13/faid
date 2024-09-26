@@ -1,4 +1,4 @@
-sample_results:
+samples:
   0:
     text: growth is strong and we have plenty of liquidity.
     label: Positive
@@ -11,10 +11,24 @@ sample_results:
     text: formulation patents might protect Vasotec to a limited extent.
     label: Neutral
     score: 0.9979718327522278
+
 variable_profile:
   neutral: 2879
   positive: 1363
   negative: 604
+
+postprocessing:
+  technique: None
+  parameters: {}
+  
+preprocessing:
+  technique: None
+  parameters: {}
+
+reductions:
+  technique: None
+  parameters: {}
+
 bygroup_metrics:
   accuracy:
     0: 0.8354935194416749
@@ -31,3 +45,4 @@ bygroup_metrics:
   count:
     0: 4012.0
     1: 826.0
+

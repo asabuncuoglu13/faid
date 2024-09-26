@@ -7,17 +7,13 @@ from .file_utils import get_project_log_folder, get_default_metadata_file_name
 from .message import error_msg, warning_msg
 
 # %%
-def generate(dataDict, name=None, return_result=False):
+def generate(dataDict, filename:str="log/project.yml", return_result=False):
   """
   Generate a yaml file 
   """
-  if not name:
-    filename = get_default_metadata_file_name()
-  else:
-    filename = name
-
-  filepath = get_project_log_folder() + filename + ".yml"
-
+  if not os.path.exists(get_project_log_folder()):
+    os.makedirs(get_project_log_folder())
+  
   # The implementation is based on https://github.com/Anthonyhawkins/yamlmaker/
   yaml.SafeDumper.org_represent_str = yaml.SafeDumper.represent_str
 
@@ -30,20 +26,16 @@ def generate(dataDict, name=None, return_result=False):
   if return_result:
     return yaml.safe_dump(dataDict, sort_keys=False, default_flow_style=False)
 
-  with open(filepath, 'w') as file:
+  with open(filename, 'w') as file:
     yaml.safe_dump(dataDict, file, sort_keys=False, default_flow_style=False)
 
 # %%
-def update(yamlData, key, filename=None):
+def update(yamlData, key, filename:str="log/project.yml"):
   """
   Update a yaml file
   """
-  if not filename:
-    filename = get_default_metadata_file_name()
-  filepath = get_project_log_folder() + filename + ".yml"
-
-  if not os.path.exists(filepath):
-    warning_msg(f"File {filepath} not found. Creating a new file.")
+  if not os.path.exists(filename):
+    warning_msg(f"File {filename} not found. Creating a new file.")
     yamlData = {key: yamlData}
     generate(yamlData, filename)
     return
@@ -56,15 +48,10 @@ def update(yamlData, key, filename=None):
   generate(existing_dataDict, filename)
 
 # %%
-def load(name=None):
+def load(filename:str="log/project.yml"):
   """
   Load a yaml file
   """
-  if not name:
-    filename = get_project_log_folder() + get_default_metadata_file_name() + ".yml"
-  else:
-    filename = name
-
   try:
     with open(filename, 'r') as file:
       return yaml.safe_load(file)
