@@ -1,63 +1,33 @@
 # %%
 from jinja2 import Environment, FileSystemLoader
 import pandas as pd
-from .file_utils import get_project_report_folder
+from .file_utils import get_faid_report_folder
 from ..logging.yaml_utils import load
 import os
 
 # %%
-def generate_project_overview_report(project_info:dict={}, output_file:str="project_overview.html"):
+def generate_experiment_overview_report(info:dict, output_file:str="experiment_overview.html"):
     """
-    Generates an HTML report from project information using Jinja2 template.
+    Generates an HTML report from experiment information using Jinja2 template.
 
     Parameters:
-    - project_info: Dictionary containing project information.
+    - experiment_info: Dictionary containing experiment information.
     - output_file: Path to the output HTML file.
     """
 
     # Load Jinja2 template
     current_folder_location = os.path.dirname(os.path.abspath(__file__))
     env = Environment(loader=FileSystemLoader(current_folder_location))
-    template = env.get_template('templates/project_overview_template.html')
+    template = env.get_template('templates/experiment_overview_template.html')
 
-    if project_info == {}:  # Load the data from the yaml file
-        project_info = load("project")
-        print(project_info)
-    # Render the template with metrics
-    html_content = template.render(project_info)
-
-    output_file = get_project_report_folder() + output_file
-    # Write the rendered HTML to a file
-    with open(output_file, 'w') as file:
-        file.write(html_content)
-# %%
-def generate_fairness_report(sample_data:pd.DataFrame=pd.DataFrame(), 
-                             metrics: dict=None, 
-                             group_metrics: dict=None,
-                             output_file:str="fairness_report.html"):
-    """
-    Generates an HTML report from fairness metrics using Jinja2 template.
-
-    Parameters:
-    - metrics: Dictionary containing overall model metrics.
-    - group_metrics: Dictionary containing fairness metrics by group.
-    - output_file: Path to the output HTML file.
-    """
-    
-    # Load Jinja2 template
-    current_folder_location = os.path.dirname(os.path.abspath(__file__))
-    env = Environment(loader=FileSystemLoader(current_folder_location))
-    template = env.get_template('templates/fairness_template.html')
+    sample_data = pd.DataFrame()
+    if info["data"]["sample_results"]:
+        sample_data  = pd.DataFrame(info["data"]["sample_results"])
 
     # Render the template with metrics
-    if sample_data.empty:
-        sample_data = load("fairness")
-        sample_data  = pd.DataFrame(sample_data["sample_results"])
-        print(sample_data)
+    html_content = template.render(info, sample_results=sample_data.to_html())
 
-    html_content = template.render(sample_data=sample_data.to_html(), metrics=metrics, group_metrics=group_metrics)
-
-    output_file = get_project_report_folder() + output_file
+    output_file = get_faid_report_folder() + output_file
     # Write the rendered HTML to a file
     with open(output_file, 'w') as file:
         file.write(html_content)
@@ -83,7 +53,7 @@ def generate_raid_register_report(raid_data:dict={}, output_file:str="risk_regis
     # Render the template with metrics
     html_content = template.render(raid_data)
 
-    output_file = get_project_report_folder() + output_file
+    output_file = get_faid_report_folder() + output_file
     # Write the rendered HTML to a file
     with open(output_file, 'w') as file:
         file.write(html_content)
@@ -109,7 +79,7 @@ def generate_data_card(dataset_info:dict={}, output_file:str="data_card.html"):
     # Render the template with metrics
     html_content = template.render(dataset_info)
 
-    output_file = get_project_report_folder() + output_file
+    output_file = get_faid_report_folder() + output_file
     # Write the rendered HTML to a file
     with open(output_file, 'w') as file:
         file.write(html_content)
@@ -136,7 +106,7 @@ def generate_model_card(model_info:dict={}, output_file:str="model_card.html"):
     # Render the template with metrics
     html_content = template.render(model_info)
 
-    output_file = get_project_report_folder() + output_file
+    output_file = get_faid_report_folder() + output_file
     # Write the rendered HTML to a file
     with open(output_file, 'w') as file:
         file.write(html_content)
@@ -162,7 +132,7 @@ def generate_transparency_report(transparency_data:dict={}, output_file:str="tra
     # Render the template with metrics
     html_content = template.render(raid_data)
 
-    output_file = get_project_report_folder() + output_file
+    output_file = get_faid_report_folder() + output_file
     # Write the rendered HTML to a file
     with open(output_file, 'w') as file:
         file.write(html_content)

@@ -5,7 +5,7 @@ from datetime import datetime
 from .logging.yaml_utils import generate, update, load
 from .logging.message import error_msg
 from .logging.model_card_utils import ModelCard
-from .report.report_utils import generate_data_card, generate_fairness_report, generate_model_card, generate_raid_register_report, generate_project_overview_report
+from .report.report_utils import generate_data_card, generate_model_card, generate_raid_register_report, generate_experiment_overview_report
 
 # %%
 class faidlog:
@@ -13,11 +13,11 @@ class faidlog:
     A class to log fairness metrics.
     """
 
-    files ={        
-        "fairness_yml_file": "log/fairness.yml",
+    files ={
         "model_yml_file": "log/model.yml",
         "data_yml_file": "log/data.yml",
         "risk_yml_file": "log/risks.yml",
+        "transparency_yml_file": "log/transparent.yml"
     }
     
     keys = {
@@ -30,61 +30,55 @@ class faidlog:
     def __str__() -> str:
         print("Fairness Logging")
         return "Fairness Logging"
-
-    @staticmethod
-    def init_project(project_name:str, author:str=None, date:str=None, description:str=None, version:str=None):
-        """
-        Initialize the metadata
-        """
-        metadata = {
-            "project": project_name,
-            "author": author if author else "Author",
-            "date": date if date else datetime.date.today().isoformat(),
-            "description": description if description else "",
-            "version": version if version else "0.1.0"
-        }
-        generate(metadata)
-        return metadata  # Return the metadata dictionary
-
-    @staticmethod
-    def init_project_with_config(project_name:str, config:dict):
-        """
-        Initialize the fairness logging using the commonly used metadata tracking tools (wandb, mlflow, etc.)
-        Takes a dictionary with the project name and configuration.
-        project_name: str
-        config: dictionary
-        """
-        generate({
-            "project": project_name,
-            faidlog.keys["config_key"]: config
-        })  
     
     @staticmethod
-    def log(params:dict, key:str, add_to_model_card:bool=False, add_to_fairness_report:bool=False, add_to_data_card:bool=False, add_to_risk_register:bool=False):
+    def convert_experiment_filepath_format(filename:str) -> str:
         """
-        Log the fairness metrics
-        params: Any value that can be stored in a dictionary
-        key: str - the key to store the data under in the metadata file
-        Returns: None - updates the metadata file
+        Correct the filename
         """
-        if add_to_model_card:
-            update(params, key=key, filename=faidlog.files["model_yml_file"])
-            print(f"Added {key} to model card")
-        elif add_to_fairness_report:
-            update(params, key=key, filename=faidlog.files["fairness_yml_file"])
-            print(f"Added {key} to fairness report")
-        elif add_to_data_card:
-            update(params, key=key, filename=faidlog.files["data_yml_file"])
-            print(f"Added {key} to data card")
-        elif add_to_risk_register:
-            update(params, key=key, filename=faidlog.files["risk_yml_file"])
-            print(f"Added {key} to risk register")
-        else:
-            update(params, key=key)
-            print(f"Added {key} to project metadata")
+        import re
+        experiment_name = re.sub(r'[^\w\-_\. ]', '_', filename.replace(" ", "_").lower())
+        experiment_file_name = f"log/fairness_{experiment_name}.yml"
+        return experiment_file_name
+    
+    @staticmethod
+    def add_model_entry(params:dict, key:str="model_info"):
+        update(params, key=key, filename=faidlog.files["model_yml_file"])
+        print(f"Added {key} to model card")
 
     @staticmethod
-    def get_log_path():
+    def get_model_entry(key:str="model_info"):
+        return load(faidlog.files["model_yml_file"])[key]
+
+    @staticmethod
+    def add_data_entry(params:dict, key:str="data_info"):
+        update(params, key=key, filename=faidlog.files["data_yml_file"])
+        print(f"Added {key} to data card")
+
+    @staticmethod
+    def get_data_entry(key:str="data_info"):
+        return load(faidlog.files["data_yml_file"])[key]
+    
+    @staticmethod
+    def add_risk_entry(params:dict, key:str="risk_info"):
+        update(params, key=key, filename=faidlog.files["risk_yml_file"])
+        print(f"Added {key} to risk register")
+    
+    @staticmethod
+    def get_risk_entry(key:str="risk_info"):
+        return load(faidlog.files["risk_yml_file"])[key]
+
+    @staticmethod
+    def add_transparency_entry(params:dict, key:str="transparency_info"):
+        update(params, key=key, filename=faidlog.files["transparency_yml_file"])
+        print(f"Added {key} to transparency metadata")
+    
+    @staticmethod
+    def get_transparency_entry(key:str="transparency_info"):
+        return load(faidlog.files["transparency_yml_file"])[key]
+
+    @staticmethod
+    def get_fairness_log_path():
         """
         Returns the path to the fairness log file
         """
@@ -92,8 +86,10 @@ class faidlog:
         import os
         from IPython import get_ipython
 
-        if os.path.exists('log') and 'fairness.yml' in os.listdir('log') :
-            return "log/fairness.yml"
+        if os.path.exists('log'):
+            fairness_files = [f for f in os.listdir('log') if f.startswith('fairness_')]
+            if len(fairness_files) == 1:
+                return os.path.join('log', fairness_files[0])
         else:
             try:
                 if 'IPKernelApp' in get_ipython().config:
@@ -116,7 +112,7 @@ class faidlog:
         """
         Generate all the reports
         """
-        generate_project_overview_report()
+        generate_experiment_overview_report()
         generate_model_card()
         generate_data_card()
         generate_fairness_report()
@@ -124,11 +120,11 @@ class faidlog:
         print("All reports generated")
 
     @staticmethod
-    def generate_project_overview_report(project_info:dict={}):
+    def generate_experiment_overview_report(project_info:dict={}):
         """
         Generate the project overview report
         """
-        generate_project_overview_report(project_info)
+        generate_experiment_overview_report(project_info)
 
     @staticmethod
     def model_info(info: ModelCard):
@@ -160,7 +156,7 @@ class faidlog:
     
     @staticmethod
     def get_fairness_data():
-        return load(faidlog.files["fairness_yml_file"])
+        return load(faidlog.get_fairness_log_path())
     
     @staticmethod
     def generate_trust_label():
@@ -234,7 +230,7 @@ class faidlog:
                 f.write(str(fairness_logo))
             return
         
-        log_path = faidlog.get_log_path()
+        log_path = faidlog.get_fairness_log_path()
         log_completeness = calculate_log_completeness(log_path)
         fairness_logo = generate_fairness_logo(log_completeness)
         add_label_to_readme(fairness_logo)
@@ -307,59 +303,148 @@ class faidlog:
             "typical_data_point": metadata.get("typical_data_point", "")
         }
         return dataset_info
+    
+    @staticmethod
+    def get_imported_libraries():
+        # Get all imported modules
+        imported_modules = [m.__name__ for m in sys.modules.values() if m]
+        # include only modules that are not in the standard library
+        imported_modules = [m for m in imported_modules if m not in sys.builtin_module_names]
+        # remove module submodules
+        imported_modules = [m.split('.')[0] for m in imported_modules]
+        # remove duplicates
+        imported_modules = list(set(imported_modules))
+        
+        # Get the version of each imported module if available
+        modules_with_versions = {}
+        for module_name in imported_modules:
+            # if module_name does not start with _
+            if module_name.startswith('_'):
+                continue
+            try:
+                version = pkg_resources.get_distribution(module_name).version
+                modules_with_versions[module_name] = version
+            except pkg_resources.DistributionNotFound:
+                pass
+        
+        return sorted(modules_with_versions.items())
+    
+    @staticmethod
+    def get_package_licenses():
+        import importlib.metadata
+        with open('requirements.txt', 'r') as f:
+            packages = f.read().splitlines()
+            packages = [pkg.split('==')[0] for pkg in packages if pkg]
+            try:
+                licenses = []
+                for package in packages:
+                    metadata = importlib.metadata.metadata(package)
+                    license = metadata.get('License')
+                    if not license:
+                        license = metadata.get('Classifier', [])
+                        license_info = [line for line in license if line.startswith('License')]
+                        license = license_info[0] if license_info else 'License information not found'
+                    licenses.append((package, license))
+            except importlib.metadata.PackageNotFoundError:
+                licenses.append((package, "Package not found")) 
+        return licenses
+
+    @staticmethod
+    def get_ctx(experiment_name:str) -> 'ExperimentContext':
+        """
+        Get the experiment context
+        """
+        dataDict = load(faidlog.convert_experiment_filepath_format(experiment_name))
+        return faidlog.ExperimentContext(name=dataDict["name"], 
+                                         description=dataDict["description"],
+                                         start_time=dataDict["start_time"],
+                                         tags=dataDict["tags"],
+                                         authors=dataDict["authors"],
+                                         hardware=dataDict["hardware"],
+                                         data=dataDict["data"])
+        
 
     class ExperimentContext:
         """
         A class to represent an experiment context.
         """
 
-        def __init__(self, name=None, description=""):
-
-            datestr = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+        def __init__(self, name:str=None, 
+                     description:str="", 
+                     start_time:str=None, 
+                     tags:list=[],
+                     authors:list=[],
+                     hardware:dict={},
+                     data:dict={}):
+            import os
             if name is None:
-                # create a random name
-                name = f"Experiment-{datestr}"
+                print("Please provide a name for the experiment")
+                return
+            
+            self.filename = faidlog.convert_experiment_filepath_format(name)
+            # if the file exists in the log directory, load the metadata
+            if os.path.exists(self.filename):
+                dataDict = load(self.filename)
+                name = dataDict["name"]
+                description = dataDict["description"]
+                start_time = dataDict["start_time"]
+                tags = dataDict["tags"]
+                authors = dataDict["authors"]
+                hardware = dataDict["hardware"]
+                data = dataDict["data"]
+            
             self.name = name
             self.description = description
-            self.start_time = datestr
-            self.end_time = None
-            self.libraries = self._get_imported_libraries()
-            self.metadata = {}
-            self.tags = []
-            self.authors = []
-            self.hardware = {}
+            if start_time is None:
+                start_time = datetime.now().isoformat()
+            self.start_time = start_time
+            self.tags = tags
+            self.authors = authors
+            self.hardware = hardware
+            self.data = data
 
-        def _get_imported_libraries(self):
-            # Get all imported modules
-            imported_modules = [m.__name__ for m in sys.modules.values() if m]
-            # include only modules that are not in the standard library
-            imported_modules = [m for m in imported_modules if m not in sys.builtin_module_names]
-            # remove module submodules
-            imported_modules = [m.split('.')[0] for m in imported_modules]
-            # remove duplicates
-            imported_modules = list(set(imported_modules))
+            self.init_experiment_log()
             
-            # Get the version of each imported module if available
-            modules_with_versions = {}
-            for module_name in imported_modules:
-                # if module_name does not start with _
-                if module_name.startswith('_'):
-                    continue
-                try:
-                    version = pkg_resources.get_distribution(module_name).version
-                    modules_with_versions[module_name] = version
-                except pkg_resources.DistributionNotFound:
-                    pass
-            
-            return sorted(modules_with_versions.items())
 
-        def add_metadata(self, key, value):
-            """Add custom metadata to the experiment context."""
-            self.metadata[key] = value
+        def to_dict(self):
+            """Get a summary of the experiment."""
+            metadata = {
+                "name": self.name,
+                "authors": self.authors,
+                "start_time": self.start_time,
+                "description": self.description,
+                "tags": self.tags,
+                "hardware": self.hardware,
+                "data": self.data,
+            }
+            return metadata
+        
+        def __str__(self):
+            summary = self.to_dict()
+            return "\n".join(f"{key}: {value}" for key, value in summary.items())
 
-        def end_experiment(self):
-            """Mark the end of the experiment."""
-            self.end_time = datetime.now()
+        def init_experiment_log(self):
+            """
+            Initialize the metadata
+            """
+            metadata = self.to_dict()
+            generate(metadata, filename=self.filename)
+            return metadata  # Return the metadata dictionary
+
+        def add_entry(self, key:str, entry:dict):
+            """
+            Initialize the fairness logging using the commonly used metadata tracking tools (wandb, mlflow, etc.)
+            Takes a dictionary with the project name and configuration.
+            project_name: str
+            config: dictionary
+            """
+            self.data[key] = entry
+            update(yamlData=self.data, key="data", filename=self.filename)
+            print(f"Added {key} to project metadata and log updated")
+
+        def set_data(self, data: dict):
+            """Set data for the experiment."""
+            self.data = data
 
         def set_tags(self, tags: list):
             """Set tags for the experiment."""
@@ -373,29 +458,12 @@ class faidlog:
             """Set hardware information for the experiment."""
             self.hardware = hardware
 
-        def get_summary(self):
-            """Get a summary of the experiment."""
-            summary = {
-                "project": self.name,
-                "description": self.description,
-                "tags": self.tags,
-                "start_time": self.start_time,
-                "end_time": self.end_time,
-                "libraries": self.libraries,
-                "metadata": self.metadata,
-                "authors": self.authors,
-                "hardware": self.hardware,
-            }
-            return summary
-        
         def log_summary(self):
             """Log a summary of the experiment."""
-            summary = self.get_summary()
+            summary = self.to_dict()
             faidlog.log(summary, key=self.name)
 
-        def __str__(self):
-            summary = self.get_summary()
-            return "\n".join(f"{key}: {value}" for key, value in summary.items())
+
 
 
 

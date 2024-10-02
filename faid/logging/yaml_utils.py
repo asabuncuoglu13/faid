@@ -7,10 +7,14 @@ from .file_utils import get_project_log_folder, get_default_metadata_file_name
 from .message import error_msg, warning_msg
 
 # %%
-def generate(dataDict, filename:str="log/project.yml", return_result=False):
+def generate(dataDict, filename:str=None, return_result=False):
   """
   Generate a yaml file 
   """
+  if not filename:
+    print("No file path provided. Please define a file path.")
+    return
+
   if not os.path.exists(get_project_log_folder()):
     os.makedirs(get_project_log_folder())
   
@@ -33,7 +37,7 @@ def generate(dataDict, filename:str="log/project.yml", return_result=False):
     yaml.safe_dump(dataDict, file, sort_keys=False, default_flow_style=False)
 
 # %%
-def update(yamlData, key, filename:str="log/project.yml"):
+def update(yamlData:dict, key:str, filename:str):
   """
   Update a yaml file
   """
@@ -50,6 +54,8 @@ def update(yamlData, key, filename:str="log/project.yml"):
 
   if key and key in existing_dataDict:
     existing_dataDict[key] = yamlData
+  else:
+    existing_dataDict.update({key: yamlData})
   
   generate(existing_dataDict, filename)
 
