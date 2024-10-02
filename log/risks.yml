@@ -1,0 +1,25 @@
+risks:
+  2:
+    description: The model card information does not contain the model's training
+      data information.
+    impact: High
+    likelihood: High
+    mitigation: Add the training data information to the model card. You can find
+      it from their research paper.
+assumptions:
+  0:
+    description: Assume that the training data provided is accurate and reliable.
+    impact: High
+    action: Perform data validation and quality checks.
+issues:
+  0:
+    description: Detected bias in initial AI model outputs.
+    impact: High
+    status: Open
+    action: Investigate the source of bias and retrain the model with improved data.
+dependencies:
+  0:
+    description: Dependency on external datasets for training the AI model.
+    impact: High
+    status: Pending
+    action: Ensure timely access to required datasets from data providers.

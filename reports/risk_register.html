@@ -121,16 +121,16 @@
             <th class="likelihood">Likelihood</th>
             <th class="mitigation">Mitigation</th>
         </tr>
-        {% if data.risks %}
-        {% for id in data.risks %}
+        
+        
         <tr>
-            <td class="description">{{ data.risks[id].description }}</td>
-            <td class="impact">{{ data.risks[id].impact }}</td>
-            <td class="likelihood">{{ data.risks[id].likelihood }}</td>
-            <td class="mitigation">{{ data.risks[id].mitigation }}</td>
+            <td class="description">The model card information does not contain the model's training data information.</td>
+            <td class="impact">High</td>
+            <td class="likelihood">High</td>
+            <td class="mitigation">Add the training data information to the model card. You can find it from their research paper.</td>
         </tr>
-        {% endfor %}
-        {% endif %}
+        
+        
     </table>
 
     <h2>Assumptions</h2>
@@ -140,15 +140,15 @@
             <th class="impact">Impact</th>
             <th class="action">Action</th>
         </tr>
-        {% if data.assumptions %}
-        {% for id in data.assumptions %}
+        
+        
         <tr>
-            <td class="description">{{ data.assumptions[id].description }}</td>
-            <td class="impact">{{ data.assumptions[id].impact }}</td>
-            <td class="action">{{ data.assumptions[id].action }}</td>
+            <td class="description">Assume that the training data provided is accurate and reliable.</td>
+            <td class="impact">High</td>
+            <td class="action">Perform data validation and quality checks.</td>
         </tr>
-        {% endfor %}
-        {% endif %}
+        
+        
     </table>
 
     <h2>Issues</h2>
@@ -160,17 +160,17 @@
             <th class="action">Action</th>
             <th>Report</th> <!-- New column for report buttons -->
         </tr>
-        {% if data.issues %}
-        {% for id in data.issues %}
-        <tr id="issue{{ id }}">
-          <td class="description">{{ data.issues[id].description }}</td>
-          <td class="impact">{{ data.issues[id].impact }}</td>
-          <td class="status">{{ data.issues[id].status }}</td>
-          <td class="action">{{ data.issues[id].action }}</td>
-          <td><button onclick="formatAndCopyIssue('issue{{ id }}','{{ data.issues[id].description }}', '{{ data.issues[id].action }}')">Report Fairness Issue</button></td>
+        
+        
+        <tr id="issue0">
+          <td class="description">Detected bias in initial AI model outputs.</td>
+          <td class="impact">High</td>
+          <td class="status">Open</td>
+          <td class="action">Investigate the source of bias and retrain the model with improved data.</td>
+          <td><button onclick="formatAndCopyIssue('issue0','Detected bias in initial AI model outputs.', 'Investigate the source of bias and retrain the model with improved data.')">Report Fairness Issue</button></td>
         </tr>
-        {% endfor %}
-        {% endif %}
+        
+        
     </table>
     <h2>Dependencies</h2>
     <table>
@@ -180,16 +180,16 @@
             <th class="status">Status</th>
             <th class="action">Action</th>
         </tr>
-        {% if data.dependencies %}
-        {% for id in data.dependencies %}
+        
+        
         <tr>
-            <td class="description">{{ data.dependencies[id].description }}</td>
-            <td class="impact">{{ data.dependencies[id].impact }}</td>
-            <td class="status">{{ data.dependencies[id].status }}</td>
-            <td class="action">{{ data.dependencies[id].action }}</td>
+            <td class="description">Dependency on external datasets for training the AI model.</td>
+            <td class="impact">High</td>
+            <td class="status">Pending</td>
+            <td class="action">Ensure timely access to required datasets from data providers.</td>
         </tr>
-        {% endfor %}
-        {% endif %}
+        
+        
     </table>
     </div>
 </body>

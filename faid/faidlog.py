@@ -5,7 +5,7 @@ from datetime import datetime
 from .logging.yaml_utils import generate, update, load
 from .logging.message import error_msg
 from .logging.model_card_utils import ModelCard
-from .report.report_utils import generate_data_card, generate_model_card, generate_raid_register_report, generate_experiment_overview_report
+from .report.report_utils import generate_data_card, generate_model_card, generate_raid_register_report, generate_experiment_overview_report, generate_transparency_report
 
 # %%
 class faidlog:
@@ -47,8 +47,15 @@ class faidlog:
         print(f"Added {key} to model card")
 
     @staticmethod
-    def get_model_entry(key:str="model_info"):
-        return load(faidlog.files["model_yml_file"])[key]
+    def get_model_entry(key:str=None):
+        if key is None:
+            return load(faidlog.files["model_yml_file"])
+        else:
+            try:
+                return load(faidlog.files["model_yml_file"])[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
 
     @staticmethod
     def add_data_entry(params:dict, key:str="data_info"):
@@ -56,17 +63,44 @@ class faidlog:
         print(f"Added {key} to data card")
 
     @staticmethod
-    def get_data_entry(key:str="data_info"):
-        return load(faidlog.files["data_yml_file"])[key]
+    def get_data_entry(key:str=None):
+        if key is None:
+            return load(faidlog.files["data_yml_file"])
+        else:
+            try:
+                return load(faidlog.files["data_yml_file"])[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
     
     @staticmethod
-    def add_risk_entry(params:dict, key:str="risk_info"):
-        update(params, key=key, filename=faidlog.files["risk_yml_file"])
+    def add_risk_entry(params:dict, key:str="risks"):
+        """
+        Add a risk entry to the risk register
+        Key can be one of ["risks", "assumptions", "issues", "dependencies"]
+        """
+        keys = ["risks", "assumptions", "issues", "dependencies"]
+        if key not in keys:
+            error_msg(f"Key {key} not found in the metadata file. Please use one of {keys}")
+            return None
+        
+        # add an id to the risk entry
+        risk_data = load(faidlog.files["risk_yml_file"])
+        id = len(risk_data[key]) + 1
+
+        update({id: params}, key=key, filename=faidlog.files["risk_yml_file"])
         print(f"Added {key} to risk register")
     
     @staticmethod
-    def get_risk_entry(key:str="risk_info"):
-        return load(faidlog.files["risk_yml_file"])[key]
+    def get_risk_entry(key:str=None):
+        if key is None:
+            return load(faidlog.files["risk_yml_file"])
+        else:
+            try:
+                return load(faidlog.files["risk_yml_file"])[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
 
     @staticmethod
     def add_transparency_entry(params:dict, key:str="transparency_info"):
@@ -74,8 +108,16 @@ class faidlog:
         print(f"Added {key} to transparency metadata")
     
     @staticmethod
-    def get_transparency_entry(key:str="transparency_info"):
-        return load(faidlog.files["transparency_yml_file"])[key]
+    def get_transparency_entry(key:str=None):
+        if key is None:
+            return load(faidlog.files["transparency_yml_file"])
+        else:
+            try:
+                return load(faidlog.files["transparency_yml_file"])[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
+            
 
     @staticmethod
     def get_fairness_log_path():
@@ -115,7 +157,6 @@ class faidlog:
         generate_experiment_overview_report()
         generate_model_card()
         generate_data_card()
-        generate_fairness_report()
         generate_raid_register_report()
         print("All reports generated")
 
@@ -127,36 +168,48 @@ class faidlog:
         generate_experiment_overview_report(project_info)
 
     @staticmethod
+    def generate_model_card_report():
+        """
+        Generate the model card report
+        """
+        generate_model_card()
+
+    @staticmethod
+    def generate_data_card_report():
+        """
+        Generate the data card report
+        """
+        generate_data_card()
+    
+    @staticmethod
+    def generate_transparency_report():
+        """
+        Generate the transparency report
+        """
+        generate_transparency_report()
+
+    @staticmethod
+    def generate_risk_register_report():
+        """
+        Generate the risk register report
+        """
+        generate_raid_register_report()
+
+    @staticmethod
     def model_info(info: ModelCard):
         info = info.get_model_info()
         update(info, key=faidlog.keys["model_info_key"])
-
-    @staticmethod
-    def get(key:str, from_fairness_report=False, from_model_card=False, from_data_card=False, from_risk_register=False):
-        """
-        Get the metadata
-        """
-        if from_fairness_report:
-            data = load(faidlog.files["fairness_yml_file"])
-        elif from_model_card:
-            data = load(faidlog.files["model_yml_file"])
-        elif from_data_card:
-            data = load(faidlog.files["data_yml_file"])
-        elif from_risk_register:
-            data = load(faidlog.files["risk_yml_file"])
-        else:  
-            data = load()
-
-        try:
-            val = data[key]
-            return val
-        except KeyError:
-            error_msg(f"Key {key} not found in the metadata file")
-            return None
     
     @staticmethod
-    def get_fairness_data():
-        return load(faidlog.get_fairness_log_path())
+    def get_fairness_entry(key:str=None):
+        if key is None:
+            return load(faidlog.get_fairness_log_path())
+        else:
+            try:
+                return load(faidlog.get_fairness_log_path())[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
     
     @staticmethod
     def generate_trust_label():

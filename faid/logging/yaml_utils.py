@@ -52,9 +52,11 @@ def update(yamlData:dict, key:str, filename:str):
   
   existing_dataDict = load(filename)
 
-  if key and key in existing_dataDict:
+  if existing_dataDict is None:
+    existing_dataDict = {}
+  try:
     existing_dataDict[key] = yamlData
-  else:
+  except KeyError:
     existing_dataDict.update({key: yamlData})
   
   generate(existing_dataDict, filename)

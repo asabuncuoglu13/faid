@@ -21,11 +21,13 @@ def generate_experiment_overview_report(info:dict, output_file:str="experiment_o
     template = env.get_template('templates/experiment_overview_template.html')
 
     sample_data = pd.DataFrame()
-    if info["data"]["sample_results"]:
-        sample_data  = pd.DataFrame(info["data"]["sample_results"])
+    try:
+        sample_data  = pd.DataFrame(info["data"]["sample_data"])
+    except KeyError:
+        pass
 
     # Render the template with metrics
-    html_content = template.render(info, sample_results=sample_data.to_html())
+    html_content = template.render(info, sample_data=sample_data.to_html())
 
     output_file = get_faid_report_folder() + output_file
     # Write the rendered HTML to a file
@@ -33,7 +35,7 @@ def generate_experiment_overview_report(info:dict, output_file:str="experiment_o
         file.write(html_content)
 
 # %%
-def generate_raid_register_report(raid_data:dict={}, output_file:str="risk_register.html"):
+def generate_raid_register_report(output_file:str="risk_register.html"):
     """
     Generates an HTML report from risk data in format format using Jinja2 template.
 
@@ -47,11 +49,13 @@ def generate_raid_register_report(raid_data:dict={}, output_file:str="risk_regis
     env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('templates/risk_register.html')
 
-    if raid_data == {}:  # Load the data from the yaml file
+    try:
         raid_data = load("risks")
-        print(raid_data)
+    except FileNotFoundError:
+        print("RAID data not found. Please provide RAID data in the YAML file.")
+
     # Render the template with metrics
-    html_content = template.render(raid_data)
+    html_content = template.render(data = raid_data)
 
     output_file = get_faid_report_folder() + output_file
     # Write the rendered HTML to a file
