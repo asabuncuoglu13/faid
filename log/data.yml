@@ -1,0 +1,45 @@
+dataset_name: ""
+summary: ""
+dataset_link: ""
+authors: ""
+publishing_organization: ""
+industry_types: []
+publishing_poc: {}
+dataset_owners: {}
+dataset_authors: []
+funding_sources: []
+data_subjects: []
+dataset_snapshot:
+  Total Records: ""
+  Coverage: ""
+  Time Span: ""
+content_description: ""
+descriptive_statistics:
+  fields: []
+  stats:
+    - name: ""
+      values: []
+sensitivity_types: []
+intentional_sensitive_data:
+  - name: ""
+    description: ""
+unintentional_sensitive_data: []
+security_privacy_handling: ""
+risk_types: []
+risks_mitigations: ""
+maintenance_status: ""
+version_details:
+  current_version: ""
+  last_updated: ""
+  release_date: ""
+maintenance_plan: ""
+next_update:
+  version_affected: ""
+  next_data_update: ""
+  next_version: ""
+  next_version_update: ""
+expected_changes: ""
+primary_data_modality: ""
+sampling_data_points: []
+data_fields: []
+typical_data_point: ""

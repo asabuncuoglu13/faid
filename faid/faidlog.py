@@ -31,6 +31,36 @@ class faidlog:
         return "Fairness Logging"
     
     @staticmethod
+    def init():
+        # create a log directory if it does not exist
+        import os
+        if not os.path.exists("log"):
+            os.makedirs("log")
+
+        # copy the template files to the log directory
+        import shutil
+        current_folder_location = os.path.dirname(os.path.abspath(__file__))
+        
+        if not os.path.exists(faidlog.files["model_yml_file"]):
+            shutil.copy(os.path.join(current_folder_location, "logging/templates/model.yml"), faidlog.files["model_yml_file"])
+        else:
+            print("Model log file already exists")
+        if not os.path.exists(faidlog.files["data_yml_file"]):
+            shutil.copy(os.path.join(current_folder_location, "logging/templates/data.yml"), faidlog.files["data_yml_file"])
+        else:
+            print("Data log file already exists")
+        if not os.path.exists(faidlog.files["risk_yml_file"]):
+            shutil.copy(os.path.join(current_folder_location, "logging/templates/risks.yml"), faidlog.files["risk_yml_file"])
+        else:
+            print("Risk log file already exists")
+        if not os.path.exists(faidlog.files["transparency_yml_file"]):
+            shutil.copy(os.path.join(current_folder_location, "logging/templates/transparent.yml"), faidlog.files["transparency_yml_file"])
+        else:
+            print("Transparency log file already exists")
+        
+        print("Logging initialized")
+    
+    @staticmethod
     def convert_experiment_filepath_format(filename:str) -> str:
         """
         Correct the filename
@@ -123,9 +153,7 @@ class faidlog:
         """
         Returns the path to the fairness log file
         """
-        import inquirer
         import os
-        from IPython import get_ipython
 
         if os.path.exists('log'):
             fairness_files = [f for f in os.listdir('log') if f.startswith('fairness_')]
@@ -134,6 +162,8 @@ class faidlog:
             else:
                 return [os.path.join('log', f) for f in fairness_files]
         else:
+            import inquirer
+            from IPython import get_ipython
             try:
                 if 'IPKernelApp' in get_ipython().config:
                     print("Enter the path to the fairness log file")
@@ -265,7 +295,7 @@ class faidlog:
                 return None
     
     @staticmethod
-    def generate_fairness_label():
+    def generate_fairness_log_completeness_label():
         """
         Generate a digital trust label as SVG and add it to the reports/README.md file.
         """
