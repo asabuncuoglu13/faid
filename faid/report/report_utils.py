@@ -47,7 +47,7 @@ def generate_raid_register_report(output_file:str="risk_register.html"):
     # Load Jinja2 template
     current_folder_location = os.path.dirname(os.path.abspath(__file__))
     env = Environment(loader=FileSystemLoader(current_folder_location))
-    template = env.get_template('templates/risk_register.html')
+    template = env.get_template('templates/risk_register_template.html')
 
     try:
         raid_data = load("risks")

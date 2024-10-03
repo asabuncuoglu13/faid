@@ -2,103 +2,131 @@
 <html lang="en">
 <head>
 <style>
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f4f4f4;
-			margin: 0;
-			padding: 0;
-			color: #333;
-		}
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
 
-		.report-container {
-			max-width: 900px;
-			margin: 20px auto;
-			background-color: #fff;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-			padding: 20px;
-			border-radius: 8px;
-		}
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 0.3em;
+        }
 
-		h1 {
-			font-size: 24px;
-			color: #333;
-			margin-bottom: 20px;
-			text-align: center;
-		}
+        h1 {
+            font-size: 2em;
+        }
 
-		h2 {
-			font-size: 20px;
-			color: #666;
-			margin-bottom: 15px;
-			border-bottom: 2px solid #e0e0e0;
-			padding-bottom: 5px;
-		}
+        h2 {
+            font-size: 1.6em;
+        }
 
-		table {
-			width: 100%;
-			border-collapse: collapse;
-			margin-bottom: 20px;
-		}
+        h3 {
+            font-size: 1.4em;
+        }
 
-		table,
-		th,
-		td {
-			border: 1px solid #e0e0e0;
-		}
+        p {
+            margin-bottom: 1.2em;
+        }
 
-		th,
-		td {
-			padding: 12px;
-			text-align: left;
-		}
+        ul, ol {
+            margin-bottom: 1.2em;
+            padding-left: 1.5em;
+        }
 
-		th {
-			background-color: #f0f0f0;
-			color: #333;
-			font-weight: bold;
-		}
+        li {
+            margin-bottom: 0.6em;
+        }
 
-		td {
-			background-color: #fff;
-		}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5em;
+        }
 
-		/* Responsive Design */
-		@media (max-width: 600px) {
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
 
-			th,
-			td {
-				display: block;
-				width: 100%;
-			}
+        th {
+            background-color: #f2f2f2;
+            color: #2c3e50;
+        }
 
-			th {
-				background-color: #f4f4f4;
-				text-align: center;
-			}
+        blockquote {
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-left: 5px solid #ccc;
+            font-style: italic;
+            color: #555;
+        }
 
-			td {
-				border-top: none;
-			}
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
 
-			td:before {
-				content: attr(data-label);
-				font-weight: bold;
-				display: block;
-				margin-bottom: 5px;
-				color: #333;
-			}
-		}
-		.chip {
-			display: inline-block;
-			padding: 0 25px;
-			height: 50px;
-			font-size: 16px;
-			line-height: 50px;
-			border-radius: 25px;
-			background-color: #f1f1f1;
-		}
-		
-		.metric { width: 60%; }
+        hr {
+            border: 0;
+            border-top: 2px solid #ddd;
+            margin: 2em 0;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .report-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            th, td {
+                display: block;
+                width: 100%;
+            }
+
+            th {
+                text-align: center;
+            }
+
+            td {
+                border-top: none;
+            }
+        }
+        .chip {
+          display: inline-block;
+          padding: 0 25px;
+          height: 50px;
+          font-size: 16px;
+          line-height: 50px;
+          border-radius: 25px;
+          background-color: #f1f1f1;
+        }
+        
+        .metric { width: 60%; }
         .value { width: 40%; }
         .text { width: 70%; }
         .label { width: 30%; }
