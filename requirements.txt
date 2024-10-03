@@ -2,8 +2,11 @@ absl-py==2.1.0
 accelerate==0.30.1
 aequitas==1.0.0
 aif360==0.6.1
+aiobotocore==2.15.1
+aiofiles==24.1.0
 aiohttp==3.9.5
 aiohttp-retry==2.8.3
+aioitertools==0.12.0
 aiosignal==1.3.1
 alembic==1.13.1
 altair==4.2.2
@@ -22,6 +25,7 @@ asyncssh==2.14.2
 atpublic==4.1.0
 attrs==23.2.0
 backoff==2.2.1
+beautifulsoup4==4.12.3
 bertviz==1.4.0
 billiard==4.2.0
 BiLLM==0.1.6
@@ -32,7 +36,7 @@ blinker==1.8.2
 blis==0.7.11
 boltons==24.0.0
 boto3==1.34.128
-botocore==1.34.128
+botocore==1.35.23
 cachetools==5.3.3
 captum==0.7.0
 catalogue==2.0.10
@@ -92,6 +96,7 @@ exceptiongroup==1.2.1
 executing==2.0.1
 fairgbm==0.9.14
 fairlearn==0.9.0
+fastjsonschema==2.20.0
 filelock==3.14.0
 Flask==3.0.3
 flatbuffers==24.3.25
@@ -99,7 +104,7 @@ flatten-dict==0.4.2
 flufl.lock==7.1.1
 fonttools==4.52.4
 frozenlist==1.4.1
-fsspec==2024.3.1
+fsspec==2024.3.0
 funcy==2.0
 gast==0.6.0
 gensim==4.3.3
@@ -128,17 +133,22 @@ grpcio==1.66.1
 grpcio-status==1.66.1
 gto==1.7.1
 gunicorn==22.0.0
+h11==0.14.0
 h5py==3.11.0
 htmlmin==0.1.12
+httpcore==1.0.6
+httpx==0.27.2
 huggingface-hub==0.23.2
 hydra-core==1.3.2
 hyperparameter-tuning==0.3.1
 idna==3.7
+ijson==3.3.0
 ImageHash==4.3.1
 immutabledict==4.2.0
 importlib_metadata==7.1.0
 importlib_resources==6.4.0
 inquirer==3.3.0
+inspect_ai==0.3.38
 ipykernel==6.29.4
 ipython==8.24.0
 ipywidgets==8.1.3
@@ -149,6 +159,7 @@ jedi==0.19.1
 Jinja2==3.1.4
 jmespath==1.0.1
 joblib==1.4.2
+jsonlines==4.0.0
 jsonpatch==1.33
 jsonpath-rw==1.4.0
 jsonpointer==2.4
@@ -190,6 +201,7 @@ ml-dtypes==0.4.0
 mlcroissant==1.0.7
 mlflow==2.13.2
 mlflow-skinny==2.13.2
+mmh3==5.0.1
 monotonic==1.6
 mpmath==1.3.0
 multidict==6.0.5
@@ -199,6 +211,7 @@ murmurhash==1.0.10
 mypy-extensions==1.0.0
 namex==0.0.8
 narwhals==1.3.0
+nbformat==5.10.4
 nest-asyncio==1.6.0
 networkx==3.3
 nltk==3.8.1
@@ -251,6 +264,7 @@ pygtrie==2.5.0
 pyparsing==3.1.2
 python-dateutil==2.9.0.post0
 python-decouple==3.8
+python-dotenv==1.0.1
 python-slugify==8.0.4
 pytz==2024.1
 PyWavelets==1.6.0
@@ -270,6 +284,7 @@ rsa==4.9
 ruamel.yaml==0.18.6
 ruamel.yaml.clib==0.2.8
 runs==1.2.2
+s3fs==2024.3.0
 s3transfer==0.10.1
 sacremoses==0.1.1
 safetensors==0.4.3
@@ -292,6 +307,7 @@ six==1.16.0
 smart-open==7.0.4
 smmap==5.0.1
 sniffio==1.3.1
+soupsieve==2.6
 spacy==3.7.5
 spacy-legacy==3.0.12
 spacy-loggers==1.0.5
