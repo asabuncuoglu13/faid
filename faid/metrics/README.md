@@ -2,7 +2,7 @@
 
 FAID provides some high-level wrappers for fairlearn and other fairness metric libraries.
 
-## Fairlearn and FAID
+## Fairlearn
 
 - Link: <https://github.com/fairlearn/fairlearn>
 - License: MIT
@@ -10,7 +10,7 @@ FAID provides some high-level wrappers for fairlearn and other fairness metric l
 Fairlearn is one of the essential libraries that is used by many fairness researchers. So, we structured our use cases around fairlearn notebooks. Also, we included some high-level wrappers for commonly used fairlearn recipes.
 
 
-## FairSD and FAID
+## FairSD
 
 - Link: <https://github.com/MaurizioPulizzi/fairsd>
 - License: Apache License v2.0

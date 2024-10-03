@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "Name": { "type": "string" },
+    "Description": { "type": "string" },
+    "Website_URL": { "type": "string" },
+    "Contact_email": { "type": "string" },
+    "Tier_2_Owner_and_Responsibility": {
+      "type": "object",
+      "properties": {
+        "Organisation_or_department": { "type": "string" },
+        "Team": { "type": "string" },
+        "Senior_responsible_owner": { "type": "string" },
+        "External_supplier_involvement": { "type": "string" }
+      },
+      "required": ["Organisation_or_department", "Team", "Senior_responsible_owner", "External_supplier_involvement"]
+    },
+    "Tier_2_Description_and_Rationale": {
+      "type": "object",
+      "properties": {
+        "Detailed_description": { "type": "string" },
+        "Scope": { "type": "string" },
+        "Benefit": { "type": "string" },
+        "Previous_process": { "type": "string" },
+        "Alternatives_considered": { "type": "string" }
+      },
+      "required": ["Detailed_description", "Scope", "Benefit", "Previous_process", "Alternatives_considered"]
+    },
+    "Tier_2_Decision_making_Process": {
+      "type": "object",
+      "properties": {
+        "Process_integration": { "type": "string" },
+        "Provided_information": { "type": "string" },
+        "Frequency_and_scale_of_usage": { "type": "string" },
+        "Human_decisions_and_review": { "type": "string" },
+        "Required_training": { "type": "string" },
+        "Appeals_and_review": { "type": "string" }
+      },
+      "required": ["Process_integration", "Provided_information", "Frequency_and_scale_of_usage", "Human_decisions_and_review", "Required_training", "Appeals_and_review"]
+    },
+    "Tier_2_Tool_Specification": {
+      "type": "object",
+      "properties": {
+        "System_architecture": { "type": "string" },
+        "Phase": { "type": "string" },
+        "Maintenance": { "type": "string" },
+        "Models": { "type": "string" }
+      },
+      "required": ["System_architecture", "Phase", "Maintenance", "Models"]
+    },
+    "Tier_2_Model_Specification_Complaint_Detection": {
+      "type": "object",
+      "properties": {
+        "Model_name": { "type": "string" },
+        "Model_version": { "type": "string" },
+        "Model_task": { "type": "string" },
+        "Model_input": { "type": "string" },
+        "Model_output": { "type": "string" },
+        "Model_architecture": { "type": "string" },
+        "Model_performance": { "type": "string" },
+        "Datasets": { "type": "string" },
+        "Dataset_purposes": { "type": "string" }
+      },
+      "required": ["Model_name", "Model_version", "Model_task", "Model_input", "Model_output", "Model_architecture", "Model_performance", "Datasets", "Dataset_purposes"]
+    },
+    "Tier_2_Model_Specification_NAE_Detection": {
+      "type": "object",
+      "properties": {
+        "Model_name": { "type": "string" },
+        "Model_version": { "type": "string" },
+        "Model_task": { "type": "string" },
+        "Model_input": { "type": "string" },
+        "Model_output": { "type": "string" },
+        "Model_architecture": { "type": "string" },
+        "Model_performance": { "type": "string" },
+        "Datasets": { "type": "string" },
+        "Dataset_purposes": { "type": "string" }
+      },
+      "required": ["Model_name", "Model_version", "Model_task", "Model_input", "Model_output", "Model_architecture", "Model_performance", "Datasets", "Dataset_purposes"]
+    },
+    "Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection": {
+      "type": "object",
+      "properties": {
+        "Model_name": { "type": "string" },
+        "Model_version": { "type": "string" },
+        "Model_task": { "type": "string" },
+        "Model_input": { "type": "string" },
+        "Model_output": { "type": "string" },
+        "Model_architecture": { "type": "string" },
+        "Model_performance": { "type": "string" },
+        "Datasets": { "type": "string" },
+        "Dataset_purposes": { "type": "string" }
+      },
+      "required": ["Model_name", "Model_version", "Model_task", "Model_input", "Model_output", "Model_architecture", "Model_performance", "Datasets", "Dataset_purposes"]
+    },
+    "Tier_2_Model_Specification_Names_identification": {
+      "type": "object",
+      "properties": {
+        "Model_name": { "type": "string" },
+        "Model_version": { "type": "string" },
+        "Model_task": { "type": "string" },
+        "Model_input": { "type": "string" },
+        "Model_output": { "type": "string" },
+        "Model_architecture": { "type": "string" },
+        "Model_performance": { "type": "string" },
+        "Datasets": { "type": "string" },
+        "Dataset_purposes": { "type": "string" }
+      },
+      "required": ["Model_name", "Model_version", "Model_task", "Model_input", "Model_output", "Model_architecture", "Model_performance", "Datasets", "Dataset_purposes"]
+    },
+    "Tier_2_Data_Specification": {
+      "type": "object",
+      "properties": {
+        "Source_data_name": { "type": "string" },
+        "Data_modality": { "type": "string" },
+        "Data_description": { "type": "string" },
+        "Data_quantities": { "type": "string" },
+        "Sensitive_attributes": { "type": "string" },
+        "Data_completeness_and_representative-ness": { "type": "string" },
+        "Source_data_URL": { "type": "string" },
+        "Data_collection": { "type": "string" },
+        "Data_cleaning": { "type": "string" },
+        "Data_sharing_agreements": { "type": "string" },
+        "Data_access_and_storage": { "type": "string" }
+      },
+      "required": ["Source_data_name", "Data_modality", "Data_description", "Data_quantities", "Sensitive_attributes", "Data_completeness_and_representative-ness", "Source_data_URL", "Data_collection", "Data_cleaning", "Data_sharing_agreements", "Data_access_and_storage"]
+    },
+    "Tier_2_Risks_Mitigations_and_Impact_Assessments": {
+      "type": "object",
+      "properties": {
+        "Impact_assessment": { "type": "string" },
+        "Risks_and_mitigations": { "type": "string" }
+      },
+      "required": ["Impact_assessment", "Risks_and_mitigations"]
+    }
+  },
+  "required": ["Name", "Description", "Website_URL", "Contact_email", "Tier_2_Owner_and_Responsibility", "Tier_2_Description_and_Rationale", "Tier_2_Decision_making_Process", "Tier_2_Tool_Specification", "Tier_2_Model_Specification_Complaint_Detection", "Tier_2_Model_Specification_NAE_Detection", "Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection", "Tier_2_Model_Specification_Names_identification", "Tier_2_Data_Specification", "Tier_2_Risks_Mitigations_and_Impact_Assessments"]
+}

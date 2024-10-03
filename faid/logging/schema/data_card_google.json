@@ -1,0 +1,204 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Data Card",
+    "type": "object",
+    "properties": {
+      "dataset_name": {
+        "type": "string",
+        "description": "Name of the dataset"
+      },
+      "summary": {
+        "type": "string",
+        "description": "Summary of the dataset"
+      },
+      "dataset_link": {
+        "type": "string",
+        "format": "uri",
+        "description": "Link to the dataset"
+      },
+      "authors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "team": { "type": "string" },
+            "role": { "type": "string" }
+          },
+          "required": ["name", "team", "role"]
+        }
+      },
+      "publishing_organization": {
+        "type": "string",
+        "description": "Name of the publishing organization"
+      },
+      "industry_types": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "publishing_poc": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "affiliation": { "type": "string" },
+          "contact": { "type": "string" },
+          "mailing_list": { "type": "string" },
+          "website": { "type": "string", "format": "uri" }
+        }
+      },
+      "dataset_owners": {
+        "type": "object",
+        "properties": {
+          "team": { "type": "string" },
+          "name": { "type": "string" },
+          "affiliation": { "type": "string" },
+          "contact": { "type": "string" },
+          "group_email": { "type": "string", "format": "email" },
+          "website": { "type": "string", "format": "uri" }
+        }
+      },
+      "dataset_authors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "title": { "type": "string" },
+            "affiliation": { "type": "string" },
+            "year": { "type": "integer" }
+          },
+          "required": ["name", "title", "affiliation", "year"]
+        }
+      },
+      "funding_sources": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "data_subjects": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "dataset_snapshot": {
+        "type": "object",
+        "additionalProperties": { "type": "string" }
+      },
+      "content_description": {
+        "type": "string"
+      },
+      "descriptive_statistics": {
+        "type": "object",
+        "properties": {
+          "fields": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "stats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "values": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              },
+              "required": ["name", "values"]
+            }
+          }
+        }
+      },
+      "sensitivity_types": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "intentional_sensitive_data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "required": ["name", "description"]
+        }
+      },
+      "unintentional_sensitive_data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "required": ["name", "description"]
+        }
+      },
+      "security_privacy_handling": {
+        "type": "string"
+      },
+      "risk_types": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "risks_mitigations": {
+        "type": "string"
+      },
+      "maintenance_status": {
+        "type": "string"
+      },
+      "version_details": {
+        "type": "object",
+        "properties": {
+          "current_version": { "type": "string" },
+          "last_updated": { "type": "string", "format": "date" },
+          "release_date": { "type": "string", "format": "date" }
+        }
+      },
+      "maintenance_plan": {
+        "type": "string"
+      },
+      "next_update": {
+        "type": "object",
+        "properties": {
+          "version_affected": { "type": "string" },
+          "next_data_update": { "type": "string", "format": "date" },
+          "next_version": { "type": "string" },
+          "next_version_update": { "type": "string", "format": "date" }
+        }
+      },
+      "expected_changes": {
+        "type": "string"
+      },
+      "primary_data_modality": {
+        "type": "string"
+      },
+      "sampling_data_points": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "url": { "type": "string", "format": "uri" }
+          },
+          "required": ["name", "url"]
+        }
+      },
+      "data_fields": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "value": { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "required": ["name", "value", "description"]
+        }
+      },
+      "typical_data_point": {
+        "type": "string"
+      }
+    },
+    "required": ["dataset_name", "summary", "dataset_link"]
+  }

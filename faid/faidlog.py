@@ -4,8 +4,7 @@ import pkg_resources
 from datetime import datetime
 from .logging.yaml_utils import generate, update, load
 from .logging.message import error_msg
-from .logging.model_card_utils import ModelCard
-from .report.report_utils import generate_data_card, generate_fairness_report, generate_model_card, generate_raid_register_report
+from .report.report_utils import generate_data_card, generate_model_card, generate_raid_register_report, generate_experiment_overview_report, generate_transparency_report
 
 # %%
 class faidlog:
@@ -13,11 +12,11 @@ class faidlog:
     A class to log fairness metrics.
     """
 
-    files ={        
-        "fairness_yml_file": "fairness.yml",
-        "model_yml_file": "model.yml",
-        "data_yml_file": "data.yml",
-        "risk_yml_file": "risks.yml",
+    files ={
+        "model_yml_file": "log/model.yml",
+        "data_yml_file": "log/data.yml",
+        "risk_yml_file": "log/risks.yml",
+        "transparency_yml_file": "log/transparent.yml"
     }
     
     keys = {
@@ -25,76 +24,167 @@ class faidlog:
         "model_info_key": "model_info",
         "sample_data_key" : "sample_results"
     }
+    
+    templates = {
+        "fairness_template": "logging/templates/fairness.yml",
+        "model_template": "logging/templates/model.yml",
+        "data_template": "logging/templates/data.yml",
+        "risk_template": "logging/templates/risks.yml",
+        "transparency_template": "logging/templates/transparent.yml"
+    }
 
     @staticmethod
     def __str__() -> str:
         print("Fairness Logging")
         return "Fairness Logging"
-
-    @staticmethod
-    def init_project(project_name:str, author:str=None, date:str=None, description:str=None, version:str=None):
-        """
-        Initialize the metadata
-        """
-        metadata = {
-            "project": project_name,
-            "author": author if author else "Author",
-            "date": date if date else datetime.date.today().isoformat(),
-            "description": description if description else "",
-            "version": version if version else "0.1.0"
-        }
-        generate(metadata)
-        return metadata  # Return the metadata dictionary
-
-    @staticmethod
-    def init_project_with_config(project_name:str, config:dict):
-        """
-        Initialize the fairness logging using the commonly used metadata tracking tools (wandb, mlflow, etc.)
-        Takes a dictionary with the project name and configuration.
-        project_name: str
-        config: dictionary
-        """
-        generate({
-            "project": project_name,
-            faidlog.keys["config_key"]: config
-        })  
     
     @staticmethod
-    def log(params:dict, key:str, add_to_model_card:bool=False, add_to_fairness_report:bool=False, add_to_data_card:bool=False, add_to_risk_register:bool=False):
-        """
-        Log the fairness metrics
-        params: Any value that can be stored in a dictionary
-        key: str - the key to store the data under in the metadata file
-        Returns: None - updates the metadata file
-        """
-        if add_to_model_card:
-            update(params, key=key, filename=faidlog.files["model_yml_file"])
-            print(f"Added {key} to model card")
-        elif add_to_fairness_report:
-            update(params, key=key, filename=faidlog.files["fairness_yml_file"])
-            print(f"Added {key} to fairness report")
-        elif add_to_data_card:
-            update(params, key=key, filename=faidlog.files["data_yml_file"])
-            print(f"Added {key} to data card")
-        elif add_to_risk_register:
-            update(params, key=key, filename=faidlog.files["risk_yml_file"])
-            print(f"Added {key} to risk register")
+    def get_current_folder_path():
+        import os
+        return os.path.dirname(os.path.abspath(__file__))
+    
+    @staticmethod
+    def init():
+        # create a log directory if it does not exist
+        import os
+        if not os.path.exists("log"):
+            os.makedirs("log")
+
+        # copy the template files to the log directory
+        import shutil
+        current_folder_location = faidlog.get_current_folder_path()
+        
+        if not os.path.exists(faidlog.files["model_yml_file"]):
+            shutil.copy(os.path.join(current_folder_location, faidlog.templates["model_template"]), faidlog.files["model_yml_file"])
         else:
-            update(params, key=key)
-            print(f"Added {key} to project metadata")
+            print("Model log file already exists")
+        if not os.path.exists(faidlog.files["data_yml_file"]):
+            shutil.copy(os.path.join(current_folder_location, faidlog.templates["data_template"]), faidlog.files["data_yml_file"])
+        else:
+            print("Data log file already exists")
+        if not os.path.exists(faidlog.files["risk_yml_file"]):
+            shutil.copy(os.path.join(current_folder_location,  faidlog.templates["risk_template"]), faidlog.files["risk_yml_file"])
+        else:
+            print("Risk log file already exists")
+        if not os.path.exists(faidlog.files["transparency_yml_file"]):
+            shutil.copy(os.path.join(current_folder_location,  faidlog.templates["transparency_template"]), faidlog.files["transparency_yml_file"])
+        else:
+            print("Transparency log file already exists")
+        
+        print("Logging initialized")
+    
+    @staticmethod
+    def convert_experiment_filepath_format(filename:str) -> str:
+        """
+        Correct the filename
+        """
+        import re
+        experiment_name = re.sub(r'[^\w\-_\. ]', '_', filename.replace(" ", "_").lower())
+        experiment_file_name = f"log/fairness_{experiment_name}.yml"
+        return experiment_file_name
+    
+    @staticmethod
+    def add_model_entry(params:dict, key:str="model_info"):
+        update(params, key=key, filename=faidlog.files["model_yml_file"])
+        print(f"Added {key} to model card")
 
     @staticmethod
-    def get_log_path():
+    def get_model_entry(key:str=None):
+        if key is None:
+            return load(faidlog.files["model_yml_file"])
+        else:
+            try:
+                return load(faidlog.files["model_yml_file"])[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
+
+    @staticmethod
+    def add_data_entry(entry:dict, key:str="dataset_info"):
+        """
+        Add a data entry to the data card
+        """
+        try:
+            if entry.get("conformsTo") == 'http://mlcommons.org/croissant/RAI/1.0':
+                key="rai"
+        except AttributeError | KeyError:
+            pass
+        update(entry, key=key, filename=faidlog.files["data_yml_file"])
+        print(f"Added {key} to data card")
+
+    @staticmethod
+    def get_data_entry(key:str=None):
+        if key is None:
+            return load(faidlog.files["data_yml_file"])
+        else:
+            try:
+                return load(faidlog.files["data_yml_file"])[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
+    
+    @staticmethod
+    def add_risk_entry(params:dict, key:str="risks"):
+        """
+        Add a risk entry to the risk register
+        Key can be one of ["risks", "assumptions", "issues", "dependencies"]
+        """
+        keys = ["risks", "assumptions", "issues", "dependencies"]
+        if key not in keys:
+            error_msg(f"Key {key} not found in the metadata file. Please use one of {keys}")
+            return None
+        
+        # add an id to the risk entry
+        risk_data = load(faidlog.files["risk_yml_file"])
+        id = len(risk_data[key]) + 1
+
+        update({id: params}, key=key, filename=faidlog.files["risk_yml_file"])
+        print(f"Added {key} to risk register")
+    
+    @staticmethod
+    def get_risk_entry(key:str=None):
+        if key is None:
+            return load(faidlog.files["risk_yml_file"])
+        else:
+            try:
+                return load(faidlog.files["risk_yml_file"])[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
+
+    @staticmethod
+    def add_transparency_entry(params:dict, key:str="transparency_info"):
+        update(params, key=key, filename=faidlog.files["transparency_yml_file"])
+        print(f"Added {key} to transparency metadata")
+    
+    @staticmethod
+    def get_transparency_entry(key:str=None):
+        if key is None:
+            return load(faidlog.files["transparency_yml_file"])
+        else:
+            try:
+                return load(faidlog.files["transparency_yml_file"])[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
+            
+
+    @staticmethod
+    def get_fairness_log_path():
         """
         Returns the path to the fairness log file
         """
-        import inquirer
         import os
-        from IPython import get_ipython
 
-        if os.path.exists('log') and 'fairness.yml' in os.listdir('log') :
-            return "log/fairness.yml"
+        if os.path.exists('log'):
+            fairness_files = [f for f in os.listdir('log') if f.startswith('fairness_')]
+            if len(fairness_files) == 1:
+                return os.path.join('log', fairness_files[0])
+            else:
+                return [os.path.join('log', f) for f in fairness_files]
         else:
+            import inquirer
+            from IPython import get_ipython
             try:
                 if 'IPKernelApp' in get_ipython().config:
                     print("Enter the path to the fairness log file")
@@ -112,50 +202,124 @@ class faidlog:
             return fairness_log_filename['input_file']
 
     @staticmethod
+    def generate_experiment_overview_report(project_info:dict=None):
+        """
+        Generate the project overview report
+        """
+        # for each file starts with fairness_, generate the report
+        if project_info is None:
+            fairness_files = faidlog.get_fairness_log_path()
+            if isinstance(fairness_files, list):
+                for file in fairness_files:
+                    project_info = load(file)
+                    generate_experiment_overview_report(project_info)
+            else:
+                project_info = load(fairness_files)
+                generate_experiment_overview_report(project_info)
+
+    @staticmethod
+    def generate_model_card_report(custom_file_path:str=None):
+        """
+        Generate the model card report
+        """
+        import os
+        if not os.path.exists(faidlog.files["model_yml_file"]):
+            print("Model log file not found")
+            return
+        else:
+            if custom_file_path is None:
+                generate_model_card()
+            else:
+                if os.path.exists(custom_file_path):
+                    info = load(custom_file_path)
+                    generate_model_card(model_info=info)
+                else:
+                    print("Custom file path not found")
+
+    @staticmethod
+    def generate_data_card_report(input_file_path:str=None, output_file_path:str=None):
+        """
+        Generate the data card report
+        """
+        import os
+        if input_file_path is not None:
+            if os.path.exists(input_file_path):
+                info = load(input_file_path)
+            else:
+                print("Input file path not found")
+        else:
+            info = faidlog.get_data_entry()
+            if not os.path.exists(faidlog.files["data_yml_file"]):
+                print("Data log file not found")
+                return
+            else:
+                if output_file_path is not None:
+                    generate_data_card(dataset_info=info, output_file=output_file_path)
+                else:
+                    generate_data_card(dataset_info=info)
+    
+    @staticmethod
+    def generate_transparency_report(custom_file_path:str=None):
+        """
+        Generate the transparency report
+        """
+        import os
+        if not os.path.exists(faidlog.files["transparency_yml_file"]):
+            print("Transparency log file not found")
+            return
+        else:
+            if custom_file_path is None:
+                generate_transparency_report()
+            else:
+                if os.path.exists(custom_file_path):
+                    info = load(custom_file_path)
+                    generate_transparency_report(transparency_data=info)
+                else:
+                    print("Custom file path not found")
+
+    @staticmethod
+    def generate_risk_register_report(custom_file_path:str=None):
+        """
+        Generate the risk register report
+        """
+        import os
+        if not os.path.exists(faidlog.files["risk_yml_file"]):
+            print("Risk log file not found")
+            return
+        else:
+            if custom_file_path is None:
+                generate_raid_register_report()
+            else:
+                if os.path.exists(custom_file_path):
+                    info = load(custom_file_path)
+                    generate_raid_register_report(risk_data=info)
+                else:
+                    print("Custom file path not found")
+
+    @staticmethod
     def generate_all_reports():
         """
         Generate all the reports
         """
-        #generate_model_card()
-        generate_data_card()
-        generate_fairness_report()
-        generate_raid_register_report()
+        faidlog.generate_experiment_overview_report()
+        faidlog.generate_model_card_report()
+        faidlog.generate_data_card_report()
+        faidlog.generate_risk_register_report()
         print("All reports generated")
-
-    @staticmethod
-    def model_info(info: ModelCard):
-        info = info.get_model_info()
-        update(info, key=faidlog.keys["model_info_key"])
-
-    @staticmethod
-    def get(key:str, from_fairness_report=False, from_model_card=False, from_data_card=False, from_risk_register=False):
-        """
-        Get the metadata
-        """
-        if from_fairness_report:
-            data = load(faidlog.files["fairness_yml_file"])
-        elif from_model_card:
-            data = load(faidlog.files["model_yml_file"])
-        elif from_data_card:
-            data = load(faidlog.files["data_yml_file"])
-        elif from_risk_register:
-            data = load(faidlog.files["risk_yml_file"])
-        else:  
-            data = load()
-
-        try:
-            val = data[key]
-            return val
-        except KeyError:
-            error_msg(f"Key {key} not found in the metadata file")
-            return None
     
     @staticmethod
-    def get_fairness_data():
-        return load(faidlog.files["fairness_yml_file"])
+    def get_fairness_entry(key:str=None):
+        if key is None:
+            return load(faidlog.get_fairness_log_path())
+        else:
+            try:
+                return load(faidlog.get_fairness_log_path())[key]
+            except KeyError:
+                error_msg(f"Key {key} not found in the metadata file")
+                return None
     
     @staticmethod
-    def generate_trust_label():
+    def generate_fairness_log_completeness_label():
         """
         Generate a digital trust label as SVG and add it to the reports/README.md file.
         """
@@ -226,7 +390,7 @@ class faidlog:
                 f.write(str(fairness_logo))
             return
         
-        log_path = faidlog.get_log_path()
+        log_path = faidlog.get_fairness_log_path()
         log_completeness = calculate_log_completeness(log_path)
         fairness_logo = generate_fairness_logo(log_completeness)
         add_label_to_readme(fairness_logo)
@@ -299,77 +463,320 @@ class faidlog:
             "typical_data_point": metadata.get("typical_data_point", "")
         }
         return dataset_info
+    
+    @staticmethod
+    def pretty_croissant_rai(metadata) -> dict:
+        """
+        Gets the ML Croissant metadata dict and returns another dict with our report format
+        """
+        dataset_info = {
+            "dataCollection": metadata.get("dataCollection", ""),
+            "dataCollectionType": metadata.get("dataCollectionType", ""),
+            "dataCollectionRawData": metadata.get("dataCollectionRawData", ""),
+            "dataAnnotationProtocol": metadata.get("dataAnnotationProtocol", ""),
+            "dataAnnotationPlatform": metadata.get("dataAnnotationPlatform", ""),
+            "dataAnnotationAnalysis": metadata.get("dataAnnotationAnalysis", ""),
+            "dataUseCases": metadata.get("dataUseCases", ""),
+            "dataBiases": metadata.get("dataBiases", ""),
+            "annotationsPerItem": metadata.get("annotationsPerItem", ""),
+            "annotatorDemographics": metadata.get("annotatorDemographics", "")
+        }
+        return dataset_info
+    
+    @staticmethod
+    def get_imported_libraries():
+        # Get all imported modules
+        imported_modules = [m.__name__ for m in sys.modules.values() if m]
+        # include only modules that are not in the standard library
+        imported_modules = [m for m in imported_modules if m not in sys.builtin_module_names]
+        # remove module submodules
+        imported_modules = [m.split('.')[0] for m in imported_modules]
+        # remove duplicates
+        imported_modules = list(set(imported_modules))
+        
+        # Get the version of each imported module if available
+        modules_with_versions = {}
+        for module_name in imported_modules:
+            # if module_name does not start with _
+            if module_name.startswith('_'):
+                continue
+            try:
+                version = pkg_resources.get_distribution(module_name).version
+                modules_with_versions[module_name] = version
+            except pkg_resources.DistributionNotFound:
+                pass
+        
+        return sorted(modules_with_versions.items())
+    
+    @staticmethod
+    def get_package_licenses():
+        import importlib.metadata
+        with open('requirements.txt', 'r') as f:
+            packages = f.read().splitlines()
+            packages = [pkg.split('==')[0] for pkg in packages if pkg]
+            try:
+                licenses = []
+                for package in packages:
+                    metadata = importlib.metadata.metadata(package)
+                    license = metadata.get('License')
+                    if not license:
+                        license = metadata.get('Classifier', [])
+                        license_info = [line for line in license if line.startswith('License')]
+                        license = license_info[0] if license_info else 'License information not found'
+                    licenses.append((package, license))
+            except importlib.metadata.PackageNotFoundError:
+                licenses.append((package, "Package not found")) 
+        return licenses
 
+    @staticmethod
+    def get_ctx(experiment_name:str) -> 'ExperimentContext':
+        """
+        Get the experiment context
+        """
+        dataDict = load(faidlog.convert_experiment_filepath_format(experiment_name))
+        return faidlog.ExperimentContext(name=dataDict["name"], 
+                                         description=dataDict["description"],
+                                         start_time=dataDict["start_time"],
+                                         tags=dataDict["tags"],
+                                         authors=dataDict["authors"],
+                                         hardware=dataDict["hardware"],
+                                         data=dataDict["data"])
+    
     class ExperimentContext:
         """
         A class to represent an experiment context.
         """
 
-        def __init__(self, name=None, description=""):
-
-            datestr = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+        def __init__(self, name:str=None, 
+                     description:str="", 
+                     start_time:str=None, 
+                     tags:list=[],
+                     authors:list=[],
+                     hardware:dict={},
+                     data:dict={}):
+            import os
             if name is None:
-                # create a random name
-                name = f"Experiment-{datestr}"
+                print("Please provide a name for the experiment")
+                return
+            
+            self.filename = faidlog.convert_experiment_filepath_format(name)
+            # if the file exists in the log directory, load the metadata
+            if os.path.exists(self.filename):
+                dataDict = load(self.filename)
+                name = dataDict["name"]
+                description = dataDict["description"]
+                start_time = dataDict["start_time"]
+                tags = dataDict["tags"]
+                authors = dataDict["authors"]
+                hardware = dataDict["hardware"]
+                data = dataDict["data"]
+            
             self.name = name
             self.description = description
-            self.start_time = datestr
-            self.end_time = None
-            self.libraries = self._get_imported_libraries()
-            self.metadata = {}
+            if start_time is None:
+                start_time = datetime.now().isoformat()
+            self.start_time = start_time
+            self.tags = tags
+            self.authors = authors
+            self.hardware = hardware
+            self.data = data
 
-        def _get_imported_libraries(self):
-            # Get all imported modules
-            imported_modules = [m.__name__ for m in sys.modules.values() if m]
-            # include only modules that are not in the standard library
-            imported_modules = [m for m in imported_modules if m not in sys.builtin_module_names]
-            # remove module submodules
-            imported_modules = [m.split('.')[0] for m in imported_modules]
-            # remove duplicates
-            imported_modules = list(set(imported_modules))
+            self.init_experiment_log()
             
-            # Get the version of each imported module if available
-            modules_with_versions = {}
-            for module_name in imported_modules:
-                # if module_name does not start with _
-                if module_name.startswith('_'):
-                    continue
-                try:
-                    version = pkg_resources.get_distribution(module_name).version
-                    modules_with_versions[module_name] = version
-                except pkg_resources.DistributionNotFound:
-                    pass
-            
-            return sorted(modules_with_versions.items())
 
-        def add_metadata(self, key, value):
-            """Add custom metadata to the experiment context."""
-            self.metadata[key] = value
-
-        def end_experiment(self):
-            """Mark the end of the experiment."""
-            self.end_time = datetime.now()
-
-        def get_summary(self):
+        def to_dict(self):
             """Get a summary of the experiment."""
-            summary = {
-                "Experiment Name": self.name,
-                "Description": self.description,
-                "Start Time": self.start_time,
-                "End Time": self.end_time,
-                "Libraries": self.libraries,
-                "Metadata": self.metadata
+            metadata = {
+                "name": self.name,
+                "authors": self.authors,
+                "start_time": self.start_time,
+                "description": self.description,
+                "tags": self.tags,
+                "hardware": self.hardware,
+                "data": self.data,
             }
-            return summary
+            return metadata
         
+        def __str__(self):
+            summary = self.to_dict()
+            return "\n".join(f"{key}: {value}" for key, value in summary.items())
+
+        def init_experiment_log(self):
+            """
+            Initialize the metadata
+            """
+            import os
+            fairness_template = load(os.path.join(faidlog.get_current_folder_path(), faidlog.templates["fairness_template"]))
+            fairness_template["name"] = self.name
+            fairness_template["description"] = self.description
+            fairness_template["start_time"] = self.start_time
+            fairness_template["tags"] = self.tags
+            fairness_template["authors"] = self.authors
+            fairness_template["hardware"] = self.hardware
+            fairness_template["data"] = self.data
+            return fairness_template  # Return the metadata dictionary
+
+        def add_entry(self, key:str, entry:dict):
+            """
+            Initialize the fairness logging using the commonly used metadata tracking tools (wandb, mlflow, etc.)
+            Takes a dictionary with the project name and configuration.
+            project_name: str
+            config: dictionary
+            """
+            self.data[key] = entry
+            update(yamlData=self.data, key="data", filename=self.filename)
+            print(f"Added {key} to project metadata and log updated")
+
+        def set_data(self, data: dict):
+            """Set data for the experiment."""
+            self.data = data
+
+        def set_tags(self, tags: list):
+            """Set tags for the experiment."""
+            self.tags = tags
+        
+        def set_authors(self, authors: list):
+            """Set authors for the experiment."""
+            self.authors = authors
+
+        def set_hardware(self, hardware: dict):
+            """Set hardware information for the experiment."""
+            self.hardware = hardware
+
         def log_summary(self):
             """Log a summary of the experiment."""
-            summary = self.get_summary()
+            summary = self.to_dict()
             faidlog.log(summary, key=self.name)
 
-        def __str__(self):
-            summary = self.get_summary()
-            return "\n".join(f"{key}: {value}" for key, value in summary.items())
+    class ModelCard:
+        def __init__(self, model_info:dict={}):
+            # if model log file exists, load the metadata
+            if model_info:
+                self.model_info = model_info
+                print("Model info is created with the provided dictionary.")
+            else:
+                self.model_info = load(faidlog.files["model_yml_file"])["model_info"]
+                print("Model info is loaded from the model log file.")
+
+        def get_model_info(self):
+            """
+            Returns the entire model information.
+            """
+            return self.model_info
+
+        def set_model_info(self, new_info):
+            """
+            Sets the model information with new info.
+            """
+            self.model_info = new_info
+
+        def get_model_detail(self, detail_key):
+            """
+            Returns a specific detail from the model details.
+            """
+            return self.model_info.get("model_details", {}).get(detail_key, None)
+
+        def set_model_detail(self, detail_key, detail_value):
+            """
+            Sets a specific detail in the model details.
+            """
+            if "model_details" not in self.model_info:
+                self.model_info["model_details"] = {}
+            self.model_info["model_details"][detail_key] = detail_value
+
+        def get_model_parameter(self, parameter_key):
+            """
+            Returns a specific parameter from the model parameters.
+            """
+            return self.model_info.get("model_parameters", {}).get(parameter_key, None)
+
+        def set_model_parameter(self, parameter_key, parameter_value):
+            """
+            Sets a specific parameter in the model parameters.
+            """
+            if "model_parameters" not in self.model_info:
+                self.model_info["model_parameters"] = {}
+            self.model_info["model_parameters"][parameter_key] = parameter_value
+
+        def get_quantitative_analysis(self, metric_key):
+            """
+            Returns a specific metric from the quantitative analysis.
+            """
+            metrics = self.model_info.get("quantitative_analysis", {}).get("performance_metrics", [])
+            for metric in metrics:
+                if metric.get("type") == metric_key:
+                    return metric
+            return None
+
+        def add_quantitative_metric(self, metric):
+            """
+            Adds a new metric to the quantitative analysis.
+            """
+            if "quantitative_analysis" not in self.model_info:
+                self.model_info["quantitative_analysis"] = {"performance_metrics": []}
+            self.model_info["quantitative_analysis"]["performance_metrics"].append(metric)
+
+        def get_consideration(self, consideration_key):
+            """
+            Returns a specific consideration from the considerations section.
+            """
+            considerations = self.model_info.get("considerations", {}).get(consideration_key, [])
+            return considerations
+
+        def add_consideration(self, consideration_key, consideration):
+            """
+            Adds a new consideration to the considerations section.
+            """
+            if "considerations" not in self.model_info:
+                self.model_info["considerations"] = {}
+            if consideration_key not in self.model_info["considerations"]:
+                self.model_info["considerations"][consideration_key] = []
+            self.model_info["considerations"][consideration_key].append(consideration)
+
+        def save(self):
+            """
+            Saves the model information to the model log file.
+            """
+            update(self.model_info, key=faidlog.keys["model_info_key"], filename=faidlog.files["model_yml_file"])
+            print("Model info saved to the model log file.")
+        
+        def to_dict(self):
+            """
+            Returns the model information as a dictionary.
+            """
+            return self.model_info
+        
+
+    class DataCard:
+        
+        def __init__(self, dataset_info:dict=None, rai:dict=None):
+            self.dataset_name = dataset_info
+            self.rai = rai
+
+        def to_dict(self):
+            """
+            Returns the data information as a dictionary.
+            """
+            return {
+                "dataset_info": self.dataset_info,
+                "rai": self.rai
+            }
+
+        def save(self):
+            """
+            Saves the data information to the data log file.
+            """
+            update(self.to_dict(), key=faidlog.keys["sample_data_key"], filename=faidlog.files["data_yml_file"])
+            print("Data info saved to the data log file.")
+
+        def validate(self, schema):
+            """
+            Validates the data information against a schema.
+            """
+            from jsonschema import validate
+            validate(instance=self.to_dict(), schema=schema)
+
+
 
 
 

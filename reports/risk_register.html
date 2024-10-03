@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RAID Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 0.3em;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.6em;
+        }
+
+        h3 {
+            font-size: 1.4em;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+        }
+
+        ul, ol {
+            margin-bottom: 1.2em;
+            padding-left: 1.5em;
+        }
+
+        li {
+            margin-bottom: 0.6em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5em;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #2c3e50;
+        }
+
+        blockquote {
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-left: 5px solid #ccc;
+            font-style: italic;
+            color: #555;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        hr {
+            border: 0;
+            border-top: 2px solid #ddd;
+            margin: 2em 0;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .report-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            th, td {
+                display: block;
+                width: 100%;
+            }
+
+            th {
+                text-align: center;
+            }
+
+            td {
+                border-top: none;
+            }
+        }
+        .description {
+            width: 30%;
+        }
+        .impact {
+            width: 20%;
+        }
+        .likelihood {
+            width: 15%;
+        }
+        .status {
+            width: 15%;
+        }
+        .mitigation {
+            width: 35%;
+        }
+        .action {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+    <h1>RAID Register</h1>
+    
+    <h2>Risks</h2>
+    <table>
+        <tr>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="likelihood">Likelihood</th>
+            <th class="mitigation">Mitigation</th>
+        </tr>
+        
+        
+        <tr>
+            <td class="description">The model card information does not contain the model's training data information.</td>
+            <td class="impact">High</td>
+            <td class="likelihood">High</td>
+            <td class="mitigation">Add the training data information to the model card. You can find it from their research paper.</td>
+        </tr>
+        
+        
+    </table>
+
+    <h2>Assumptions</h2>
+    <table>
+        <tr>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="action">Action</th>
+        </tr>
+        
+        
+        <tr>
+            <td class="description">Assume that the training data provided is accurate and reliable.</td>
+            <td class="impact">High</td>
+            <td class="action">Perform data validation and quality checks.</td>
+        </tr>
+        
+        
+    </table>
+
+    <h2>Issues</h2>
+    <table>
+        <tr>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="status">Status</th>
+            <th class="action">Action</th>
+            <th>Report</th> <!-- New column for report buttons -->
+        </tr>
+        
+        
+        <tr id="issue0">
+          <td class="description">Detected bias in initial AI model outputs.</td>
+          <td class="impact">High</td>
+          <td class="status">Open</td>
+          <td class="action">Investigate the source of bias and retrain the model with improved data.</td>
+          <td><button onclick="formatAndCopyIssue('issue0','Detected bias in initial AI model outputs.', 'Investigate the source of bias and retrain the model with improved data.')">Report Fairness Issue</button></td>
+        </tr>
+        
+        
+    </table>
+    <h2>Dependencies</h2>
+    <table>
+        <tr>
+            <th class="description">Description</th>
+            <th class="impact">Impact</th>
+            <th class="status">Status</th>
+            <th class="action">Action</th>
+        </tr>
+        
+        
+        <tr>
+            <td class="description">Dependency on external datasets for training the AI model.</td>
+            <td class="impact">High</td>
+            <td class="status">Pending</td>
+            <td class="action">Ensure timely access to required datasets from data providers.</td>
+        </tr>
+        
+        
+    </table>
+    </div>
+</body>
+
+<script>
+    function formatAndCopyIssue(issueId, description, action) {
+        // Find the issue row and extract data
+        const id = issueId.replace('issue', '');
+        const issueRow = document.getElementById(issueId);
+        const issue = {
+            description: issueRow.querySelector('.description').textContent,
+            impact: issueRow.querySelector('.impact').textContent,
+            status: issueRow.querySelector('.status').textContent,
+            action: issueRow.querySelector('.action').textContent,
+        };
+    
+        // Format the issue data into the markdown template
+        const formattedText = `
+            ---
+            name: Fairness Issues
+            about: Report unfair behaviour (bias, discrimination, accessibility, etc.) displayed by the system
+            title: "[FAIRNESS] Issue ID: ${id}"
+            labels: ''
+            assignees: ''
+            
+            ---
+            
+            # Current Behaviour
+            
+            ${description}
+            
+            # Affected Protected Characteristics
+            
+            (Describe here)
+            
+            # Possible Solution
+            
+            ${action}
+        `;
+    
+        // Copy the formatted text to the clipboard
+        navigator.clipboard.writeText(formattedText).then(() => {
+            alert('Issue report copied to clipboard.');
+        }, (err) => {
+            console.error('Could not copy text: ', err);
+        });
+    }
+</script>
+
+</html>

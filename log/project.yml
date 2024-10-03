@@ -1,8 +1,0 @@
-project: financial-sentiment-analysis
-config:
-  language: en
-  tags:
-  - financial-sentiment-analysis
-  - sentiment-analysis
-  widget:
-  - text: [growth is strong and we have plenty of liquidity, there is a shortage of capital, and we need extra financing, formulation patents might protect Vasotec to a limited extent]
