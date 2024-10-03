@@ -24,11 +24,24 @@ class faidlog:
         "model_info_key": "model_info",
         "sample_data_key" : "sample_results"
     }
+    
+    templates = {
+        "fairness_template": "logging/templates/fairness.yml",
+        "model_template": "logging/templates/model.yml",
+        "data_template": "logging/templates/data.yml",
+        "risk_template": "logging/templates/risks.yml",
+        "transparency_template": "logging/templates/transparent.yml"
+    }
 
     @staticmethod
     def __str__() -> str:
         print("Fairness Logging")
         return "Fairness Logging"
+    
+    @staticmethod
+    def get_current_folder_path():
+        import os
+        return os.path.dirname(os.path.abspath(__file__))
     
     @staticmethod
     def init():
@@ -39,22 +52,22 @@ class faidlog:
 
         # copy the template files to the log directory
         import shutil
-        current_folder_location = os.path.dirname(os.path.abspath(__file__))
+        current_folder_location = faidlog.get_current_folder_path()
         
         if not os.path.exists(faidlog.files["model_yml_file"]):
-            shutil.copy(os.path.join(current_folder_location, "logging/templates/model.yml"), faidlog.files["model_yml_file"])
+            shutil.copy(os.path.join(current_folder_location, faidlog.templates["model_template"]), faidlog.files["model_yml_file"])
         else:
             print("Model log file already exists")
         if not os.path.exists(faidlog.files["data_yml_file"]):
-            shutil.copy(os.path.join(current_folder_location, "logging/templates/data.yml"), faidlog.files["data_yml_file"])
+            shutil.copy(os.path.join(current_folder_location, faidlog.templates["data_template"]), faidlog.files["data_yml_file"])
         else:
             print("Data log file already exists")
         if not os.path.exists(faidlog.files["risk_yml_file"]):
-            shutil.copy(os.path.join(current_folder_location, "logging/templates/risks.yml"), faidlog.files["risk_yml_file"])
+            shutil.copy(os.path.join(current_folder_location,  faidlog.templates["risk_template"]), faidlog.files["risk_yml_file"])
         else:
             print("Risk log file already exists")
         if not os.path.exists(faidlog.files["transparency_yml_file"]):
-            shutil.copy(os.path.join(current_folder_location, "logging/templates/transparent.yml"), faidlog.files["transparency_yml_file"])
+            shutil.copy(os.path.join(current_folder_location,  faidlog.templates["transparency_template"]), faidlog.files["transparency_yml_file"])
         else:
             print("Transparency log file already exists")
         
@@ -592,9 +605,16 @@ class faidlog:
             """
             Initialize the metadata
             """
-            metadata = self.to_dict()
-            generate(metadata, filename=self.filename)
-            return metadata  # Return the metadata dictionary
+            import os
+            fairness_template = load(os.path.join(faidlog.get_current_folder_path(), faidlog.templates["fairness_template"]))
+            fairness_template["name"] = self.name
+            fairness_template["description"] = self.description
+            fairness_template["start_time"] = self.start_time
+            fairness_template["tags"] = self.tags
+            fairness_template["authors"] = self.authors
+            fairness_template["hardware"] = self.hardware
+            fairness_template["data"] = self.data
+            return fairness_template  # Return the metadata dictionary
 
         def add_entry(self, key:str, entry:dict):
             """
@@ -725,6 +745,36 @@ class faidlog:
             Returns the model information as a dictionary.
             """
             return self.model_info
+        
+
+    class DataCard:
+        
+        def __init__(self, dataset_info:dict=None, rai:dict=None):
+            self.dataset_name = dataset_info
+            self.rai = rai
+
+        def to_dict(self):
+            """
+            Returns the data information as a dictionary.
+            """
+            return {
+                "dataset_info": self.dataset_info,
+                "rai": self.rai
+            }
+
+        def save(self):
+            """
+            Saves the data information to the data log file.
+            """
+            update(self.to_dict(), key=faidlog.keys["sample_data_key"], filename=faidlog.files["data_yml_file"])
+            print("Data info saved to the data log file.")
+
+        def validate(self, schema):
+            """
+            Validates the data information against a schema.
+            """
+            from jsonschema import validate
+            validate(instance=self.to_dict(), schema=schema)
 
 
 

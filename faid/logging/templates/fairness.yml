@@ -1,0 +1,20 @@
+name: ""
+authors: []
+start_time: ""
+description: ""
+tags: []
+hardware: {}
+data:
+  license_info: ""
+  sample_data: ""
+  variable_profile:
+bias_metrics:
+  facets:
+    - name: ""
+      metrics:
+        - description: ""
+          name: ""
+          value: 0
+      value_or_threshold: ""
+      label: ""
+      label_value_or_threshold: ""
