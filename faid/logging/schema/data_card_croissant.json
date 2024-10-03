@@ -78,5 +78,20 @@
     "data_fields": { "type": "array", "items": { "type": "string" } },
     "typical_data_point": { "type": "string" }
   },
+  "rai": {
+    "type": "object",
+    "properties": {
+      "dataCollection": { "type": "string" },
+      "dataCollectionType": { "type": "string" },
+      "dataCollectionRawData": { "type": "string" },
+      "dataAnnotationProtocol": { "type": "string" },
+      "dataAnnotationPlatform": { "type": "string" },
+      "dataAnnotationAnalysis": { "type": "string" },
+      "dataUseCases": { "type": "string" },
+      "dataBiases": { "type": "string" },
+      "annotationsPerItem": { "type": "string" },
+      "annotatorDemographics": { "type": "string" }
+    }
+  },
   "required": ["dataset_name", "summary", "dataset_link"]
 }

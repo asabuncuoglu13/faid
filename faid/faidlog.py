@@ -87,8 +87,16 @@ class faidlog:
                 return None
 
     @staticmethod
-    def add_data_entry(params:dict, key:str="data_info"):
-        update(params, key=key, filename=faidlog.files["data_yml_file"])
+    def add_data_entry(entry:dict, key:str="dataset_info"):
+        """
+        Add a data entry to the data card
+        """
+        try:
+            if entry.get("conformsTo") == 'http://mlcommons.org/croissant/RAI/1.0':
+                key="rai"
+        except AttributeError | KeyError:
+            pass
+        update(entry, key=key, filename=faidlog.files["data_yml_file"])
         print(f"Added {key} to data card")
 
     @staticmethod
@@ -216,23 +224,26 @@ class faidlog:
                     print("Custom file path not found")
 
     @staticmethod
-    def generate_data_card_report(custom_file_path:str=None):
+    def generate_data_card_report(input_file_path:str=None, output_file_path:str=None):
         """
         Generate the data card report
         """
         import os
-        if not os.path.exists(faidlog.files["data_yml_file"]):
-            print("Data log file not found")
-            return
-        else:
-            if custom_file_path is None:
-                generate_data_card()
+        if input_file_path is not None:
+            if os.path.exists(input_file_path):
+                info = load(input_file_path)
             else:
-                if os.path.exists(custom_file_path):
-                    info = load(custom_file_path)
-                    generate_data_card(dataset_info=info)
+                print("Input file path not found")
+        else:
+            info = faidlog.get_data_entry()
+            if not os.path.exists(faidlog.files["data_yml_file"]):
+                print("Data log file not found")
+                return
+            else:
+                if output_file_path is not None:
+                    generate_data_card(dataset_info=info, output_file=output_file_path)
                 else:
-                    print("Custom file path not found")
+                    generate_data_card(dataset_info=info)
     
     @staticmethod
     def generate_transparency_report(custom_file_path:str=None):
@@ -437,6 +448,25 @@ class faidlog:
             "sampling_data_points": [df.head().to_dict()],
             "data_fields": df.keys().tolist(),
             "typical_data_point": metadata.get("typical_data_point", "")
+        }
+        return dataset_info
+    
+    @staticmethod
+    def pretty_croissant_rai(metadata) -> dict:
+        """
+        Gets the ML Croissant metadata dict and returns another dict with our report format
+        """
+        dataset_info = {
+            "dataCollection": metadata.get("dataCollection", ""),
+            "dataCollectionType": metadata.get("dataCollectionType", ""),
+            "dataCollectionRawData": metadata.get("dataCollectionRawData", ""),
+            "dataAnnotationProtocol": metadata.get("dataAnnotationProtocol", ""),
+            "dataAnnotationPlatform": metadata.get("dataAnnotationPlatform", ""),
+            "dataAnnotationAnalysis": metadata.get("dataAnnotationAnalysis", ""),
+            "dataUseCases": metadata.get("dataUseCases", ""),
+            "dataBiases": metadata.get("dataBiases", ""),
+            "annotationsPerItem": metadata.get("annotationsPerItem", ""),
+            "annotatorDemographics": metadata.get("annotatorDemographics", "")
         }
         return dataset_info
     
