@@ -4,7 +4,6 @@ import pkg_resources
 from datetime import datetime
 from .logging.yaml_utils import generate, update, load
 from .logging.message import error_msg
-from .logging.model_card_utils import ModelCard
 from .report.report_utils import generate_data_card, generate_model_card, generate_raid_register_report, generate_experiment_overview_report, generate_transparency_report
 
 # %%
@@ -132,6 +131,8 @@ class faidlog:
             fairness_files = [f for f in os.listdir('log') if f.startswith('fairness_')]
             if len(fairness_files) == 1:
                 return os.path.join('log', fairness_files[0])
+            else:
+                return [os.path.join('log', f) for f in fairness_files]
         else:
             try:
                 if 'IPKernelApp' in get_ipython().config:
@@ -150,55 +151,107 @@ class faidlog:
             return fairness_log_filename['input_file']
 
     @staticmethod
+    def generate_experiment_overview_report(project_info:dict=None):
+        """
+        Generate the project overview report
+        """
+        # for each file starts with fairness_, generate the report
+        if project_info is None:
+            fairness_files = faidlog.get_fairness_log_path()
+            if isinstance(fairness_files, list):
+                for file in fairness_files:
+                    project_info = load(file)
+                    generate_experiment_overview_report(project_info)
+            else:
+                project_info = load(fairness_files)
+                generate_experiment_overview_report(project_info)
+
+    @staticmethod
+    def generate_model_card_report(custom_file_path:str=None):
+        """
+        Generate the model card report
+        """
+        import os
+        if not os.path.exists(faidlog.files["model_yml_file"]):
+            print("Model log file not found")
+            return
+        else:
+            if custom_file_path is None:
+                generate_model_card()
+            else:
+                if os.path.exists(custom_file_path):
+                    info = load(custom_file_path)
+                    generate_model_card(model_info=info)
+                else:
+                    print("Custom file path not found")
+
+    @staticmethod
+    def generate_data_card_report(custom_file_path:str=None):
+        """
+        Generate the data card report
+        """
+        import os
+        if not os.path.exists(faidlog.files["data_yml_file"]):
+            print("Data log file not found")
+            return
+        else:
+            if custom_file_path is None:
+                generate_data_card()
+            else:
+                if os.path.exists(custom_file_path):
+                    info = load(custom_file_path)
+                    generate_data_card(dataset_info=info)
+                else:
+                    print("Custom file path not found")
+    
+    @staticmethod
+    def generate_transparency_report(custom_file_path:str=None):
+        """
+        Generate the transparency report
+        """
+        import os
+        if not os.path.exists(faidlog.files["transparency_yml_file"]):
+            print("Transparency log file not found")
+            return
+        else:
+            if custom_file_path is None:
+                generate_transparency_report()
+            else:
+                if os.path.exists(custom_file_path):
+                    info = load(custom_file_path)
+                    generate_transparency_report(transparency_data=info)
+                else:
+                    print("Custom file path not found")
+
+    @staticmethod
+    def generate_risk_register_report(custom_file_path:str=None):
+        """
+        Generate the risk register report
+        """
+        import os
+        if not os.path.exists(faidlog.files["risk_yml_file"]):
+            print("Risk log file not found")
+            return
+        else:
+            if custom_file_path is None:
+                generate_raid_register_report()
+            else:
+                if os.path.exists(custom_file_path):
+                    info = load(custom_file_path)
+                    generate_raid_register_report(risk_data=info)
+                else:
+                    print("Custom file path not found")
+
+    @staticmethod
     def generate_all_reports():
         """
         Generate all the reports
         """
-        generate_experiment_overview_report()
-        generate_model_card()
-        generate_data_card()
-        generate_raid_register_report()
+        faidlog.generate_experiment_overview_report()
+        faidlog.generate_model_card_report()
+        faidlog.generate_data_card_report()
+        faidlog.generate_risk_register_report()
         print("All reports generated")
-
-    @staticmethod
-    def generate_experiment_overview_report(project_info:dict={}):
-        """
-        Generate the project overview report
-        """
-        generate_experiment_overview_report(project_info)
-
-    @staticmethod
-    def generate_model_card_report():
-        """
-        Generate the model card report
-        """
-        generate_model_card()
-
-    @staticmethod
-    def generate_data_card_report():
-        """
-        Generate the data card report
-        """
-        generate_data_card()
-    
-    @staticmethod
-    def generate_transparency_report():
-        """
-        Generate the transparency report
-        """
-        generate_transparency_report()
-
-    @staticmethod
-    def generate_risk_register_report():
-        """
-        Generate the risk register report
-        """
-        generate_raid_register_report()
-
-    @staticmethod
-    def model_info(info: ModelCard):
-        info = info.get_model_info()
-        update(info, key=faidlog.keys["model_info_key"])
     
     @staticmethod
     def get_fairness_entry(key:str=None):
@@ -212,7 +265,7 @@ class faidlog:
                 return None
     
     @staticmethod
-    def generate_trust_label():
+    def generate_fairness_label():
         """
         Generate a digital trust label as SVG and add it to the reports/README.md file.
         """
@@ -415,8 +468,7 @@ class faidlog:
                                          authors=dataDict["authors"],
                                          hardware=dataDict["hardware"],
                                          data=dataDict["data"])
-        
-
+    
     class ExperimentContext:
         """
         A class to represent an experiment context.
@@ -515,6 +567,104 @@ class faidlog:
             """Log a summary of the experiment."""
             summary = self.to_dict()
             faidlog.log(summary, key=self.name)
+
+    class ModelCard:
+        def __init__(self, model_info:dict={}):
+            # if model log file exists, load the metadata
+            if model_info:
+                self.model_info = model_info
+                print("Model info is created with the provided dictionary.")
+            else:
+                self.model_info = load(faidlog.files["model_yml_file"])["model_info"]
+                print("Model info is loaded from the model log file.")
+
+        def get_model_info(self):
+            """
+            Returns the entire model information.
+            """
+            return self.model_info
+
+        def set_model_info(self, new_info):
+            """
+            Sets the model information with new info.
+            """
+            self.model_info = new_info
+
+        def get_model_detail(self, detail_key):
+            """
+            Returns a specific detail from the model details.
+            """
+            return self.model_info.get("model_details", {}).get(detail_key, None)
+
+        def set_model_detail(self, detail_key, detail_value):
+            """
+            Sets a specific detail in the model details.
+            """
+            if "model_details" not in self.model_info:
+                self.model_info["model_details"] = {}
+            self.model_info["model_details"][detail_key] = detail_value
+
+        def get_model_parameter(self, parameter_key):
+            """
+            Returns a specific parameter from the model parameters.
+            """
+            return self.model_info.get("model_parameters", {}).get(parameter_key, None)
+
+        def set_model_parameter(self, parameter_key, parameter_value):
+            """
+            Sets a specific parameter in the model parameters.
+            """
+            if "model_parameters" not in self.model_info:
+                self.model_info["model_parameters"] = {}
+            self.model_info["model_parameters"][parameter_key] = parameter_value
+
+        def get_quantitative_analysis(self, metric_key):
+            """
+            Returns a specific metric from the quantitative analysis.
+            """
+            metrics = self.model_info.get("quantitative_analysis", {}).get("performance_metrics", [])
+            for metric in metrics:
+                if metric.get("type") == metric_key:
+                    return metric
+            return None
+
+        def add_quantitative_metric(self, metric):
+            """
+            Adds a new metric to the quantitative analysis.
+            """
+            if "quantitative_analysis" not in self.model_info:
+                self.model_info["quantitative_analysis"] = {"performance_metrics": []}
+            self.model_info["quantitative_analysis"]["performance_metrics"].append(metric)
+
+        def get_consideration(self, consideration_key):
+            """
+            Returns a specific consideration from the considerations section.
+            """
+            considerations = self.model_info.get("considerations", {}).get(consideration_key, [])
+            return considerations
+
+        def add_consideration(self, consideration_key, consideration):
+            """
+            Adds a new consideration to the considerations section.
+            """
+            if "considerations" not in self.model_info:
+                self.model_info["considerations"] = {}
+            if consideration_key not in self.model_info["considerations"]:
+                self.model_info["considerations"][consideration_key] = []
+            self.model_info["considerations"][consideration_key].append(consideration)
+
+        def save(self):
+            """
+            Saves the model information to the model log file.
+            """
+            update(self.model_info, key=faidlog.keys["model_info_key"], filename=faidlog.files["model_yml_file"])
+            print("Model info saved to the model log file.")
+        
+        def to_dict(self):
+            """
+            Returns the model information as a dictionary.
+            """
+            return self.model_info
 
 
 

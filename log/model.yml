@@ -30,3 +30,25 @@ model_info:
     - sentiment-analysis
     widget:
     - text: growth is strong and we have plenty of liquidity
+  model_details:
+    name: BERT
+  model_parameters:
+    num_layers: 12
+  quantitative_analysis:
+    performance_metrics:
+    - type: accuracy
+      value: 0.95
+  considerations:
+    ethical_considerations:
+    - This model is not fair.
+model_details:
+  name: BERT
+model_parameters:
+  num_layers: 12
+quantitative_analysis:
+  performance_metrics:
+  - type: accuracy
+    value: 0.95
+considerations:
+  ethical_considerations:
+  - This model is not fair.
