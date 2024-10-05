@@ -177,12 +177,12 @@ class faidlog:
         """
         import os
 
-        if os.path.exists('log'):
-            fairness_files = [f for f in os.listdir('log') if f.startswith('fairness_')]
+        if os.path.exists(get_project_log_path()):
+            fairness_files = [f for f in os.listdir(get_project_log_path()) if f.startswith('fairness_')]
             if len(fairness_files) == 1:
-                return os.path.join('log', fairness_files[0])
+                return os.path.join(get_project_log_path(), fairness_files[0])
             else:
-                return [os.path.join('log', f) for f in fairness_files]
+                return [os.path.join(get_project_log_path(), f) for f in fairness_files]
         else:
             import inquirer
             from IPython import get_ipython
