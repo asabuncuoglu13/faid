@@ -1,9 +1,10 @@
-name: ""
-authors: []
-start_time: ""
-description: ""
-tags: []
-hardware: {}
+context:
+  name: ""
+  authors: []
+  start_time: ""
+  description: ""
+  tags: []
+  hardware: {}
 data:
   license_info: ""
   sample_data: ""

@@ -167,23 +167,18 @@
 		{% endif %}
 		<h2>Descriptive Statistics</h2>
 		{% if dataset_info.descriptive_statistics %}
-			<p><strong>Fields:</strong> {{ dataset_info.descriptive_statistics.fields | join(', ') }}</p>
-			<ul>
-				{% for stat in dataset_info.descriptive_statistics.stats %}
-					<li><strong>{{ stat.name }}:</strong> {{ dataset_info.stat.values | join(', ') }}</li>
-				{% endfor %}
-			</ul>
+			<div>
+				{{ dataset_info.descriptive_statistics }}
+			</div>
 		{% endif %}
 		{% if dataset_info.sensitivity_types %}
 			<p><strong>Sensitivity Types:</strong> {{ dataset_info.sensitivity_types | join(', ') }}</p>
 		{% endif %}
 		<h2>Intentional Sensitive Data</h2>
-		{% if dataset_info.intentional_sensitive_data %}
-			<ul>
-				{% for data in dataset_info.intentional_sensitive_data %}
-					<li><strong>{{ data.name }}:</strong> {{ dataset_info.data.description }}</li>
-				{% endfor %}
-			</ul>
+		{% if dataset_info.intentional_sensitive_data %}\
+			<div> 
+			{{dataset_info.intentional_sensitive_data }}
+			</div>
 		{% endif %}
 		{% if dataset_info.unintentional_sensitive_data %}
 			<p><strong>Unintentional Sensitive Data:</strong> {{ dataset_info.unintentional_sensitive_data | join(', ') }}</p>

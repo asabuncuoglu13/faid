@@ -1,8 +1,9 @@
 # %%
 import sys
+import os
 import pkg_resources
 from datetime import datetime
-from .logging.yaml_utils import generate, update, load
+from .logging.yaml_utils import update, load, get_project_log_path
 from .logging.message import error_msg
 from .report.report_utils import generate_data_card, generate_model_card, generate_raid_register_report, generate_experiment_overview_report, generate_transparency_report
 
@@ -12,11 +13,16 @@ class faidlog:
     A class to log fairness metrics.
     """
 
+    @staticmethod
+    def get_current_folder_path():
+        import os
+        return os.path.dirname(os.path.abspath(__file__))
+
     files ={
-        "model_yml_file": "log/model.yml",
-        "data_yml_file": "log/data.yml",
-        "risk_yml_file": "log/risks.yml",
-        "transparency_yml_file": "log/transparent.yml"
+        "model_yml_file": os.path.join(get_project_log_path(), "model.yml"),
+        "data_yml_file": os.path.join(get_project_log_path(),"data.yml"),
+        "risk_yml_file": os.path.join(get_project_log_path(),"risks.yml"),
+        "transparency_yml_file": os.path.join(get_project_log_path(), "transparency.yml")
     }
     
     keys = {
@@ -26,11 +32,11 @@ class faidlog:
     }
     
     templates = {
-        "fairness_template": "logging/templates/fairness.yml",
-        "model_template": "logging/templates/model.yml",
-        "data_template": "logging/templates/data.yml",
-        "risk_template": "logging/templates/risks.yml",
-        "transparency_template": "logging/templates/transparent.yml"
+        "fairness_template": os.path.join(get_current_folder_path(), "logging/templates/fairness.yml"),
+        "model_template": os.path.join(get_current_folder_path(), "logging/templates/model.yml"),
+        "data_template": os.path.join(get_current_folder_path(), "logging/templates/data.yml"),
+        "risk_template": os.path.join(get_current_folder_path(), "logging/templates/risks.yml"),
+        "transparency_template": os.path.join(get_current_folder_path(), "logging/templates/transparency.yml")
     }
 
     @staticmethod
@@ -39,35 +45,29 @@ class faidlog:
         return "Fairness Logging"
     
     @staticmethod
-    def get_current_folder_path():
-        import os
-        return os.path.dirname(os.path.abspath(__file__))
-    
-    @staticmethod
     def init():
         # create a log directory if it does not exist
         import os
-        if not os.path.exists("log"):
-            os.makedirs("log")
+        if not os.path.exists(get_project_log_path()):
+            os.makedirs(get_project_log_path())
 
         # copy the template files to the log directory
         import shutil
-        current_folder_location = faidlog.get_current_folder_path()
         
         if not os.path.exists(faidlog.files["model_yml_file"]):
-            shutil.copy(os.path.join(current_folder_location, faidlog.templates["model_template"]), faidlog.files["model_yml_file"])
+            shutil.copy(faidlog.templates["model_template"], faidlog.files["model_yml_file"])
         else:
             print("Model log file already exists")
         if not os.path.exists(faidlog.files["data_yml_file"]):
-            shutil.copy(os.path.join(current_folder_location, faidlog.templates["data_template"]), faidlog.files["data_yml_file"])
+            shutil.copy(faidlog.templates["data_template"], faidlog.files["data_yml_file"])
         else:
             print("Data log file already exists")
         if not os.path.exists(faidlog.files["risk_yml_file"]):
-            shutil.copy(os.path.join(current_folder_location,  faidlog.templates["risk_template"]), faidlog.files["risk_yml_file"])
+            shutil.copy(faidlog.templates["risk_template"], faidlog.files["risk_yml_file"])
         else:
             print("Risk log file already exists")
         if not os.path.exists(faidlog.files["transparency_yml_file"]):
-            shutil.copy(os.path.join(current_folder_location,  faidlog.templates["transparency_template"]), faidlog.files["transparency_yml_file"])
+            shutil.copy(faidlog.templates["transparency_template"], faidlog.files["transparency_yml_file"])
         else:
             print("Transparency log file already exists")
         
@@ -79,8 +79,9 @@ class faidlog:
         Correct the filename
         """
         import re
+        import os
         experiment_name = re.sub(r'[^\w\-_\. ]', '_', filename.replace(" ", "_").lower())
-        experiment_file_name = f"log/fairness_{experiment_name}.yml"
+        experiment_file_name = os.path.join(get_project_log_path(), f"fairness_{experiment_name}.yml")
         return experiment_file_name
     
     @staticmethod
@@ -559,7 +560,7 @@ class faidlog:
         """
         Get the experiment context
         """
-        dataDict = load(faidlog.convert_experiment_filepath_format(experiment_name))
+        dataDict = load(faidlog.convert_experiment_filepath_format(experiment_name))["context"]
         return faidlog.ExperimentContext(name=dataDict["name"], 
                                          description=dataDict["description"],
                                          start_time=dataDict["start_time"],
@@ -584,20 +585,10 @@ class faidlog:
             if name is None:
                 print("Please provide a name for the experiment")
                 return
-            
+
+            self.name = name            
             self.filename = faidlog.convert_experiment_filepath_format(name)
-            # if the file exists in the log directory, load the metadata
-            if os.path.exists(self.filename):
-                dataDict = load(self.filename)
-                name = dataDict["name"]
-                description = dataDict["description"]
-                start_time = dataDict["start_time"]
-                tags = dataDict["tags"]
-                authors = dataDict["authors"]
-                hardware = dataDict["hardware"]
-                data = dataDict["data"]
-            
-            self.name = name
+
             self.description = description
             if start_time is None:
                 start_time = datetime.now().isoformat()
@@ -607,7 +598,22 @@ class faidlog:
             self.hardware = hardware
             self.data = data
 
-            self.init_experiment_log()
+            self.init_fairness_log()
+
+        def init_fairness_log(self) -> dict:
+            import shutil
+            if not os.path.exists(self.filename):
+                shutil.copy(faidlog.templates["fairness_template"], self.filename)
+            expCtx = load(self.filename)
+            expCtx["name"] = self.name
+            expCtx["description"] = self.description
+            expCtx["start_time"] = self.start_time
+            expCtx["tags"] = self.tags
+            expCtx["authors"] = self.authors
+            expCtx["hardware"] = self.hardware
+            expCtx["data"] = self.data
+            update(yamlData=expCtx, key="context", filename=self.filename)
+            return expCtx
             
 
         def to_dict(self):
@@ -626,21 +632,6 @@ class faidlog:
         def __str__(self):
             summary = self.to_dict()
             return "\n".join(f"{key}: {value}" for key, value in summary.items())
-
-        def init_experiment_log(self):
-            """
-            Initialize the metadata
-            """
-            import os
-            fairness_template = load(os.path.join(faidlog.get_current_folder_path(), faidlog.templates["fairness_template"]))
-            fairness_template["name"] = self.name
-            fairness_template["description"] = self.description
-            fairness_template["start_time"] = self.start_time
-            fairness_template["tags"] = self.tags
-            fairness_template["authors"] = self.authors
-            fairness_template["hardware"] = self.hardware
-            fairness_template["data"] = self.data
-            return fairness_template  # Return the metadata dictionary
 
         def add_entry(self, key:str, entry:dict):
             """

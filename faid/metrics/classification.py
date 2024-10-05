@@ -80,10 +80,3 @@ def tabular_classification(data:pd.DataFrame, sens_feats:list, clf:object):
     }
 
     return config
-
-# %% Example usage
-"""
-import pandas as pd
-data = pd.read_csv('../../../data/german_credit_data.csv')
-data.head()
-"""
