@@ -29,7 +29,7 @@ def generate(dataDict, filename:str=None, return_result=False):
     os.makedirs(get_project_log_path())
   
   if not filename.endswith(".yml"):
-    filename = "log/" + filename + ".yml"
+    filename = os.path.join(get_project_log_path, f"{filename}.yml")
   
   # The implementation is based on https://github.com/Anthonyhawkins/yamlmaker/
   yaml.SafeDumper.org_represent_str = yaml.SafeDumper.represent_str
@@ -47,7 +47,7 @@ def generate(dataDict, filename:str=None, return_result=False):
     yaml.safe_dump(dataDict, file, sort_keys=False, default_flow_style=False)
 
 # %%
-def update(yamlData:dict, key:str, filename:str):
+def update(yamlData, key:str=None, filename:str=None):
   """
   Update a yaml file
   """
@@ -64,9 +64,15 @@ def update(yamlData:dict, key:str, filename:str):
 
   if existing_dataDict is None:
     existing_dataDict = {}
+  
+  if key is None:
+    generate(yamlData, filename)
+    return
+
   try:
     existing_dataDict[key] = yamlData
   except KeyError:
+    print(f"Key {key} not found in the yaml file")
     existing_dataDict.update({key: yamlData})
   
   generate(existing_dataDict, filename)
@@ -88,3 +94,5 @@ def load(filename:str):
     error_msg(f"File {filename} not found")
   except ParserError:
     error_msg(f"File {filename} is not a valid yaml file")
+  
+  return {}

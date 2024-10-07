@@ -560,14 +560,13 @@ class faidlog:
         """
         Get the experiment context
         """
-        dataDict = load(faidlog.convert_experiment_filepath_format(experiment_name))["context"]
+        dataDict = load(faidlog.convert_experiment_filepath_format(experiment_name))
+
         return faidlog.ExperimentContext(name=dataDict["name"], 
-                                         description=dataDict["description"],
-                                         start_time=dataDict["start_time"],
-                                         tags=dataDict["tags"],
-                                         authors=dataDict["authors"],
-                                         hardware=dataDict["hardware"],
-                                         data=dataDict["data"])
+                                         context=dataDict["context"],
+                                         data=dataDict["data"],
+                                         sample_data=dataDict["sample_data"],
+                                         model=dataDict["model"])
     
     class ExperimentContext:
         """
@@ -575,12 +574,10 @@ class faidlog:
         """
 
         def __init__(self, name:str=None, 
-                     description:str="", 
-                     start_time:str=None, 
-                     tags:list=[],
-                     authors:list=[],
-                     hardware:dict={},
-                     data:dict={}):
+                     context:dict=None,
+                     data:dict=None,
+                     sample_data:dict=None,
+                     model:dict=None):
             import os
             if name is None:
                 print("Please provide a name for the experiment")
@@ -588,16 +585,22 @@ class faidlog:
 
             self.name = name            
             self.filename = faidlog.convert_experiment_filepath_format(name)
+            if context is None:
+                context = load(self.filename)["context"]
+            self.context = context
 
-            self.description = description
-            if start_time is None:
-                start_time = datetime.now().isoformat()
-            self.start_time = start_time
-            self.tags = tags
-            self.authors = authors
-            self.hardware = hardware
+            if data is None:
+                data = load(self.filename)["data"]
             self.data = data
 
+            if sample_data is None:
+                sample_data = load(self.filename)["sample_data"]
+            self.sample_data = sample_data
+
+            if model is None:
+                model = load(self.filename)["model"]
+            self.model = model
+            
             self.init_fairness_log()
 
         def init_fairness_log(self) -> dict:
@@ -606,26 +609,21 @@ class faidlog:
                 shutil.copy(faidlog.templates["fairness_template"], self.filename)
             expCtx = load(self.filename)
             expCtx["name"] = self.name
-            expCtx["description"] = self.description
-            expCtx["start_time"] = self.start_time
-            expCtx["tags"] = self.tags
-            expCtx["authors"] = self.authors
-            expCtx["hardware"] = self.hardware
+            expCtx["context"] = self.context
             expCtx["data"] = self.data
-            update(yamlData=expCtx, key="context", filename=self.filename)
+            expCtx["sample_data"] = self.sample_data
+            expCtx["model"] = self.model
+            update(expCtx, filename=self.filename)
             return expCtx
             
-
         def to_dict(self):
             """Get a summary of the experiment."""
             metadata = {
                 "name": self.name,
-                "authors": self.authors,
-                "start_time": self.start_time,
-                "description": self.description,
-                "tags": self.tags,
-                "hardware": self.hardware,
+                "context": self.context,
                 "data": self.data,
+                "sample_data": self.sample_data,
+                "model": self.model,
             }
             return metadata
         
@@ -633,37 +631,74 @@ class faidlog:
             summary = self.to_dict()
             return "\n".join(f"{key}: {value}" for key, value in summary.items())
 
-        def add_entry(self, key:str, entry:dict):
-            """
-            Initialize the fairness logging using the commonly used metadata tracking tools (wandb, mlflow, etc.)
-            Takes a dictionary with the project name and configuration.
-            project_name: str
-            config: dictionary
-            """
+        def add_context_entry(self, key:str, entry):
+            self.context = load(self.filename)["context"]
+            self.context[key] = entry
+            update(yamlData=self.context, key="context", filename=self.filename)
+            print(f"Added {key} to project metadata under ['context'] and log updated")
+
+        def add_data_entry(self, key:str, entry):
+            self.data = load(self.filename)["data"]
             self.data[key] = entry
             update(yamlData=self.data, key="data", filename=self.filename)
-            print(f"Added {key} to project metadata and log updated")
-
-        def set_data(self, data: dict):
-            """Set data for the experiment."""
-            self.data = data
-
-        def set_tags(self, tags: list):
-            """Set tags for the experiment."""
-            self.tags = tags
+            print(f"Added {key} to project metadata under ['data'] and log updated")
         
-        def set_authors(self, authors: list):
-            """Set authors for the experiment."""
-            self.authors = authors
+        def add_sample_data_entry(self, key:str, entry):
+            self.sample_data = load(self.filename)["sample_data"]
+            self.sample_data[key] = entry
+            update(yamlData=self.sample_data, key="sample_data", filename=self.filename)
+            print(f"Added {key} to project metadata under ['sample_data'] and log updated")
+        
+        def add_model_entry(self, key:str, entry):
+            self.model = load(self.filename)["model"]
+            self.model[key] = entry
+            update(yamlData=self.model, key="model", filename=self.filename)
+            print(f"Added {key} to project metadata under ['model'] and log updated")
 
-        def set_hardware(self, hardware: dict):
-            """Set hardware information for the experiment."""
-            self.hardware = hardware
+        def set_context(self, 
+                description:str="", 
+                start_time:str=None, 
+                tags:list=[],
+                authors:list=[],
+                hardware:dict={},
+                license_info:list=[]):
+            self.description = description
+            if start_time is None:
+                start_time = datetime.now().isoformat()
+            self.context.start_time = start_time
+            self.context.tags = tags
+            self.context.authors = authors
+            self.context.hardware = hardware
+            self.context.license_info = license_info
 
-        def log_summary(self):
-            """Log a summary of the experiment."""
-            summary = self.to_dict()
-            faidlog.log(summary, key=self.name)
+            expCtx = load(self.filename)["context"]
+            expCtx["description"] = self.description
+            expCtx["start_time"] = self.context.start_time
+            expCtx["tags"] = self.context.tags
+            expCtx["authors"] = self.context.authors
+            expCtx["hardware"] = self.context.hardware
+            update(yamlData=expCtx, key="context", filename=self.filename)
+
+
+        def get_context_entry(self, key:str=None):
+            if key is None:
+                return self.context
+            return self.context.get(key, None)
+
+        def get_data_entry(self, key:str=None):
+            if key is None:
+                return self.data
+            return self.data.get(key, None)
+        
+        def get_sample_data_entry(self, key:str=None):
+            if key is None:
+                return self.sample_data
+            return self.sample_data.get(key, None)
+        
+        def get_model_entry(self, key:str=None):
+            if key is None:
+                return self.model
+            return self.model.get(key, None)
 
     class ModelCard:
         def __init__(self, model_info:dict={}):

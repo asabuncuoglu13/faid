@@ -1,14 +1,21 @@
+name: ""
 context:
-  name: ""
   authors: []
   start_time: ""
   description: ""
   tags: []
   hardware: {}
-data:
   license_info: ""
-  sample_data: ""
+data:
+  sample: ""
   variable_profile:
+model:
+  name: ""
+sample_data:
+  tps: []
+  fps: []
+  tns: []
+  fns: []
 bias_metrics:
   facets:
     - name: ""
