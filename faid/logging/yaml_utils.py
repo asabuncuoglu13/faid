@@ -3,8 +3,18 @@
 import os
 import yaml
 from yaml.parser import ParserError
-from .file_utils import get_project_log_folder, get_default_metadata_file_name
 from .message import error_msg, warning_msg
+
+slash = '\\' if os.name == "nt" else "/"
+
+# %% 
+def get_project_log_path():
+    """
+    Get the name of the project
+    """
+    root = os.getcwd()
+    log_folder = root + slash + "logs" + slash + "faid"
+    return log_folder + slash
 
 # %%
 def generate(dataDict, filename:str=None, return_result=False):
@@ -15,11 +25,11 @@ def generate(dataDict, filename:str=None, return_result=False):
     print("No file path provided. Please define a file path.")
     return
 
-  if not os.path.exists(get_project_log_folder()):
-    os.makedirs(get_project_log_folder())
+  if not os.path.exists(get_project_log_path()):
+    os.makedirs(get_project_log_path())
   
   if not filename.endswith(".yml"):
-    filename = "log/" + filename + ".yml"
+    filename = os.path.join(get_project_log_path, f"{filename}.yml")
   
   # The implementation is based on https://github.com/Anthonyhawkins/yamlmaker/
   yaml.SafeDumper.org_represent_str = yaml.SafeDumper.represent_str
@@ -37,12 +47,12 @@ def generate(dataDict, filename:str=None, return_result=False):
     yaml.safe_dump(dataDict, file, sort_keys=False, default_flow_style=False)
 
 # %%
-def update(yamlData:dict, key:str, filename:str):
+def update(yamlData, key:str=None, filename:str=None):
   """
   Update a yaml file
   """
   if not filename.endswith(".yml"):
-    filename = "log/" + filename + ".yml"
+    filename = os.path.join(get_project_log_path, f"{filename}.yml")
   
   if not os.path.exists(filename):
     warning_msg(f"File {filename} not found. Creating a new file.")
@@ -54,21 +64,28 @@ def update(yamlData:dict, key:str, filename:str):
 
   if existing_dataDict is None:
     existing_dataDict = {}
+  
+  if key is None:
+    generate(yamlData, filename)
+    return
+
   try:
     existing_dataDict[key] = yamlData
   except KeyError:
+    print(f"Key {key} not found in the yaml file")
     existing_dataDict.update({key: yamlData})
   
   generate(existing_dataDict, filename)
 
 # %%
-def load(filename:str="log/project.yml"):
+def load(filename:str):
   """
   Load a yaml file
   """
+  import os
   # if filename does not contain .yml extension, add it
   if not filename.endswith(".yml"):
-    filename = "log/" + filename + ".yml"
+    filename = os.path.join(get_project_log_path(), f"{filename}.yml")
 
   try:
     with open(filename, 'r') as file:
@@ -77,29 +94,5 @@ def load(filename:str="log/project.yml"):
     error_msg(f"File {filename} not found")
   except ParserError:
     error_msg(f"File {filename} is not a valid yaml file")
-
-#  %% Test the functions
-"""
-dataDict = {
-    "project": "FAID",
-    "version": "02.0",
-    "description": "FAID Test Configuration",
-}
-updateDict = {
-    "seed": 42,
-    "accuracy": "0.8"
-}
-
-config = {
-    "learning_rate": 0.02,
-    "architecture": "CNN",
-    "dataset": "CIFAR-100",
-    "epochs": 10,
-}
-generate(dataDict)
-update(updateDict, key="metrics")
-update(config, key="config")
-update({"optimizer": "Adam"}, key="config")
-print(load()) 
-"""
-# %%
+  
+  return {}
