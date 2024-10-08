@@ -101,15 +101,16 @@ class faidlog:
                 return None
 
     @staticmethod
-    def add_data_entry(entry:dict, key:str="dataset_info"):
+    def add_data_entry(entry, key:str="dataset_info"):
         """
         Add a data entry to the data card
         """
-        try:
-            if entry.get("conformsTo") == 'http://mlcommons.org/croissant/RAI/1.0':
-                key="rai"
-        except AttributeError | KeyError:
-            pass
+        if type(entry) is dict:
+            try:
+                if entry.get("conformsTo") == 'http://mlcommons.org/croissant/RAI/1.0':
+                    key="rai"
+            except AttributeError | KeyError:
+                pass
         update(entry, key=key, filename=faidlog.files["data_yml_file"])
         print(f"Added {key} to data card")
 

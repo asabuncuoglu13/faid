@@ -274,3 +274,8 @@ variables:
     22: 'no'
     23: 'no'
     24: 'no'
+sensitive_characteristics:
+- Sex
+- Education Level
+- Marital Status
+- Age

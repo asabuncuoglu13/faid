@@ -14,6 +14,11 @@ data:
   - Education Level
   - Marital Status
   - Age
+  demographiscs:
+  - Sex
+  - Education Level
+  - Marital Status
+  - Age
 model:
   name: ''
 sample_data:

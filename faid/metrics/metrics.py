@@ -1,5 +1,5 @@
 """
-This implementation is based on https://github.com/adubowski/subgroup-harm-assessor/
+This implementation is based on https://github.com/adubowski/subgroup-harm-assessor/. License: MIT
 """
 import numpy as np
 import pandas as pd
