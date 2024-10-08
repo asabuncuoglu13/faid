@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />-->
+	<script>
+		fairness_info = {
+			"hardware" : {
+				"info": "An ML model with the same parameters (random seeds, epochs, batch-size) on different hardware can have different performance results, especially for minority groups. This is due to (1) variations in gradient flows across groups, and (2) differences in local loss surfaces.",
+				"source": "Nelaturu et al. On The Fairness Impacts of Hardware Selection in Machine Learning. 2023.",
+				"link": "https://arxiv.org/abs/2312.03886"
+			}
+		}
+
+		function get_fairness_info_by_key(key) {
+			return fairness_info[key]["info"] + "\n <a class='infolink' href='" + fairness_info[key]["link"] + "'>" + fairness_info[key]["source"] + "</a>";
+		}
+	</script>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 0.3em;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.6em;
+        }
+
+        h3 {
+            font-size: 1.4em;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+        }
+
+        ul, ol {
+            margin-bottom: 1.2em;
+            padding-left: 1.5em;
+        }
+
+        li {
+            margin-bottom: 0.6em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5em;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #2c3e50;
+        }
+
+        blockquote {
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-left: 5px solid #ccc;
+            font-style: italic;
+            color: #555;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        hr {
+            border: 0;
+            border-top: 2px solid #ddd;
+            margin: 2em 0;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .report-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            th, td {
+                display: block;
+                width: 100%;
+            }
+
+            th {
+                text-align: center;
+            }
+
+            td {
+                border-top: none;
+            }
+        }
+		
+		.chip {
+			display: inline-block;
+			padding: 0 25px;
+			height: 50px;
+			font-size: 16px;
+			line-height: 50px;
+			border-radius: 25px;
+			background-color: #f1f1f1;
+		}
+		
+		.metric { width: 60%; }
+        .value { width: 40%; }
+        .text { width: 70%; }
+        .label { width: 30%; }
+
+		/*.material-symbols-outlined {
+			font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24
+		}*/
+	</style>
+	<title></title>
+</head>
+
+<body>
+	<div class="report-container">
+
+	<h1>Experiment Name: winogrande</h1>
+	<p></p>
+
+	<p>
+		
+	</p>
+
+	
+
+	
+
+	
+	<h2>Sample Data</h2>
+	<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+	
+
+	
+	<h2>Fairness Experiment Overview</h2>
+		
+		
+
+		
+	
+
+	</div>
+	<script>
+		function display_info_box(key) {
+			document.getElementById(key).addEventListener("mouseover", function () {
+				let hoverBox = document.createElement("div");
+				hoverBox.style.position = "absolute";
+				hoverBox.style.backgroundColor = "#fff";
+				hoverBox.style.border = "1px solid #ccc";
+				hoverBox.style.padding = "10px";
+				hoverBox.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
+				hoverBox.style.maxWidth = "480px";
+				hoverBox.innerHTML = get_fairness_info_by_key(key);
+				document.body.appendChild(hoverBox);
+
+				this.addEventListener("mousemove", function (e) {
+					hoverBox.style.top = e.pageY + 10 + "px";
+					hoverBox.style.left = e.pageX + 10 + "px";
+				});
+
+				hoverBox.addEventListener("mouseover", function () {
+					hoverBox.style.display = "block";
+				});
+
+				hoverBox.addEventListener("mouseout", function () {
+					document.body.removeChild(hoverBox);
+				});
+			});
+		}
+		display_info_box("hardware");
+	</script>
+</body>
+
+</html>

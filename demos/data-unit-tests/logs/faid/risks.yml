@@ -1,0 +1,26 @@
+risks:
+  0:
+    description: ""
+    impact: ""
+    likelihood: ""
+    mitigation: ""
+
+assumptions:
+  0:
+    description: ""
+    impact: ""
+    action: ""
+
+issues:
+  0:
+    description: ""
+    impact: ""
+    status: ""
+    action: ""
+
+dependencies:
+  0:
+    description: ""
+    impact: ""
+    status: ""
+    action: ""

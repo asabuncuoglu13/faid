@@ -1,6 +1,7 @@
 .vscode
 .DS_Store
 .idea
+
 # Great Expectations library outputs
 gx
 

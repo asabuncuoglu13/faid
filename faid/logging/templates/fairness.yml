@@ -9,6 +9,7 @@ context:
 data:
   sample: ""
   variable_profile:
+  sensitive_characteristics:
 model:
   name: ""
 sample_data:

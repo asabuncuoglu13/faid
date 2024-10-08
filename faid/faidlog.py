@@ -538,7 +538,8 @@ class faidlog:
     @staticmethod
     def get_package_licenses():
         import importlib.metadata
-        with open('requirements.txt', 'r') as f:
+        root = os.getcwd()
+        with open(os.path.join(root, 'requirements.txt'), 'r') as f:
             packages = f.read().splitlines()
             packages = [pkg.split('==')[0] for pkg in packages if pkg]
             try:
@@ -579,12 +580,18 @@ class faidlog:
                      sample_data:dict=None,
                      model:dict=None):
             import os
+            import shutil
+
             if name is None:
                 print("Please provide a name for the experiment")
                 return
 
             self.name = name            
             self.filename = faidlog.convert_experiment_filepath_format(name)
+            
+            if not os.path.exists(self.filename):
+                shutil.copy(faidlog.templates["fairness_template"], self.filename)
+                
             if context is None:
                 context = load(self.filename)["context"]
             self.context = context
@@ -604,9 +611,6 @@ class faidlog:
             self.init_fairness_log()
 
         def init_fairness_log(self) -> dict:
-            import shutil
-            if not os.path.exists(self.filename):
-                shutil.copy(faidlog.templates["fairness_template"], self.filename)
             expCtx = load(self.filename)
             expCtx["name"] = self.name
             expCtx["context"] = self.context
