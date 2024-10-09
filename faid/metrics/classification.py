@@ -2,6 +2,9 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from fairlearn.metrics import false_positive_rate
@@ -12,7 +15,7 @@ from fairlearn.metrics import MetricFrame
 from sklearn.preprocessing import LabelEncoder
 
 # %%
-def tabular_classification(data:pd.DataFrame, sens_feats:list, clf:object):
+def tabular_classification(X:pd.DataFrame, y, sens_feats:list, clf:object=RandomForestClassifier()):
     """
     Function to calculate fairness metrics for tabular data
 
@@ -31,27 +34,22 @@ def tabular_classification(data:pd.DataFrame, sens_feats:list, clf:object):
         Dictionary containing the fairness metrics
     """
    # Process data through regular ML Model
-    num_feats = data.select_dtypes(include=['int64', 'float64']).columns
-    cat_feats = data.select_dtypes(include=['object']).columns
+    num_feats = X.select_dtypes(include=['int64', 'float64']).columns
+    cat_feats = X.select_dtypes(include=['object', 'category']).columns
 
-    num_df = data[num_feats]
-    cat_df = data[cat_feats]
+    num_df = X[num_feats]
+    cat_df = X[cat_feats]
 
     # Label encoding
     le = LabelEncoder()
     for i in cat_df:
-        cat_df[i] = le.fit_transform(cat_df[i])
+        cat_df.loc[:, i] = le.fit_transform(cat_df[i])
     main_df = pd.concat([num_df, cat_df], axis=1)
 
-    X = main_df.drop(main_df.columns[-1], axis=1)
-    y = main_df[main_df.columns[-1]]
-    # Train/Test splits
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-    # Model Training
+    main_df = main_df.dropna()
     
-    if not clf:
-        clf = RandomForestClassifier()
-
+    X_train, X_test, y_train, y_test = train_test_split(main_df, y, test_size=0.2, random_state=42, stratify=y)
+    
     clf.fit(X_train, y_train)
     predictions = clf.predict(X_test)
     
@@ -80,3 +78,34 @@ def tabular_classification(data:pd.DataFrame, sens_feats:list, clf:object):
     }
 
     return config
+
+def benchmark_tabular_classification(X: pd.DataFrame, y, sens_feats: list):
+    """
+    Function to benchmark fairness metrics with multiple classifiers for tabular data
+
+    Parameters
+    ----------
+    data: pd.DataFrame
+        Dataframe containing the data
+    sens_feats: list
+        List of sensitive features
+
+    Returns
+    -------
+    dict
+        Dictionary containing the fairness metrics for each classifier
+    """
+    classifiers = {
+        "RandomForest": RandomForestClassifier(),
+        "LogisticRegression": LogisticRegression(),
+        "DecisionTree": DecisionTreeClassifier(),
+        "SVC": SVC()
+    }
+
+    results = {}
+
+    for clf_name, clf in classifiers.items():
+        metrics = tabular_classification(X, y, sens_feats, clf)
+        results[clf_name] = metrics
+
+    return results
