@@ -2,10 +2,6 @@ import os
 import inquirer
 import click
 
-from .logging.yaml_utils import update
-from .faidlog import init_metadata
-from .logging.message import warning_msg, info_msg
-
 def load_data(data_path):
     """
     Load data from the specified path
@@ -15,7 +11,7 @@ def load_data(data_path):
         data = pd.read_csv(data_path)
         return data
     except Exception as e:
-        warning_msg(f"Error loading data: {e}")
+        print(f"Error loading data: {e}")
         return None
     
 def get_feature_names(data):
@@ -29,7 +25,7 @@ def get_data_path():
     List all the files in the specified data folder and return the path of the file selected by the user
     """
     if not os.path.exists('data'):
-        warning_msg("No data folder found")
+        print("No data folder found")
         return
     
     data_filename = inquirer.prompt([
@@ -59,25 +55,30 @@ def get_sensitive_features(data):
     return selected_sensitive_fts
 
 @click.command()
-@click.option('--mod', help='Available options are: init, scan \n init: Initialize the metadata file \n scan: Scan the data for sensitive features.')
+@click.option('--mod', help='Available options are: init, scan \n init: Initialize the metadata files \n scan: Scan the data for sensitive features.')
 @click.option('--data_path', help='Path to the data file')
 def main(mod, data_path):
+    import sys
+    sys.path.append('../..')
+    from faid.faidlog import faidlog
+    
     if mod == 'init':
         # Get the main folder name from os
-        init_metadata(project_name=os.path.basename(os.getcwd()))
+        faidlog.init()
         return
     
     if mod == 'scan-data':
-        info_msg("Scanning for sensitive features in the data.")
+        print("Scanning for sensitive features in the data.")
         # Load data
         if not data_path:
             data_path = get_data_path()
         data = load_data(data_path)
         selected_sensitive_fts = get_sensitive_features(data)
         while not selected_sensitive_fts:
-            warning_msg("No sensitive features selected. Please select at least one sensitive feature.")
+            print("No sensitive features selected. Please select at least one sensitive feature.")
             selected_sensitive_fts = get_sensitive_features(data)
-        update(selected_sensitive_fts, key="sensitive_features")
+        
+        faidlog.add_data_entry("sensitivity_types", selected_sensitive_fts)
         print(selected_sensitive_fts)
    
 if __name__ == "__main__":

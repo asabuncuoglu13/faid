@@ -229,6 +229,11 @@
 		{% endif %}
 	{% endif %}
 
+	{% if captum_records %}
+	<h2>Token Level Importance</h2>
+	{{ captum_records }}
+	{% endif %}
+	
 	</div>
 	<script>
 		function display_info_box(key) {
