@@ -6,7 +6,7 @@ name: Report generation workflow
 on:
   push:
     paths:
-      - 'log/**.yml'
+      - 'logs/faid/**.yml'
 
 jobs:
   Deployment:

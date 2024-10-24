@@ -1,6 +1,8 @@
 .vscode
 .DS_Store
 .idea
+# Great Expectations library outputs
+gx
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

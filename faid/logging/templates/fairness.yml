@@ -1,0 +1,28 @@
+name: ""
+context:
+  authors: []
+  start_time: ""
+  description: ""
+  tags: []
+  hardware: {}
+  license_info: ""
+data:
+  sample: ""
+  variable_profile:
+model:
+  name: ""
+sample_data:
+  tps: []
+  fps: []
+  tns: []
+  fns: []
+bias_metrics:
+  facets:
+    - name: ""
+      metrics:
+        - description: ""
+          name: ""
+          value: 0
+      value_or_threshold: ""
+      label: ""
+      label_value_or_threshold: ""

@@ -6,12 +6,94 @@
 	<!-- This dataset card template is from Google's The Data Cards Playbook. https://sites.research.google/datacardsplaybook/-->
 	<!-- The original card template was published as Word document and we converted it to a HTML template. -->
 	 <style>
-		body {
+        body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+            line-height: 1.6;
+            background-color: #f9f9f9;
             color: #333;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 0.3em;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.6em;
+        }
+
+        h3 {
+            font-size: 1.4em;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+        }
+
+        ul, ol {
+            margin-bottom: 1.2em;
+            padding-left: 1.5em;
+        }
+
+        li {
+            margin-bottom: 0.6em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5em;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #2c3e50;
+        }
+
+        blockquote {
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-left: 5px solid #ccc;
+            font-style: italic;
+            color: #555;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        hr {
+            border: 0;
+            border-top: 2px solid #ddd;
+            margin: 2em 0;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         .report-container {
@@ -23,46 +105,6 @@
             border-radius: 8px;
         }
 
-        h1 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 20px;
-            color: #666;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 5px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #e0e0e0;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f0f0f0;
-            color: #333;
-            font-weight: bold;
-        }
-
-        td {
-            background-color: #fff;
-        }
-
         /* Responsive Design */
         @media (max-width: 600px) {
             th, td {
@@ -71,20 +113,11 @@
             }
 
             th {
-                background-color: #f4f4f4;
                 text-align: center;
             }
 
             td {
                 border-top: none;
-            }
-
-            td:before {
-                content: attr(data-label);
-                font-weight: bold;
-                display: block;
-                margin-bottom: 5px;
-                color: #333;
             }
         }
 	</style>
@@ -92,234 +125,139 @@
 </head>
 <body>
 	<div class="report-container">
-	<h1>{{ dataset_name }} (Acronym)</h1>
-	<p>{{ summary }}</p>
-
-	<h3>Dataset Link</h3>
-	<p><a href="{{ dataset_link }}">Dataset Link</a></p>
-
-	<h3>Data Card Author(s)</h3>
-	{% for author in authors %}
-	<p><strong>Name, Team:</strong> {{ author.name }}, {{ author.team }} ({{ author.role }})</p>
-	{% endfor %}
-
-	<h2>Authorship</h2>
-	<h3>Publishers</h3>
-	<p><strong>Organization Name:</strong> {{ publishing_organization }}</p>
-
-	<h3>Industry Type(s)</h3>
-	<ul>
-		{% for industry in industry_types %}
-		<li>{{ industry }}</li>
-		{% endfor %}
-	</ul>
-
-	{% if publishing_poc %}
-	<h3>Contact Detail(s)</h3>
-	<p><strong>Publishing POC:</strong> {{ publishing_poc.name }}</p>
-	<p><strong>Affiliation:</strong> {{ publishing_poc.affiliation }}</p>
-	<p><strong>Contact:</strong> {{ publishing_poc.contact }}</p>
-	<p><strong>Mailing List:</strong> {{ publishing_poc.mailing_list }}</p>
-	<p><strong>Website:</strong> <a href="{{ publishing_poc.website }}">{{ publishing_poc.website }}</a></p>
-	{% endif %}
-
-	{% if dataset_owners %}
-	<h3>Dataset Owners</h3>
-	<p><strong>Team(s):</strong> {{ dataset_owners.team }}</p>
-
-	<h3>Contact Detail(s)</h3>
-	<p><strong>Dataset Owner(s):</strong> {{ dataset_owners.name }}</p>
-	<p><strong>Affiliation:</strong> {{ dataset_owners.affiliation }}</p>
-	<p><strong>Contact:</strong> {{ dataset_owners.contact }}</p>
-	<p><strong>Group Email:</strong> <a href="mailto:{{ dataset_owners.group_email }}">{{ dataset_owners.group_email }}</a></p>
-	<p><strong>Website:</strong> <a href="{{ dataset_owners.website }}">{{ dataset_owners.website }}</a></p>
-	{% endif %}
-
-	{% if dataset_authors %}
-	<h3>Author(s)</h3>
-	{% for author in dataset_authors %}
-	<p>{{ author.name }}, {{ author.title }}, {{ author.affiliation }}, {{ author.year }}</p>
-	{% endfor %}
-	{% endif %}
-
-	{% if funding_sources %}
-	<h3>Funding Sources</h3>
-	<ul>
-		{% for institution in funding_sources %}
-		<li>{{ institution }}</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-
-	{% if data_subjects %}
-
-	<h2>Dataset Overview</h2>
-	<h3>Data Subject(s)</h3>
-	<ul>
-		{% for subject in data_subjects %}
-		<li>{{ subject }}</li>
-		{% endfor %}
-	</ul>
-	
-	{% endif %}
-
-	{% if dataset_snapshot %}
-	<h3>Dataset Snapshot</h3>
-	<table>
-		<tr>
-			<th>Category</th>
-			<th>Data</th>
-		</tr>
-		{% for category, data in dataset_snapshot.items() %}
-		<tr>
-			<td>{{ category }}</td>
-			<td>{{ data }}</td>
-		</tr>
-		{% endfor %}
-	</table>
-	{% endif %}
-
-	{% if content_description %}
-	<h3>Content Description</h3>
-	<p>{{ content_description }}</p>
-	{% endif %}
-
-	{% if descriptive_statistics %}
-	<h3>Descriptive Statistics</h3>
-	<table>
-		<tr>
-			<th>Statistic</th>
-			{% for field_name in descriptive_statistics.fields %}
-			<th>{{ field_name }}</th>
-			{% endfor %}
-		</tr>
-		{% for stat in descriptive_statistics.stats %}
-		<tr>
-			<td>{{ stat.name }}</td>
-			{% for value in stat.values %}
-			<td>{{ value }}</td>
-			{% endfor %}
-		</tr>
-		{% endfor %}
-	</table>
-	{% endif %}
-
-	{% if sensitivity_types %}
-
-	<h3>Sensitivity of Data</h3>
-	<h4>Sensitivity Type(s)</h4>
-	<ul>
-		{% for type in sensitivity_types %}
-		<li>{{ type }}</li>
-		{% endfor %}
-	</ul>
-	
-	{% endif %}
-
-	<h4>Field(s) with Sensitive Data</h4>
-	{% if intentional_sensitive_data %}
-	<p>Intentional Collected Sensitive Data</p>
-	<ul>
-		{% for field in intentional_sensitive_data %}
-		<li>{{ field.name }}: {{ field.description }}</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-
-	{% if unintentional_sensitive_data %}
-	<p>Unintentionally Collected Sensitive Data</p>
-	<ul>
-		{% for field in unintentional_sensitive_data %}
-		<li>{{ field.name }}: {{ field.description }}</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-
-	{% if security_privacy_handling %}
-	<h3>Security and Privacy Handling</h3>
-	<p>{{ security_privacy_handling }}</p>
-	{% endif %}
-
-	{% if risk_types %}
-	<h3>Risk Type(s)</h3>
-	<ul>
-		{% for risk in risk_types %}
-		<li>{{ risk }}</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-
-	{% if risks_mitigations %}
-	<h3>Risk(s) and Mitigation(s)</h3>
-	<p>{{ risks_mitigations }}</p>
-	{% endif %}
-
-	
-	<h2>Dataset Version and Maintenance</h2>
-	{% if maintenance_status %}
-	<p><strong>Maintenance Status:</strong> {{ maintenance_status }}</p>
-	{% endif %}
-
-	{% if version_details %}
-	<p><strong>Current Version:</strong> {{ version_details.current_version }}</p>
-	<p><strong>Last Updated:</strong> {{ version_details.last_updated }}</p>
-	<p><strong>Release Date:</strong> {{ version_details.release_date }}</p>
-	{% endif %}
-
-	{% if maintenance_plan %}
-	<h3>Maintenance Plan</h3>
-	<p>{{ maintenance_plan }}</p>
-	{% endif %}
-
-	{% if next_update %}
-	<h3>Next Planned Update(s)</h3>
-	<p><strong>Version affected:</strong> {{ next_update.version_affected }}</p>
-	<p><strong>Next data update:</strong> {{ next_update.next_data_update }}</p>
-	<p><strong>Next version:</strong> {{ next_update.next_version }}</p>
-	<p><strong>Next version update:</strong> {{ next_update.next_version_update }}</p>
-	{% endif %}
-
-	{% if expected_changes %}
-	<h3>Expected Change(s)</h3>
-	<p>{{ expected_changes }}</p>
-	{% endif %}
-
-	{% if primary_data_modality %}
-	<h2>Example of Data Points</h2>
-	<h3>Primary Data Modality</h3>
-	<p>{{ primary_data_modality }}</p>
-	{% endif %}
-
-	{% if sampling_data_points %}
-	<h3>Sampling of Data Points</h3>
-	<ul>
-		{% for link in sampling_data_points %}
-		<li><a href="{{ link.url }}">{{ link.name }}</a></li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-
-	{% if field %}
-	<h3>Data Fields</h3>
-	<table>
-		<tr>
-			<th>Field Name</th>
-			<th>Field Value</th>
-			<th>Description</th>
-		</tr>
-		{% for field in data_fields %}
-		<tr>
-			<td>{{ field.name }}</td>
-			<td>{{ field.value }}</td>
-			<td>{{ field.description }}</td>
-		</tr>
-		{% endfor %}
-	</table>
-	{% endif %}
-
-	{% if typical_data_point %}
-	<h3>Typical Data Point</h3>
-	<p>{{ typical_data_point }}</p>
+		<h1>{{ dataset_info.dataset_name }}</h1>
+		{% if dataset_info.summary %}
+			<p><strong>Summary:</strong> {{ dataset_info.summary }}</p>
+		{% endif %}
+		{% if dataset_info.dataset_link %}
+			<p><strong>Dataset Link:</strong> <a href="{{ dataset_link }}">{{ dataset_info.dataset_link }}</a></p>
+		{% endif %}
+		{% if dataset_info.authors %}
+			<p><strong>Authors:</strong> {{ dataset_info.authors }}</p>
+		{% endif %}
+		{% if dataset_info.publishing_organization %}
+			<p><strong>Publishing Organization:</strong> {{ dataset_info.publishing_organization }}</p>
+		{% endif %}
+		{% if dataset_info.industry_types %}
+			<p><strong>Industry Types:</strong> {{ dataset_info.industry_types | join(', ') }}</p>
+		{% endif %}
+		{% if dataset_info.publishing_poc %}
+			<p><strong>Publishing POC:</strong> {{ dataset_info.publishing_poc }}</p>
+		{% endif %}
+		{% if dataset_info.dataset_owners %}
+			<p><strong>Dataset Owners:</strong> {{ dataset_info.dataset_owners }}</p>
+		{% endif %}
+		{% if dataset_info.dataset_authors %}
+			<p><strong>Dataset Authors:</strong> {{ dataset_info.dataset_authors | join(', ') }}</p>
+		{% endif %}
+		{% if dataset_info.funding_sources %}
+			<p><strong>Funding Sources:</strong> {{ dataset_info.funding_sources | join(', ') }}</p>
+		{% endif %}
+		{% if dataset_info.data_subjects %}
+			<p><strong>Data Subjects:</strong> {{ dataset_info.data_subjects | join(', ') }}</p>
+		{% endif %}
+		<h2>Dataset Snapshot</h2>
+		{% if dataset_info.dataset_snapshot %}
+			<p><strong>Total Records:</strong> {{ dataset_info.dataset_snapshot['Total Records'] }}</p>
+			<p><strong>Coverage:</strong> {{ dataset_info.dataset_snapshot.Coverage }}</p>
+			<p><strong>Time Span:</strong> {{ dataset_info.dataset_snapshot['Time Span'] }}</p>
+		{% endif %}
+		{% if dataset_info.content_description %}
+			<p><strong>Content Description:</strong> {{ dataset_info.content_description }}</p>
+		{% endif %}
+		<h2>Descriptive Statistics</h2>
+		{% if dataset_info.descriptive_statistics %}
+			<div>
+				{{ dataset_info.descriptive_statistics }}
+			</div>
+		{% endif %}
+		{% if dataset_info.sensitivity_types %}
+			<p><strong>Sensitivity Types:</strong> {{ dataset_info.sensitivity_types | join(', ') }}</p>
+		{% endif %}
+		<h2>Intentional Sensitive Data</h2>
+		{% if dataset_info.intentional_sensitive_data %}\
+			<div> 
+			{{dataset_info.intentional_sensitive_data }}
+			</div>
+		{% endif %}
+		{% if dataset_info.unintentional_sensitive_data %}
+			<p><strong>Unintentional Sensitive Data:</strong> {{ dataset_info.unintentional_sensitive_data | join(', ') }}</p>
+		{% endif %}
+		{% if dataset_info.security_privacy_handling %}
+			<p><strong>Security Privacy Handling:</strong> {{ dataset_info.security_privacy_handling }}</p>
+		{% endif %}
+		{% if dataset_info.risk_types %}
+			<p><strong>Risk Types:</strong> {{ dataset_info.risk_types | join(', ') }}</p>
+		{% endif %}
+		{% if dataset_info.risks_mitigations %}
+			<p><strong>Risks Mitigations:</strong> {{ dataset_info.risks_mitigations }}</p>
+		{% endif %}
+		{% if dataset_info.maintenance_status %}
+			<p><strong>Maintenance Status:</strong> {{ dataset_info.maintenance_status }}</p>
+		{% endif %}
+		<h2>Version Details</h2>
+		{% if dataset_info.version_details %}
+			<p><strong>Current Version:</strong> {{ dataset_info.version_details.current_version }}</p>
+			<p><strong>Last Updated:</strong> {{ dataset_info.version_details.last_updated }}</p>
+			<p><strong>Release Date:</strong> {{ dataset_info.version_details.release_date }}</p>
+		{% endif %}
+		{% if dataset_info.maintenance_plan %}
+			<p><strong>Maintenance Plan:</strong> {{ dataset_info.maintenance_plan }}</p>
+		{% endif %}
+		<h2>Next Update</h2>
+		{% if dataset_info.next_update %}
+			<p><strong>Version Affected:</strong> {{ dataset_info.next_update.version_affected }}</p>
+			<p><strong>Next Data Update:</strong> {{ dataset_info.next_update.next_data_update }}</p>
+			<p><strong>Next Version:</strong> {{ dataset_info.next_update.next_version }}</p>
+			<p><strong>Next Version Update:</strong> {{ dataset_info.next_update.next_version_update }}</p>
+		{% endif %}
+		{% if dataset_info.expected_changes %}
+			<p><strong>Expected Changes:</strong> {{ dataset_info.expected_changes }}</p>
+		{% endif %}
+		{% if dataset_info.primary_data_modality %}
+			<p><strong>Primary Data Modality:</strong> {{ dataset_info.primary_data_modality }}</p>
+		{% endif %}
+		{% if dataset_info.sampling_data_points %}
+			<p><strong>Sampling Data Points:</strong> {{ dataset_info.sampling_data_points | join(', ') }}</p>
+		{% endif %}
+		{% if dataset_info.data_fields %}
+			<p><strong>Data Fields:</strong> {{ dataset_info.data_fields | join(', ') }}</p>
+		{% endif %}
+		{% if dataset_info.typical_data_point %}
+			<p><strong>Typical Data Point:</strong> {{ dataset_info.typical_data_point }}</p>
+		{% endif %}
+		{% if rai %}
+		<h2>Responsible AI (RAI) Details</h2>
+		{% if rai.dataCollection %}
+			<p><strong>Data Collection:</strong> {{ rai.dataCollection }}</p>
+		{% endif %}
+		{% if rai.dataCollectionType %}
+			<p><strong>Data Collection Type:</strong> {{ rai.dataCollectionType }}</p>
+		{% endif %}
+		{% if rai.dataCollectionRawData %}
+			<p><strong>Data Collection Raw Data:</strong> {{ rai.dataCollectionRawData }}</p>
+		{% endif %}
+		{% if rai.dataAnnotationProtocol %}
+			<p><strong>Data Annotation Protocol:</strong> {{ rai.dataAnnotationProtocol }}</p>
+		{% endif %}
+		{% if rai.dataAnnotationPlatform %}
+			<p><strong>Data Annotation Platform:</strong> {{ rai.dataAnnotationPlatform }}</p>
+		{% endif %}
+		{% if rai.dataAnnotationAnalysis %}
+			<p><strong>Data Annotation Analysis:</strong> {{ rai.dataAnnotationAnalysis }}</p>
+		{% endif %}
+		{% if rai.dataUseCases %}
+			<p><strong>Data Use Cases:</strong> {{ rai.dataUseCases }}</p>
+		{% endif %}
+		{% if rai.dataBiases %}
+			<p><strong>Data Biases:</strong> {{ rai.dataBiases }}</p>
+		{% endif %}
+		{% if rai.annotationsPerItem %}
+			<p><strong>Annotations Per Item:</strong> {{ rai.annotationsPerItem }}</p>
+		{% endif %}
+		{% if rai.annotatorDemographics %}
+			<p><strong>Annotator Demographics:</strong> {{ rai.annotatorDemographics }}</p>
+		{% endif %}
 	{% endif %}
 	</div>
 </body>
