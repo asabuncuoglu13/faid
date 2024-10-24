@@ -1,6 +1,5 @@
 # %%
 from jinja2 import Environment, FileSystemLoader
-import pandas as pd
 from .file_utils import get_faid_report_folder
 from ..logging.yaml_utils import load
 import os
@@ -15,19 +14,37 @@ def generate_experiment_overview_report(info:dict, output_file:str=None):
     - output_file: Path to the output HTML file.
     """
     from datetime import datetime
+
+    sample_data_html = None
+    # if info has data and data has sample_data
+    if "data" in info and "sample_data" in info["data"]:
+        import pandas as pd
+        sample_data = pd.DataFrame()
+        sample_data  = pd.DataFrame(info["data"]["sample_data"])
+        sample_data_html = sample_data.to_html()
+
+    captum_records = None
+    if "model" in info and "captum_records" in info["model"]:
+        from captum.attr import visualization as viz
+        import torch
+        record = info["model"]["captum_records"]
+        visrecord = viz.VisualizationDataRecord(
+            torch.tensor(record["word_attributions"], dtype=torch.float64), 
+            record["pred_prob"], 
+            record["pred_class"],
+            record["true_class"], 
+            record["attr_class"], 
+            record["attr_score"], 
+            record["raw_input_ids"], 
+            record["convergence_score"])
+        captum_records = viz.visualize_text([visrecord])._repr_html_()
+    
     # Load Jinja2 template
     current_folder_location = os.path.dirname(os.path.abspath(__file__))
     env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('templates/experiment_overview_template.html')
-
-    sample_data = pd.DataFrame()
-    try:
-        sample_data  = pd.DataFrame(info["data"]["sample_data"])
-    except KeyError:
-        pass
-
     # Render the template with metrics
-    html_content = template.render(info, sample_data=sample_data.to_html())
+    html_content = template.render(info, sample_data=sample_data_html, captum_records = captum_records)
 
     if output_file is None:
         if "name" not in info:

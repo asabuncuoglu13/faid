@@ -75,7 +75,10 @@ def update(yamlData, key:str=None, filename:str=None):
     print(f"Key {key} not found in the yaml file")
     existing_dataDict.update({key: yamlData})
   
-  generate(existing_dataDict, filename)
+  try:
+    generate(existing_dataDict, filename)
+  except Exception as e:
+    error_msg(f"Error updating yaml file: {e}")
 
 # %%
 def load(filename:str):

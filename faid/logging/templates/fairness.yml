@@ -7,8 +7,9 @@ context:
   hardware: {}
   license_info: ""
 data:
-  sample: ""
+  sample: []
   variable_profile:
+  sensitive_characteristics:
 model:
   name: ""
 sample_data:
@@ -19,6 +20,7 @@ sample_data:
 bias_metrics:
   facets:
     - name: ""
+      description: ""
       metrics:
         - description: ""
           name: ""
@@ -26,3 +28,4 @@ bias_metrics:
       value_or_threshold: ""
       label: ""
       label_value_or_threshold: ""
+      notes: ""

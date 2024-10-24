@@ -1,12 +1,9 @@
 name: Report generation workflow
 
-# The workflow triggers on pushes to the log directory
-# It runs the generate_report.py script, which processes the YAML files and generates the HTML reports in the reports/ directory.
-
 on:
   push:
     paths:
-      - 'logs/faid/**.yml'
+      - 'demos/**/logs/faid/**.yml'
 
 jobs:
   Deployment:
@@ -30,16 +27,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-deployment.txt
 
-      - name: generate report
+      - name: Extract changed directories
+        id: extract_dirs
         run: |
-          echo "Generating report..."
-          # Add your report generation logic here
-          python -c "print('Generating reports...'); from faid.faidlog import faidlog; faidlog.generate_all_reports()"
-          echo "Report generated successfully"
-      
+          echo "Extracting changed directories..."
+          CHANGED_DIRS=$(git diff --name-only HEAD^ HEAD | grep 'demos/.*/logs/faid/.*.yml' | xargs -n1 dirname | sort -u)
+          echo "Changed directories: $CHANGED_DIRS"
+          echo "::set-output name=dirs::$CHANGED_DIRS"
+
+      - name: Generate reports for each changed log directory
+        run: |
+          for dir in ${{ steps.extract_dirs.outputs.dirs }}; do
+            echo "Generating report for $dir..."
+            cd $dir
+            python -c "print('Generating reports for $dir...'); from faid.faidlog import faidlog; faidlog.generate_all_reports()"
+            echo "Report generated successfully for $dir"
+          done
+
       - name: Upload HTML Reports
         uses: actions/upload-artifact@v3
         with:
           name: html-reports
-          path: reports/*.html
-
+          path: demos/**/reports/

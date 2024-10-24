@@ -12,6 +12,8 @@ Fairlearn is one of the essential libraries that is used by many fairness resear
 
 ## FairSD
 
+The subgroup behaiour implementation is based on https://github.com/adubowski/subgroup-harm-assessor/. License: MIT.
+
 - Link: <https://github.com/MaurizioPulizzi/fairsd>
 - License: Apache License v2.0
 

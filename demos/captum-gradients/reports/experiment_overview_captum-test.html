@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />-->
+	<script>
+		fairness_info = {
+			"hardware" : {
+				"info": "An ML model with the same parameters (random seeds, epochs, batch-size) on different hardware can have different performance results, especially for minority groups. This is due to (1) variations in gradient flows across groups, and (2) differences in local loss surfaces.",
+				"source": "Nelaturu et al. On The Fairness Impacts of Hardware Selection in Machine Learning. 2023.",
+				"link": "https://arxiv.org/abs/2312.03886"
+			}
+		}
+
+		function get_fairness_info_by_key(key) {
+			return fairness_info[key]["info"] + "\n <a class='infolink' href='" + fairness_info[key]["link"] + "'>" + fairness_info[key]["source"] + "</a>";
+		}
+	</script>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 0.3em;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.6em;
+        }
+
+        h3 {
+            font-size: 1.4em;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+        }
+
+        ul, ol {
+            margin-bottom: 1.2em;
+            padding-left: 1.5em;
+        }
+
+        li {
+            margin-bottom: 0.6em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5em;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #2c3e50;
+        }
+
+        blockquote {
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-left: 5px solid #ccc;
+            font-style: italic;
+            color: #555;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        hr {
+            border: 0;
+            border-top: 2px solid #ddd;
+            margin: 2em 0;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .report-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            th, td {
+                display: block;
+                width: 100%;
+            }
+
+            th {
+                text-align: center;
+            }
+
+            td {
+                border-top: none;
+            }
+        }
+		
+		.chip {
+			display: inline-block;
+			padding: 0 25px;
+			height: 50px;
+			font-size: 16px;
+			line-height: 50px;
+			border-radius: 25px;
+			background-color: #f1f1f1;
+		}
+		
+		.metric { width: 60%; }
+        .value { width: 40%; }
+        .text { width: 70%; }
+        .label { width: 30%; }
+
+		/*.material-symbols-outlined {
+			font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24
+		}*/
+	</style>
+	<title></title>
+</head>
+
+<body>
+	<div class="report-container">
+
+	<h1>Experiment Name: captum-test</h1>
+	<p></p>
+
+	<p>
+		
+	</p>
+
+	
+
+	
+
+	
+
+	
+	<h2>Fairness Experiment Overview</h2>
+		
+		
+
+		
+	
+
+	
+	<h2>Token Level Importance</h2>
+	<table width: 100%><div style="border-top: 1px solid; margin-top: 5px;             padding-top: 5px; display: inline-block"><b>Legend: </b><span style="display: inline-block; width: 10px; height: 10px;                 border: 1px solid; background-color:                 hsl(0, 75%, 60%)"></span> Negative  <span style="display: inline-block; width: 10px; height: 10px;                 border: 1px solid; background-color:                 hsl(0, 75%, 100%)"></span> Neutral  <span style="display: inline-block; width: 10px; height: 10px;                 border: 1px solid; background-color:                 hsl(120, 75%, 50%)"></span> Positive  </div><tr><th>True Label</th><th>Predicted Label</th><th>Attribution Label</th><th>Attribution Score</th><th>Word Importance</th><tr><td><text style="padding-right:2em"><b>1</b></text></td><td><text style="padding-right:2em"><b>0 (1.00)</b></text></td><td><text style="padding-right:2em"><b>sugar mills have paid 30% of their total cane dues. the government has announced a soft loan of Rs 4,000 crore plus a subsidy of Rs 4.50/quintal to clear the dues of the farmers by November 30. the total cane crushed this season was 1,111.90 tonnes. the total cane arrears for 2017-18 now stand at Rs 9,770 crores.</b></text></td><td><text style="padding-right:2em"><b>1.20</b></text></td><td><mark style="background-color: hsl(0, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> [CLS]                    </font></mark><mark style="background-color: hsl(0, 75%, 93%); opacity:1.0;                     line-height:1.75"><font color="black"> sugar                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> mills                    </font></mark><mark style="background-color: hsl(0, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> have                    </font></mark><mark style="background-color: hsl(0, 75%, 87%); opacity:1.0;                     line-height:1.75"><font color="black"> paid                    </font></mark><mark style="background-color: hsl(0, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> 30                    </font></mark><mark style="background-color: hsl(0, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> %                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> of                    </font></mark><mark style="background-color: hsl(120, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> their                    </font></mark><mark style="background-color: hsl(120, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> total                    </font></mark><mark style="background-color: hsl(0, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> can                    </font></mark><mark style="background-color: hsl(120, 75%, 93%); opacity:1.0;                     line-height:1.75"><font color="black"> ##e                    </font></mark><mark style="background-color: hsl(120, 75%, 92%); opacity:1.0;                     line-height:1.75"><font color="black"> due                    </font></mark><mark style="background-color: hsl(120, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> ##s                    </font></mark><mark style="background-color: hsl(0, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> .                    </font></mark><mark style="background-color: hsl(120, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> the                    </font></mark><mark style="background-color: hsl(120, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> government                    </font></mark><mark style="background-color: hsl(0, 75%, 95%); opacity:1.0;                     line-height:1.75"><font color="black"> has                    </font></mark><mark style="background-color: hsl(120, 75%, 92%); opacity:1.0;                     line-height:1.75"><font color="black"> announced                    </font></mark><mark style="background-color: hsl(120, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> a                    </font></mark><mark style="background-color: hsl(120, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> soft                    </font></mark><mark style="background-color: hsl(0, 75%, 88%); opacity:1.0;                     line-height:1.75"><font color="black"> loan                    </font></mark><mark style="background-color: hsl(120, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> of                    </font></mark><mark style="background-color: hsl(0, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> rs                    </font></mark><mark style="background-color: hsl(120, 75%, 94%); opacity:1.0;                     line-height:1.75"><font color="black"> 4                    </font></mark><mark style="background-color: hsl(120, 75%, 95%); opacity:1.0;                     line-height:1.75"><font color="black"> ,                    </font></mark><mark style="background-color: hsl(0, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> 000                    </font></mark><mark style="background-color: hsl(0, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> cro                    </font></mark><mark style="background-color: hsl(0, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> ##re                    </font></mark><mark style="background-color: hsl(0, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> plus                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> a                    </font></mark><mark style="background-color: hsl(0, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> subsidy                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> of                    </font></mark><mark style="background-color: hsl(0, 75%, 94%); opacity:1.0;                     line-height:1.75"><font color="black"> rs                    </font></mark><mark style="background-color: hsl(120, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> 4                    </font></mark><mark style="background-color: hsl(0, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> .                    </font></mark><mark style="background-color: hsl(0, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> 50                    </font></mark><mark style="background-color: hsl(0, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> /                    </font></mark><mark style="background-color: hsl(120, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> quint                    </font></mark><mark style="background-color: hsl(120, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> ##al                    </font></mark><mark style="background-color: hsl(0, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> to                    </font></mark><mark style="background-color: hsl(0, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> clear                    </font></mark><mark style="background-color: hsl(0, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> the                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> due                    </font></mark><mark style="background-color: hsl(120, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> ##s                    </font></mark><mark style="background-color: hsl(120, 75%, 93%); opacity:1.0;                     line-height:1.75"><font color="black"> of                    </font></mark><mark style="background-color: hsl(0, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> the                    </font></mark><mark style="background-color: hsl(0, 75%, 90%); opacity:1.0;                     line-height:1.75"><font color="black"> farmers                    </font></mark><mark style="background-color: hsl(120, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> by                    </font></mark><mark style="background-color: hsl(120, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> november                    </font></mark><mark style="background-color: hsl(0, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> 30                    </font></mark><mark style="background-color: hsl(0, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> .                    </font></mark><mark style="background-color: hsl(120, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> the                    </font></mark><mark style="background-color: hsl(120, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> total                    </font></mark><mark style="background-color: hsl(0, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> can                    </font></mark><mark style="background-color: hsl(120, 75%, 94%); opacity:1.0;                     line-height:1.75"><font color="black"> ##e                    </font></mark><mark style="background-color: hsl(0, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> crush                    </font></mark><mark style="background-color: hsl(0, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> ##ed                    </font></mark><mark style="background-color: hsl(0, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> this                    </font></mark><mark style="background-color: hsl(0, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> season                    </font></mark><mark style="background-color: hsl(120, 75%, 95%); opacity:1.0;                     line-height:1.75"><font color="black"> was                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> 1                    </font></mark><mark style="background-color: hsl(120, 75%, 94%); opacity:1.0;                     line-height:1.75"><font color="black"> ,                    </font></mark><mark style="background-color: hsl(120, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> 111                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> .                    </font></mark><mark style="background-color: hsl(120, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> 90                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> tonnes                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> .                    </font></mark><mark style="background-color: hsl(120, 75%, 95%); opacity:1.0;                     line-height:1.75"><font color="black"> the                    </font></mark><mark style="background-color: hsl(120, 75%, 94%); opacity:1.0;                     line-height:1.75"><font color="black"> total                    </font></mark><mark style="background-color: hsl(0, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> can                    </font></mark><mark style="background-color: hsl(120, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> ##e                    </font></mark><mark style="background-color: hsl(0, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> arrears                    </font></mark><mark style="background-color: hsl(120, 75%, 92%); opacity:1.0;                     line-height:1.75"><font color="black"> for                    </font></mark><mark style="background-color: hsl(120, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> 2017                    </font></mark><mark style="background-color: hsl(120, 75%, 96%); opacity:1.0;                     line-height:1.75"><font color="black"> -                    </font></mark><mark style="background-color: hsl(120, 75%, 86%); opacity:1.0;                     line-height:1.75"><font color="black"> 18                    </font></mark><mark style="background-color: hsl(120, 75%, 93%); opacity:1.0;                     line-height:1.75"><font color="black"> now                    </font></mark><mark style="background-color: hsl(120, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> stand                    </font></mark><mark style="background-color: hsl(120, 75%, 98%); opacity:1.0;                     line-height:1.75"><font color="black"> at                    </font></mark><mark style="background-color: hsl(0, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> rs                    </font></mark><mark style="background-color: hsl(120, 75%, 95%); opacity:1.0;                     line-height:1.75"><font color="black"> 9                    </font></mark><mark style="background-color: hsl(120, 75%, 95%); opacity:1.0;                     line-height:1.75"><font color="black"> ,                    </font></mark><mark style="background-color: hsl(0, 75%, 97%); opacity:1.0;                     line-height:1.75"><font color="black"> 770                    </font></mark><mark style="background-color: hsl(120, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> cro                    </font></mark><mark style="background-color: hsl(120, 75%, 93%); opacity:1.0;                     line-height:1.75"><font color="black"> ##res                    </font></mark><mark style="background-color: hsl(120, 75%, 99%); opacity:1.0;                     line-height:1.75"><font color="black"> .                    </font></mark><mark style="background-color: hsl(0, 75%, 100%); opacity:1.0;                     line-height:1.75"><font color="black"> [SEP]                    </font></mark></td><tr></table>
+	
+	
+	</div>
+	<script>
+		function display_info_box(key) {
+			document.getElementById(key).addEventListener("mouseover", function () {
+				let hoverBox = document.createElement("div");
+				hoverBox.style.position = "absolute";
+				hoverBox.style.backgroundColor = "#fff";
+				hoverBox.style.border = "1px solid #ccc";
+				hoverBox.style.padding = "10px";
+				hoverBox.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
+				hoverBox.style.maxWidth = "480px";
+				hoverBox.innerHTML = get_fairness_info_by_key(key);
+				document.body.appendChild(hoverBox);
+
+				this.addEventListener("mousemove", function (e) {
+					hoverBox.style.top = e.pageY + 10 + "px";
+					hoverBox.style.left = e.pageX + 10 + "px";
+				});
+
+				hoverBox.addEventListener("mouseover", function () {
+					hoverBox.style.display = "block";
+				});
+
+				hoverBox.addEventListener("mouseout", function () {
+					document.body.removeChild(hoverBox);
+				});
+			});
+		}
+		display_info_box("hardware");
+	</script>
+</body>
+
+</html>

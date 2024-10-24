@@ -1,6 +1,6 @@
 {
-    "Statistical Metric": {
-        "metrics": {
+    "Fairness Evaluation Metric": {
+        "Statistical Metric": {
             "Accuracy": "Measures the overall correctness of the model.",
             "True Positive Rate": "Proportion of actual positives that are correctly identified.",
             "False Positive Rate": "Proportion of actual negatives that are incorrectly identified as positives.",
@@ -8,44 +8,50 @@
             "False Negative Rate": "Proportion of actual positives that are incorrectly identified as negatives.",
             "Positive Predictive Value": "Proportion of positive results that are true positives.",
             "Negative Predictive Value": "Proportion of negative results that are true negatives."
+        },
+        "Fairness Metrics": {
+            "Difference-based Metrics": {
+                "Mean Difference": "Difference in the average predictions between groups.",
+                "Log loss difference": "Difference in the log loss between groups."
+            },
+            "Ratio-based Metrics": {
+                "Mean Ratio": "Ratio of the average predictions between groups.",
+                "Log loss ratio": "Ratio of the log loss between groups."
+            },
+            "Statistical Fairness Test": {
+                "Chi-Square Test": "Tests the independence of two categorical variables.",
+                "Kolmogorov-Smirnov Test": "Tests the equality of two distributions.",
+                "Mann-Whitney U Test": "Tests the difference between two independent samples.",
+                "Wilcoxon Signed-Rank Test": "Tests the difference between two dependent samples."
+            }
         }
     },
-    "Fairness Metric": {
-        "Classification": [
-            "Balance For Negative Class",
-            "Balance For Positive Class",
-            "Conditional Statistical Parity",
-            "Conditional Use Accuracy Equality",
-            "Equal Negative Predictive Value",
-            "Equal Opportunity",
-            "Equalized Odds",
-            "Fairness Through Awareness",
-            "Fairness Through Unawareness",
-            "Overall Accuracy Equality",
-            "Predictive Equality",
-            "Predictive Parity",
-            "Statistical Parity",
-            "Test Fairness",
-            "Total Fairness",
-            "Treatment Equality",
-            "Well Calibration"
-        ],
-        "Regression": [
-            "Equal Accuracy For Regression",
-            "Equal Opportunity For Regression",
-            "Individual Fairness For Regression",
-            "Loss-Based Fairness",
-            "Loss-Class Fairness Notion",
-            "Mean Difference",
-            "Pairwise Equal Accuracy",
-            "Pairwise Equal Opportunity",
-            "Pairwise Fairness Notion",
-            "Pairwise Statistical Parity",
-            "Statistical Parity For Regression",
-            "Symmetric Equal Accuracy"
-        ]
+    "Fairness Notion": {
+        "Group Fairness Notion": {
+            "Independence Class Fairness": {
+                "Statistical Parity": "All groups should have the same likelihood of receiving a positive outcome.",
+                "Conditional Statistical Parity": "A more nuanced version where groups may be treated differently, but fairness is achieved through conditioning on certain factors."
+            },
+            "Separation Class Fairness": {
+                "Equalized Odds": "All groups should have equal true positive rates and false positive rates.",
+                "Equal Opportunity": "All groups should have equal true positive rates.",
+                "Predictive Equality": "All groups should have equal false positive rates."
+            },
+            "Sufficiency Class Fairness": {
+                "Conditional Use Accuracy Equality": "All groups should have equal positive and negative predictive values.",
+                "Predictive Parity": "All groups should have equal positive predictive values.",
+                "Well Calibration": "All groups should be well-calibrated, meaning the predicted probabilities reflect the actual likelihoods of the outcome."
+            }
+        },
+        "Relaxed Fairness Notion": {
+            "Overall Accuracy Equality": "Fairness based on overall accuracy for different groups.",
+            "Treatment Equality": "All groups should have the same treatment regardless of the underlying characteristics.",
+            "Thresholded Fairness Notion": {
+                "Statistical Test Based Fairness": "Fairness is determined through statistical tests that give numeric values representing fairness."
+            }
+        }
     },
-    "Fairness Metric Explanation": {
+    "Fairness Objectives": {
         "Balance For Negative Class": "Ensures that the balance of negative class predictions is the same across different groups.",
         "Balance For Positive Class": "Ensures that the balance of positive class predictions is the same across different groups.",
         "Conditional Statistical Parity": "Achieves statistical parity conditioned on certain variables.",
@@ -75,31 +81,6 @@
         "Pairwise Statistical Parity": "Ensures statistical parity based on pairwise comparisons of individuals.",
         "Statistical Parity For Regression": "Ensures that the probability of a positive outcome in regression is the same across different groups.",
         "Symmetric Equal Accuracy": "Ensures that the accuracy is symmetrically equal across different groups."
-    },
-    "FairnessNotion": {
-        "GroupFairnessNotion": {
-            "IndependenceClassFairness": {
-                "StatisticalParity": "All groups should have the same likelihood of receiving a positive outcome.",
-                "ConditionalStatisticalParity": "A more nuanced version where groups may be treated differently, but fairness is achieved through conditioning on certain factors."
-            },
-            "SeparationClassFairness": {
-                "EqualizedOdds": "All groups should have equal true positive rates and false positive rates.",
-                "EqualOpportunity": "All groups should have equal true positive rates.",
-                "PredictiveEquality": "All groups should have equal false positive rates."
-            },
-            "SufficiencyClassFairness": {
-                "ConditionalUseAccuracyEquality": "All groups should have equal positive and negative predictive values.",
-                "PredictiveParity": "All groups should have equal positive predictive values.",
-                "WellCalibration": "All groups should be well-calibrated, meaning the predicted probabilities reflect the actual likelihoods of the outcome."
-            }
-        },
-        "RelaxedFairnessNotion": {
-            "OverallAccuracyEquality": "Fairness based on overall accuracy for different groups.",
-            "TreatmentEquality": "All groups should have the same treatment regardless of the underlying characteristics.",
-            "ThresholdedFairnessNotion": {
-                "StatisticalTestBasedFairness": "Fairness is determined through statistical tests that give numeric values representing fairness."
-            }
-        }
     },
     "Bias": {
         "RepresentationBias": "Occurs when the training data is not representative of the target population.",

@@ -101,15 +101,16 @@ class faidlog:
                 return None
 
     @staticmethod
-    def add_data_entry(entry:dict, key:str="dataset_info"):
+    def add_data_entry(entry, key:str="dataset_info"):
         """
         Add a data entry to the data card
         """
-        try:
-            if entry.get("conformsTo") == 'http://mlcommons.org/croissant/RAI/1.0':
-                key="rai"
-        except AttributeError | KeyError:
-            pass
+        if type(entry) is dict:
+            try:
+                if entry.get("conformsTo") == 'http://mlcommons.org/croissant/RAI/1.0':
+                    key="rai"
+            except AttributeError | KeyError:
+                pass
         update(entry, key=key, filename=faidlog.files["data_yml_file"])
         print(f"Added {key} to data card")
 
@@ -217,6 +218,8 @@ class faidlog:
             else:
                 project_info = load(fairness_files)
                 generate_experiment_overview_report(project_info)
+        else:
+            generate_experiment_overview_report(project_info)
 
     @staticmethod
     def generate_model_card_report(custom_file_path:str=None):
@@ -538,7 +541,8 @@ class faidlog:
     @staticmethod
     def get_package_licenses():
         import importlib.metadata
-        with open('requirements.txt', 'r') as f:
+        root = os.getcwd()
+        with open(os.path.join(root, 'requirements.txt'), 'r') as f:
             packages = f.read().splitlines()
             packages = [pkg.split('==')[0] for pkg in packages if pkg]
             try:
@@ -579,12 +583,18 @@ class faidlog:
                      sample_data:dict=None,
                      model:dict=None):
             import os
+            import shutil
+
             if name is None:
                 print("Please provide a name for the experiment")
                 return
 
             self.name = name            
             self.filename = faidlog.convert_experiment_filepath_format(name)
+            
+            if not os.path.exists(self.filename):
+                shutil.copy(faidlog.templates["fairness_template"], self.filename)
+                
             if context is None:
                 context = load(self.filename)["context"]
             self.context = context
@@ -604,9 +614,6 @@ class faidlog:
             self.init_fairness_log()
 
         def init_fairness_log(self) -> dict:
-            import shutil
-            if not os.path.exists(self.filename):
-                shutil.copy(faidlog.templates["fairness_template"], self.filename)
             expCtx = load(self.filename)
             expCtx["name"] = self.name
             expCtx["context"] = self.context
@@ -654,6 +661,21 @@ class faidlog:
             self.model[key] = entry
             update(yamlData=self.model, key="model", filename=self.filename)
             print(f"Added {key} to project metadata under ['model'] and log updated")
+
+        def add_entry(self, entry):
+            from captum.attr import visualization as viz
+            if isinstance(entry, viz.VisualizationDataRecord):
+                entry_dict = {
+                    "word_attributions": entry.word_attributions.detach().cpu().numpy().tolist() if hasattr(entry.word_attributions, 'detach') else entry.word_attributions,
+                    "pred_prob": entry.pred_prob.detach().cpu().numpy().tolist() if hasattr(entry.pred_prob, 'detach') else entry.pred_prob,
+                    "pred_class": entry.pred_class.detach().cpu().numpy().tolist() if hasattr(entry.pred_class, 'detach') else entry.pred_class,
+                    "true_class": entry.true_class.detach().cpu().numpy().tolist() if hasattr(entry.true_class, 'detach') else entry.true_class,
+                    "attr_class": entry.attr_class.detach().cpu().numpy().tolist() if hasattr(entry.attr_class, 'detach') else entry.attr_class,
+                    "attr_score": entry.attr_score.detach().cpu().numpy().tolist() if hasattr(entry.attr_score, 'detach') else entry.attr_score,
+                    "raw_input_ids": entry.raw_input_ids.detach().cpu().numpy().tolist() if hasattr(entry.raw_input_ids, 'detach') else entry.raw_input_ids,
+                    "convergence_score": entry.convergence_score.detach().cpu().numpy().tolist() if hasattr(entry.convergence_score, 'detach') else entry.convergence_score,
+                }
+                self.add_model_entry("captum_records", entry_dict)
 
         def set_context(self, 
                 description:str="", 
@@ -827,46 +849,3 @@ class faidlog:
             """
             from jsonschema import validate
             validate(instance=self.to_dict(), schema=schema)
-
-
-
-
-
-# %% Example usage
-"""
-import random
-import wandb
-import mlflow
-
-project = "test-project-1"
-config = {
-    "learning_rate": 0.02,
-    "architecture": "CNN",
-    "dataset": "CIFAR-100",
-    "epochs": 10,
-}
-
-# initialize wandb run
-run = wandb.init(project= project, config= config)
-mlflow.set_experiment(project)
-faidlog.init(project_name= project, config= config)
-
-with mlflow.start_run():
-    # Log the hyperparameters
-    # simulate training
-    epochs = 10
-    offset = random.random() / 5
-    for epoch in range(2, epochs):
-        acc = 1 - 2 ** -epoch - random.random() / epoch - offset
-        loss = 2 ** -epoch + random.random() / epoch + offset
-
-        # log metrics to wandb
-        metrics = {"acc": acc, "loss": loss}
-        wandb.log(metrics)
-        mlflow.log_params(metrics)
-        faidlog.log(metrics)
-
-# [optional] finish the wandb run, necessary in notebooks
-wandb.finish()
-"""
-# %%
