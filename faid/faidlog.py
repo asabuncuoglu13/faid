@@ -631,6 +631,7 @@ class faidlog:
                 "data": self.data,
                 "sample_data": self.sample_data,
                 "model": self.model,
+                "bias_metrics": self.metric
             }
             return metadata
         
@@ -661,6 +662,12 @@ class faidlog:
             self.model[key] = entry
             update(yamlData=self.model, key="model", filename=self.filename)
             print(f"Added {key} to project metadata under ['model'] and log updated")
+        
+        def add_metric_entry(self, key:str, entry):
+            self.metric = load(self.filename)["bias_metrics"]
+            self.metric["groups"][key] = entry
+            update(yamlData=self.metric, key="bias_metrics", filename=self.filename)
+            print(f"Added {key} to project metadata under ['bias_metrics']['groups'] and log updated")
 
         def add_entry(self, entry):
             from captum.attr import visualization as viz

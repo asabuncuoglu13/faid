@@ -1,38 +1,59 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Bias Evaluation and Mitigation Metrics Schema",
-    "type": "object",
-    "properties": {
-        "bias_metrics": {
+  "type": "object",
+  "properties": {
+    "bias_metrics": {
+      "type": "object",
+      "properties": {
+        "groups": {
+          "type": "array",
+          "items": {
             "type": "object",
             "properties": {
-                "facets": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": { "type": "string" },
-                            "metrics": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "description": { "type": "string" },
-                                        "name": { "type": "string" },
-                                        "value": { "type": "number" }
-                                    },
-                                    "required": ["description", "name", "value"]
-                                }
-                            },
-                            "value_or_threshold": { "type": "string" },
-                            "label": { "type": "string" },
-                            "label_value_or_threshold": { "type": "string" }
-                        },
-                        "required": ["name", "metrics", "value_or_threshold", "label", "label_value_or_threshold"]
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "number"
+                    },
+                    "threshold": {
+                      "type": "number"
+                    },
+                    "bigger_is_better": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "string"
                     }
+                  },
+                  "required": ["name", "value", "threshold"]
                 }
+              }
             },
-            "required": ["facets"]
+            "required": ["name", "metrics"]
+          }
         }
+      }
     }
+  },
+  "required": ["bias_metrics"]
 }

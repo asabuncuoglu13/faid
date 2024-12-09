@@ -18,14 +18,15 @@ sample_data:
   tns: []
   fns: []
 bias_metrics:
-  facets:
-    - name: ""
+  groups:
+    group_name:
       description: ""
-      metrics:
-        - description: ""
-          name: ""
-          value: 0
-      value_or_threshold: ""
       label: ""
-      label_value_or_threshold: ""
-      notes: ""
+      metrics:
+        - name: ""
+          description: ""
+          value: 0
+          threshold: 0
+          bigger_is_better: ""
+          label: ""
+          notes: ""
