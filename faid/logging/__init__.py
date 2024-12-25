@@ -53,7 +53,7 @@ from faid.logging.transparency_utils import (
 )
 
 from faid.logging.logging import (
-    init
+    init_log
 )
 
 from faid.logging.utils import (
@@ -79,7 +79,7 @@ from faid.logging.conversion import (
 
 __all__ = [
     #logging
-    'init',
+    'init_log',
     # message
     'error_msg',
     'success_msg',

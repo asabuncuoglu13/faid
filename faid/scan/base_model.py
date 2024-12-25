@@ -1,5 +1,5 @@
 # %%
-from ..logging.message import error_msg
+from faid.logging import error_msg
 
 # %%
 def get_base_model_name_from_hf(model_name: str):
@@ -52,7 +52,7 @@ def get_fairness_metric_explanations():
 
 # %% display benchmark as a dropdown html
 
-def fairness_metric_dropdown():
+def fairness_benchmark_dropdown():
 
     df = get_fairness_metric_explanations()
 

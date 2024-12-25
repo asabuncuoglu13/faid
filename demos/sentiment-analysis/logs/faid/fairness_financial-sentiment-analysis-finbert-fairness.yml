@@ -3275,7 +3275,19 @@ context:
   - financial-sentiment-analysis
   - sentiment-analysis
 data:
-  sample: ''
+  sample:
+    0:
+      text: growth is strong and we have plenty of liquidity.
+      label: Positive
+      score: 1.0
+    1:
+      text: there is a shortage of capital, and we need extra financing.
+      label: Negative
+      score: 0.9952379465103149
+    2:
+      text: formulation patents might protect Vasotec to a limited extent.
+      label: Neutral
+      score: 0.9979718327522278
   variable_profile: null
 model:
   name: ''

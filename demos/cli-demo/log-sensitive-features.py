@@ -64,7 +64,7 @@ def main(mod, data_path):
     
     if mod == 'init':
         # Get the main folder name from os
-        faidlog.init()
+        faidlog.init_log()
         return
     
     if mod == 'scan-data':
