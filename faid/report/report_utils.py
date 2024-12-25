@@ -1,11 +1,45 @@
 # %%
 from jinja2 import Environment, FileSystemLoader
-from .file_utils import get_faid_report_folder
-from ..logging.yaml_utils import load
+from faid.report import get_faid_report_folder
+from faid.logging import (
+    load, 
+    get_data_entry, 
+    get_fairness_log_path,
+    get_data_log_path,
+    get_model_log_file_path,
+    get_risk_register_log_path,
+    get_transparency_log_path
+)
 import os
 
-# %%
-def generate_experiment_overview_report(info:dict, output_file:str=None):
+def generate_all_reports():
+    """
+    Generate all the reports
+    """
+    generate_experiment_overview_report()
+    generate_model_card_report()
+    generate_data_card_report()
+    generate_risk_register_report()
+    print("All reports generated")
+
+def generate_experiment_overview_report(project_info:dict=None):
+    """
+    Generate the project overview report
+    """
+    # for each file starts with fairness_, generate the report
+    if project_info is None:
+        fairness_files = get_fairness_log_path()
+        if isinstance(fairness_files, list):
+            for file in fairness_files:
+                project_info = load(file)
+                experiment_overview_report(project_info)
+        else:
+            project_info = load(fairness_files)
+            experiment_overview_report(project_info)
+    else:
+        experiment_overview_report(project_info)
+
+def experiment_overview_report(info:dict, output_file:str=None):
     """
     Generates an HTML report from experiment information using Jinja2 template.
 
@@ -58,8 +92,25 @@ def generate_experiment_overview_report(info:dict, output_file:str=None):
     with open(output_file, 'w') as file:
         file.write(html_content)
 
-# %%
-def generate_raid_register_report(risk_data:dict={}, output_file:str="risk_register.html"):
+def generate_risk_register_report(custom_file_path:str=None):
+    """
+    Generate the risk register report
+    """
+    import os
+    if not os.path.exists(get_risk_register_log_path()):
+        print("Risk log file not found")
+        return
+    else:
+        if custom_file_path is None:
+            raid_register_report()
+        else:
+            if os.path.exists(custom_file_path):
+                info = load(custom_file_path)
+                raid_register_report(risk_data=info)
+            else:
+                print("Custom file path not found")
+
+def raid_register_report(risk_data:dict={}, output_file:str="risk_register.html"):
     """
     Generates an HTML report from risk data in format format using Jinja2 template.
 
@@ -87,8 +138,28 @@ def generate_raid_register_report(risk_data:dict={}, output_file:str="risk_regis
     with open(output_file, 'w') as file:
         file.write(html_content)
 
-# %%
-def generate_data_card(dataset_info:dict={}, output_file:str="data_card.html"):
+def generate_data_card_report(input_file_path:str=None, output_file_path:str=None):
+    """
+    Generate the data card report
+    """
+    import os
+    if input_file_path is not None:
+        if os.path.exists(input_file_path):
+            info = load(input_file_path)
+        else:
+            print("Input file path not found")
+    else:
+        info = get_data_entry()
+        if not os.path.exists(get_data_log_path()):
+            print("Data log file not found")
+            return
+        else:
+            if output_file_path is not None:
+                data_card(dataset_info=info, output_file=output_file_path)
+            else:
+                data_card(dataset_info=info)
+
+def data_card(dataset_info:dict={}, output_file:str="data_card.html"):
     """
     Generates an HTML report from data card information using Jinja2 template.
 
@@ -116,8 +187,25 @@ def generate_data_card(dataset_info:dict={}, output_file:str="data_card.html"):
         file.write(html_content)
 
 
-# %%
-def generate_model_card(model_info:dict={}, output_file:str="model_card.html"):
+def generate_model_card_report(custom_file_path:str=None):
+    """
+    Generate the model card report
+    """
+    import os
+    if not os.path.exists(get_model_log_file_path()):
+        print("Model log file not found")
+        return
+    else:
+        if custom_file_path is None:
+            model_card()
+        else:
+            if os.path.exists(custom_file_path):
+                info = load(custom_file_path)
+                model_card(model_info=info)
+            else:
+                print("Custom file path not found")
+
+def model_card(model_info:dict={}, output_file:str="model_card.html"):
     """
     Generates an HTML model card from model info using Jinja2 template.
 
@@ -144,8 +232,25 @@ def generate_model_card(model_info:dict={}, output_file:str="model_card.html"):
     with open(output_file, 'w') as file:
         file.write(html_content)
 
-# %%
-def generate_transparency_report(transparency_data:dict={}, output_file:str="transparency.html"):
+def generate_transparency_report(custom_file_path:str=None):
+    """
+    Generate the transparency report
+    """
+    import os
+    if not os.path.exists(get_transparency_log_path()):
+        print("Transparency log file not found")
+        return
+    else:
+        if custom_file_path is None:
+            transparency_report()
+        else:
+            if os.path.exists(custom_file_path):
+                info = load(custom_file_path)
+                transparency_report(transparency_data=info)
+            else:
+                print("Custom file path not found")
+
+def transparency_report(transparency_data:dict={}, output_file:str="transparency.html"):
     """
     Generates an HTML report from transparency data using Jinja2 template.
 

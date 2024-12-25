@@ -3298,12 +3298,16 @@ sample_data:
   tns: []
   fns: []
 bias_metrics:
-  facets:
-  - name: ''
-    metrics:
-    - description: ''
-      name: ''
-      value: 0
-    value_or_threshold: ''
-    label: ''
-    label_value_or_threshold: ''
+  groups:
+    group_name:
+      description: ''
+      label: ''
+      metrics:
+      - name: ''
+        description: ''
+        value: 0
+        threshold: 0
+        bigger_is_better: ''
+        label: ''
+        notes: ''
+        sg_params: {}

@@ -26,8 +26,9 @@ dataset_info:
       description: ""
   unintentional_sensitive_data: []
   security_privacy_handling: ""
-  risk_types: []
-  risks_mitigations: ""
+  risks:
+    - name:
+      mitigation_strategy: ""
   maintenance_status: ""
   version_details:
     current_version: ""

@@ -40,7 +40,7 @@ jobs:
           for dir in ${{ steps.extract_dirs.outputs.dirs }}; do
             echo "Generating report for $dir..."
             cd $dir
-            python -c "print('Generating reports for $dir...'); from faid.faidlog import faidlog; faidlog.generate_all_reports()"
+            python -c "print('Generating reports for $dir...'); from faid.logging import generate_all_reports; generate_all_reports()"
             echo "Report generated successfully for $dir"
           done
 
