@@ -17,6 +17,11 @@ def get_project_log_path():
     return log_folder + slash
 
 # %%
+def get_current_folder_path():
+    import os
+    return os.path.dirname(os.path.abspath(__file__))
+
+# %%
 def generate(dataDict, filename:str=None, return_result=False):
   """
   Generate a yaml file 

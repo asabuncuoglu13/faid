@@ -10,6 +10,8 @@ data:
   sample: []
   variable_profile:
   sensitive_characteristics:
+  nominal_features:
+  continuous_features:
 model:
   name: ""
 sample_data:
@@ -30,3 +32,4 @@ bias_metrics:
           bigger_is_better: ""
           label: ""
           notes: ""
+          sg_params: {}

@@ -60,7 +60,7 @@ def get_sensitive_features(data):
 def main(mod, data_path):
     import sys
     sys.path.append('../..')
-    from faid.faidlog import faidlog
+    from faid import logging as faidlog
     
     if mod == 'init':
         # Get the main folder name from os

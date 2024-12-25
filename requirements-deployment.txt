@@ -3,3 +3,4 @@ pandas==2.2.2
 PyYAML==6.0.1
 inquirer==3.3.0
 ipython==8.24.0
+matplotlib==3.8.4
