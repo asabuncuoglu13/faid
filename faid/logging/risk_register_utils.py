@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 from shutil import copy
 
-from faid.logging import error_msg, update, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path
 
 risk_file_path = join(get_project_log_path(), "risks.yml")
 risk_file_template_path = join(get_current_folder_path(), "templates/risks.yml")
@@ -12,9 +12,9 @@ risk_file_template_path = join(get_current_folder_path(), "templates/risks.yml")
 def initialize_risk_log():
     if not exists(risk_file_path):
         copy(risk_file_template_path, risk_file_path)
-        print("Risks log file created.")
+        success_msg("Risks log file created.")
     else:
-        print("Risks log file already exists.")
+        warning_msg("Risks log file already exists. Logging will be appended to the existing file.")
 
 def get_risk_register_log_path():
     return risk_file_path

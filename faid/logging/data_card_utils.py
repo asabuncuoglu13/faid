@@ -1,7 +1,7 @@
 from os.path import join, exists
 from shutil import copy
 
-from faid.logging import error_msg, update, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path
 
 data_file_path = join(get_project_log_path(), "data.yml")
 data_file_template_path = join(get_current_folder_path(), "templates/data.yml")
@@ -10,9 +10,9 @@ data_info_key = "dataset_info"
 def initialize_data_log():
     if not exists(data_file_path):
         copy(data_file_template_path, data_file_template_path)
-        print("Data log file created.")
+        success_msg("Data log file created.")
     else:
-        print("Data log file already exists.")
+        warning_msg("Data log file already exists. Logging will be appended to the existing file.")
 
 def get_data_log_path():
     return data_file_path
@@ -60,7 +60,7 @@ class DataCard:
         Saves the data information to the data log file.
         """
         update(self.to_dict(), key=data_info_key, filename=data_file_path)
-        print("Data info saved to the data log file.")
+        success_msg("Data info saved to the data log file.")
 
     def validate(self, schema):
         """

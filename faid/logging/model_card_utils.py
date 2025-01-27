@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 from shutil import copy
 
-from faid.logging import error_msg, update, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path
 
 model_file_path = join(get_project_log_path(), "model.yml")
 model_file_template_path = join(get_current_folder_path(), "templates/model.yml")
@@ -13,9 +13,9 @@ model_info_key = "model_info"
 def initialize_model_log():
     if not exists(model_file_path):
         copy(model_file_template_path, model_file_path)
-        print("Model log file created.")
+        success_msg("Model log file created.")
     else:
-        print("Model log file already exists.")
+        warning_msg("Model log file already exists.  Logging will be appended to the existing file.")
 
 def get_model_log_file_path():
     return model_file_path
@@ -152,7 +152,7 @@ def convert_to_hf_model_card(data, lookup_table):
         if key in lookup_table:
             converted_data[lookup_table[key]] = value
         else:
-            print(f"Warning: No mapping found for key '{key}'")
+            warning_msg(f"Warning: No mapping found for key '{key}'")
     return converted_data
 
 # Function to map from schema2 to schema1
@@ -164,7 +164,7 @@ def convert_to_google_model_card(data, lookup_table):
         if key in reversed_lookup:
             converted_data[reversed_lookup[key]] = value
         else:
-            print(f"Warning: No mapping found for key '{key}'")
+            warning_msg(f"Warning: No mapping found for key '{key}'")
     return converted_data
 
 # Example JSON data in schema1
@@ -273,7 +273,7 @@ class ModelCard:
             Saves the model information to the model log file.
             """
             update(self.model_info, key=model_info_key, filename=model_file_path)
-            print("Model info saved to the model log file.")
+            success_msg("Model info saved to the model log file.")
         
         def to_dict(self):
             """

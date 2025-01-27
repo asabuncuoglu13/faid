@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 from shutil import copy
 
-from faid.logging import error_msg, update, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path
 
 transparency_file_path = join(get_project_log_path(), "transparency.yml")
 transparency_file_template_path = join(get_current_folder_path(), "templates/transparency.yml")
@@ -12,9 +12,9 @@ transparency_file_template_path = join(get_current_folder_path(), "templates/tra
 def initialize_transparency_log():
     if not exists(transparency_file_path):
         copy(transparency_file_template_path, transparency_file_path)
-        print("Transparency log file created.")
+        success_msg("Transparency log file created.")
     else:
-        print("Transparency log file already exists.")
+        warning_msg("Transparency log file already exists. Logging will be appended to the existing file.")
 
 def get_transparency_log_path():
     return transparency_file_path
