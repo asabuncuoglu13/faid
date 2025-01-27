@@ -29,7 +29,7 @@ def add_data_entry(key:str, entry:any):
     update(entry, key=key, filename=data_file_path)
     print(f"Added {key} to data card")
 
-def get_data_entry(key:str):
+def get_data_entry(key:str=None):
     if key is None:
         return load(data_file_path)
     else:
