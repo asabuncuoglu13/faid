@@ -108,7 +108,7 @@
           }
         }
       },
-      "sensitivity_types": {
+      "protected_characteristics": {
         "type": "array",
         "items": { "type": "string" }
       },

@@ -9,7 +9,7 @@ data_info_key = "dataset_info"
 
 def initialize_data_log():
     if not exists(data_file_path):
-        copy(data_file_template_path, data_file_template_path)
+        copy(data_file_template_path, data_file_path)
         success_msg("Data log file created.")
     else:
         warning_msg("Data log file already exists. Logging will be appended to the existing file.")
@@ -37,6 +37,9 @@ def get_data_entry(key:str=None):
         try:
             return load(data_file_path)[key]
         except KeyError:
+            error_msg(f"Key {key} not found in the metadata file")
+            return None
+        except AttributeError:
             error_msg(f"Key {key} not found in the metadata file")
             return None
 
@@ -98,40 +101,9 @@ def pretty_croissant(ds) -> dict:
             "Time Span": metadata.get("dataset_snapshot", {}).get("Time Span", "")
         },
         "content_description": metadata.get("content_description", ""),
-        "descriptive_statistics": {
-            "fields": metadata.get("descriptive_statistics", {}).get("fields", []),
-            "stats": [
-                {"name": stat.get("name", ""), "values": stat.get("values", [])}
-                for stat in metadata.get("descriptive_statistics", {}).get("stats", [])
-            ]
-        },
-        "sensitivity_types": metadata.get("sensitivity_types", []),
-        "intentional_sensitive_data": [
-            {"name": data.get("name", ""), "description": data.get("description", "")}
-            for data in metadata.get("intentional_sensitive_data", [])
-        ],
-        "unintentional_sensitive_data": metadata.get("unintentional_sensitive_data", []),
-        "security_privacy_handling": metadata.get("security_privacy_handling", ""),
-        "risk_types": metadata.get("risk_types", []),
-        "risks_mitigations": metadata.get("risks_mitigations", ""),
-        "maintenance_status": metadata.get("maintenance_status", ""),
-        "version_details": {
-            "current_version": metadata.get("version_details", {}).get("current_version", ""),
-            "last_updated": metadata.get("version_details", {}).get("last_updated", ""),
-            "release_date": metadata.get("version_details", {}).get("release_date", "")
-        },
-        "maintenance_plan": metadata.get("maintenance_plan", ""),
-        "next_update": {
-            "version_affected": metadata.get("next_update", {}).get("version_affected", ""),
-            "next_data_update": metadata.get("next_update", {}).get("next_data_update", ""),
-            "next_version": metadata.get("next_update", {}).get("next_version", ""),
-            "next_version_update": metadata.get("next_update", {}).get("next_version_update", "")
-        },
-        "expected_changes": metadata.get("expected_changes", ""),
-        "primary_data_modality": metadata.get("primary_data_modality", ""),
+        "version_details": metadata.get("content_description", ""),
         "sampling_data_points": [df.head().to_dict()],
-        "data_fields": df.keys().tolist(),
-        "typical_data_point": metadata.get("typical_data_point", "")
+        "data_fields": df.keys().tolist()
     }
     return dataset_info
 
@@ -150,5 +122,39 @@ def pretty_croissant_rai(metadata) -> dict:
         "dataBiases": metadata.get("dataBiases", ""),
         "annotationsPerItem": metadata.get("annotationsPerItem", ""),
         "annotatorDemographics": metadata.get("annotatorDemographics", "")
+    }
+    return dataset_info
+
+def pretty_uci_metadata(metadata) -> dict:
+    """
+    Gets the UCI metadata dict and returns another dict with our report format
+    """
+    dataset_info = {
+        "id": metadata.get("uci_id", ""),
+        "dataset_name": metadata.get("name", ""),
+        "repository_url": metadata.get("repository_url", ""),
+        "dataset_link": metadata.get("data_url", ""),
+        "summary": metadata.get("abstract", ""),
+        "industry_types": metadata.get("area", ""),
+        "tasks": metadata.get("tasks", []),
+        "characteristics": metadata.get("characteristics", []),
+        "num_instances": metadata.get("num_instances", ""),
+        "num_features": metadata.get("num_features", ""),
+        "feature_types": metadata.get("feature_types", []),
+        "protected_characteristics": metadata.get("demographics", ""),
+        "target_col": metadata.get("target_col", ""),
+        "index_col": metadata.get("index_col", ""),
+        "has_missing_values": metadata.get("has_missing_values", False),
+        "missing_values_symbol": metadata.get("missing_values_symbol", ""),
+        "version_details": {
+            "current_version": "",
+            "last_updated": metadata.get("last_updated", ""),
+            "release_date": metadata.get("year_of_dataset_creation", "")
+        },
+        "authors": metadata.get("creators", []),
+        "intro_paper": metadata.get("intro_paper", ""),
+        "funding_sources": metadata.get("additional_info", "").get("funded_by", ""),
+        "intentional_sensitive_data": metadata.get("additional_info", "").get("sensitive_data", ""),
+        "data_fields": metadata.get("additional_info", "").get("variable_info", []),
     }
     return dataset_info

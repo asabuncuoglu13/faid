@@ -78,7 +78,7 @@ def main(mod, data_path):
             print("No sensitive features selected. Please select at least one sensitive feature.")
             selected_sensitive_fts = get_sensitive_features(data)
         
-        faidlog.add_data_entry("sensitivity_types", selected_sensitive_fts)
+        faidlog.add_data_entry("protected_characteristics", selected_sensitive_fts)
         print(selected_sensitive_fts)
    
 if __name__ == "__main__":

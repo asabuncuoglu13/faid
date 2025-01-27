@@ -2,8 +2,20 @@ dataset_info:
   dataset_name: ""
   summary: ""
   dataset_link: ""
+  repository_link: ""
   authors: ""
   publishing_organization: ""
+  tasks: []
+  characteristics: []
+  num_instances: ""
+  num_features: ""
+  feature_types: []
+  target_col: ""
+  index_col: ""
+  has_missing_values: ""
+  missing_values_symbol: ""
+  year_of_dataset_creation: ""
+  last_updated: ""
   industry_types: []
   publishing_poc: {}
   dataset_owners: {}
@@ -20,7 +32,7 @@ dataset_info:
     stats:
       - name: ""
         values: []
-  sensitivity_types: []
+  protected_characteristics: []
   intentional_sensitive_data:
     - name: ""
       description: ""

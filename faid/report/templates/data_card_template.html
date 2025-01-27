@@ -171,8 +171,8 @@
 				{{ dataset_info.descriptive_statistics }}
 			</div>
 		{% endif %}
-		{% if dataset_info.sensitivity_types %}
-			<p><strong>Sensitivity Types:</strong> {{ dataset_info.sensitivity_types | join(', ') }}</p>
+		{% if dataset_info.protected_characteristics %}
+			<p><strong>Sensitivity Types:</strong> {{ dataset_info.protected_characteristics | join(', ') }}</p>
 		{% endif %}
 		<h2>Intentional Sensitive Data</h2>
 		{% if dataset_info.intentional_sensitive_data %}\

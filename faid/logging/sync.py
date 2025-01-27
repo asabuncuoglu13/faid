@@ -9,31 +9,26 @@ from faid.logging import (
     add_risk_entry,
 )
 
-class EntityLookup:
-    def __init__(self):
-        self.lookup_table = self.load_data()
-
-    def load_data(self):
-        return [
-            {"is_array": "1", "model": "data", "model_p": "model_parameters", "data": "", "data_p": "", "risk": "", "risk_p": "", "usecase": "", "usecase_p": "", "transparency": "", "transparency_p": ""},
-            {"is_array": "0", "model": "description", "model_p": "data", "data": "summary", "data_p": "", "risk": "", "risk_p": "", "usecase": "", "usecase_p": "", "transparency": "", "transparency_p": ""},
-            {"is_array": "0", "model": "link", "model_p": "data", "data": "dataset_link", "data_p": "", "risk": "", "risk_p": "", "usecase": "", "usecase_p": "", "transparency": "", "transparency_p": ""},
-            {"is_array": "0", "model": "sensitive", "model_p": "data", "data": "sensitivity_types", "data_p": "", "risk": "", "risk_p": "", "usecase": "", "usecase_p": "", "transparency": "", "transparency_p": ""},
-            {"is_array": "0", "model": "sensitive", "model_p": "data", "data": "sensitivity_types", "data_p": "", "risk": "", "risk_p": "", "usecase": "", "usecase_p": "", "transparency": "", "transparency_p": ""},
-            {"is_array": "1", "model": "risks", "model_p": "considerations", "data": "risks", "data_p": "", "risk": "risks", "risk_p": "", "usecase": "", "usecase_p": "", "transparency": "", "transparency_p": ""},
-            {"is_array": "0", "model": "name", "model_p": "risks", "data": "name", "data_p": "risks", "risk": "description", "risk_p": "risks", "usecase": "", "usecase_p": "", "transparency": "", "transparency_p": ""},
-            {"is_array": "0", "model": "mitigation_strategy", "model_p": "risks", "data": "mitigation_strategy", "data_p": "risks", "risk": "mitigation", "risk_p": "risks", "usecase": "", "usecase_p": "", "transparency": "", "transparency_p": ""}
-        ]
-
-    def find_entity(self, key, value):
-        results = []
-        for row in self.lookup_table:
-            if row.get(key) == value:
-                results.append(row)
-        return results
-
 model_file_path = get_model_log_file_path()
 risk_file_path = get_risk_register_log_path()
+
+def get_fairness_entities_from_model():
+    return {
+        "model_parameters" : {
+            "data": get_model_entry("model_parameters").get('data', ''),
+        },
+        "quantitative_analysis": get_model_entry("quantitative_analysis"),
+        "considerations": get_model_entry("considerations")
+    }
+
+def get_fairness_entities_from_data():
+    return {
+        "summary": get_data_entry("dataset_info").get('summary', ''),
+        "protected_characteristics": get_data_entry("dataset_info").get('protected_characteristics', ''),
+        "intentional_sensitive_data": get_data_entry("dataset_info").get('intentional_sensitive_data', ''),
+        "unintentional_sensitive_data": get_data_entry("dataset_info").get('unintentional_sensitive_data', ''),
+        "rai": get_data_entry("rai"),
+    }
 
 def sync_model_to_risk():
     model_risks = get_model_entry("considerations").get('risks', [])
@@ -52,7 +47,7 @@ def sync_model_to_data():
     add_data_entry({
         "summary": model_data.get('description', ''),
         "dataset_link": model_data.get('link', ''),
-        "sensitivity_types": model_data.get('sensitive', ''),
+        "protected_characteristics": model_data.get('sensitive', ''),
     })
 
 def sync_model_to_usecase():
@@ -63,7 +58,7 @@ def sync_data_to_model():
     data_entry = {
         "description" : get_data_entry("summary"),
         "link" : get_data_entry("dataset_link"),
-        "sensitive" : get_data_entry("sensitivity_types"),
+        "sensitive" : get_data_entry("protected_characteristics"),
         "graphics" : "",
     }
     add_model_entry(data_entry, key='data', filename=model_file_path)
@@ -124,18 +119,3 @@ def sync_usecase_to_data():
 def sync_usecase_to_transparency():
     # Implement the logic to sync usecase to transparency
     pass
-
-
-"""
-if __name__ == "__main__":
-    entity_lookup = EntityLookup()
-
-    # Example usage
-    key = 'model'
-    value = 'data'
-    results = entity_lookup.find_entity(key, value)
-    
-    for result in results:
-        print(result)
-
-"""
