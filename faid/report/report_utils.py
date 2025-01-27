@@ -155,16 +155,16 @@ def generate_data_card_report(input_file_path:str=None, output_file_path:str=Non
             return
         else:
             if output_file_path is not None:
-                data_card(dataset_info=info, output_file=output_file_path)
+                data_card(data_entries=info, output_file=output_file_path)
             else:
-                data_card(dataset_info=info)
+                data_card(data_entries=info)
 
-def data_card(dataset_info:dict={}, output_file:str="data_card.html"):
+def data_card(data_entries:dict={}, output_file:str="data_card.html"):
     """
     Generates an HTML report from data card information using Jinja2 template.
 
     Parameters:
-    - dataset_info: Dictionary containing dataset information.
+    - data_entries: Dictionary containing dataset information.
     - output_file: Path to the output HTML file.
     """
 
@@ -173,13 +173,13 @@ def data_card(dataset_info:dict={}, output_file:str="data_card.html"):
     env = Environment(loader=FileSystemLoader(current_folder_location))
     template = env.get_template('templates/data_card_template.html')
 
-    if dataset_info == {}:  # Load the data from the yaml file
+    if data_entries == {}:  # Load the data from the yaml file
         try:
-            dataset_info = load("data")
+            data_entries = load("data")
         except FileNotFoundError:
             print("Data card information not found. Please provide data card information in the YAML file.")
     # Render the template with metrics
-    html_content = template.render(dataset_info)
+    html_content = template.render(data_entries)
 
     output_file = get_faid_report_folder() + output_file
     # Write the rendered HTML to a file

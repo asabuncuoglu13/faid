@@ -1,281 +1,172 @@
-dataset_info:
-  uci_id: 350
-  name: Default of Credit Card Clients
-  repository_url: https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients
-  data_url: https://archive.ics.uci.edu/static/public/350/data.csv
-  abstract: This research aimed at the case of customers' default payments in Taiwan
-    and compares the predictive accuracy of probability of default among six data
-    mining methods.
-  area: Business
-  tasks:
-  - Classification
-  characteristics:
-  - Multivariate
-  num_instances: 30000
-  num_features: 23
-  feature_types:
-  - Integer
-  - Real
-  demographics:
-  - Sex
-  - Education Level
-  - Marital Status
-  - Age
-  target_col:
-  - Y
-  index_col:
-  - ID
-  has_missing_values: 'no'
-  missing_values_symbol: null
-  year_of_dataset_creation: 2009
-  last_updated: Fri Mar 29 2024
-  dataset_doi: 10.24432/C55S3H
-  creators:
-  - I-Cheng Yeh
-  intro_paper:
-    ID: 365
-    type: NATIVE
-    title: The comparisons of data mining techniques for the predictive accuracy of
-      probability of default of credit card clients
-    authors: I. Yeh, Che-hui Lien
-    venue: Expert systems with applications
-    year: 2009
-    journal: null
-    DOI: 10.1016/j.eswa.2007.12.020
-    URL: https://www.semanticscholar.org/paper/1cacac4f0ea9fdff3cd88c151c94115a9fddcf33
-    sha: null
-    corpus: null
-    arxiv: null
-    mag: null
-    acl: null
-    pmid: null
-    pmcid: null
-  additional_info:
-    summary: This research aimed at the case of customers' default payments in Taiwan
-      and compares the predictive accuracy of probability of default among six data
-      mining methods. From the perspective of risk management, the result of predictive
-      accuracy of the estimated probability of default will be more valuable than
-      the binary result of classification - credible or not credible clients. Because
-      the real probability of default is unknown, this study presented the novel Sorting
-      Smoothing Method to estimate the real probability of default. With the real
-      probability of default as the response variable (Y), and the predictive probability
-      of default as the independent variable (X), the simple linear regression result
-      (Y = A + BX) shows that the forecasting model produced by artificial neural
-      network has the highest coefficient of determination; its regression intercept
-      (A) is close to zero, and regression coefficient (B) to one. Therefore, among
-      the six data mining techniques, artificial neural network is the only one that
-      can accurately estimate the real probability of default.
-    purpose: null
-    funded_by: null
-    instances_represent: null
-    recommended_data_splits: null
-    sensitive_data: null
-    preprocessing_description: null
-    variable_info: "This research employed a binary variable, default payment (Yes\
-      \ = 1, No = 0), as the response variable. This study reviewed the literature\
-      \ and used the following 23 variables as explanatory variables:\r\nX1: Amount\
-      \ of the given credit (NT dollar): it includes both the individual consumer\
-      \ credit and his/her family (supplementary) credit.\r\nX2: Gender (1 = male;\
-      \ 2 = female).\r\nX3: Education (1 = graduate school; 2 = university; 3 = high\
-      \ school; 4 = others).\r\nX4: Marital status (1 = married; 2 = single; 3 = others).\r\
-      \nX5: Age (year).\r\nX6 - X11: History of past payment. We tracked the past\
-      \ monthly payment records (from April to September, 2005) as follows: X6 = the\
-      \ repayment status in September, 2005; X7 = the repayment status in August,\
-      \ 2005; . . .;X11 = the repayment status in April, 2005. The measurement scale\
-      \ for the repayment status is: -1 = pay duly; 1 = payment delay for one month;\
-      \ 2 = payment delay for two months; . . .; 8 = payment delay for eight months;\
-      \ 9 = payment delay for nine months and above.\r\nX12-X17: Amount of bill statement\
-      \ (NT dollar). X12 = amount of bill statement in September, 2005; X13 = amount\
-      \ of bill statement in August, 2005; . . .; X17 = amount of bill statement in\
-      \ April, 2005. \r\nX18-X23: Amount of previous payment (NT dollar). X18 = amount\
-      \ paid in September, 2005; X19 = amount paid in August, 2005; . . .;X23 = amount\
-      \ paid in April, 2005.\r\n"
-    citation: null
-variables:
-  name:
-    0: ID
-    1: X1
-    2: X2
-    3: X3
-    4: X4
-    5: X5
-    6: X6
-    7: X7
-    8: X8
-    9: X9
-    10: X10
-    11: X11
-    12: X12
-    13: X13
-    14: X14
-    15: X15
-    16: X16
-    17: X17
-    18: X18
-    19: X19
-    20: X20
-    21: X21
-    22: X22
-    23: X23
-    24: Y
-  role:
-    0: ID
-    1: Feature
-    2: Feature
-    3: Feature
-    4: Feature
-    5: Feature
-    6: Feature
-    7: Feature
-    8: Feature
-    9: Feature
-    10: Feature
-    11: Feature
-    12: Feature
-    13: Feature
-    14: Feature
-    15: Feature
-    16: Feature
-    17: Feature
-    18: Feature
-    19: Feature
-    20: Feature
-    21: Feature
-    22: Feature
-    23: Feature
-    24: Target
-  type:
-    0: Integer
-    1: Integer
-    2: Integer
-    3: Integer
-    4: Integer
-    5: Integer
-    6: Integer
-    7: Integer
-    8: Integer
-    9: Integer
-    10: Integer
-    11: Integer
-    12: Integer
-    13: Integer
-    14: Integer
-    15: Integer
-    16: Integer
-    17: Integer
-    18: Integer
-    19: Integer
-    20: Integer
-    21: Integer
-    22: Integer
-    23: Integer
-    24: Binary
-  demographic:
-    0: null
-    1: null
-    2: Sex
-    3: Education Level
-    4: Marital Status
-    5: Age
-    6: null
-    7: null
-    8: null
-    9: null
-    10: null
-    11: null
-    12: null
-    13: null
-    14: null
-    15: null
-    16: null
-    17: null
-    18: null
-    19: null
-    20: null
-    21: null
-    22: null
-    23: null
-    24: null
-  description:
-    0: null
-    1: LIMIT_BAL
-    2: SEX
-    3: EDUCATION
-    4: MARRIAGE
-    5: AGE
-    6: PAY_0
-    7: PAY_2
-    8: PAY_3
-    9: PAY_4
-    10: PAY_5
-    11: PAY_6
-    12: BILL_AMT1
-    13: BILL_AMT2
-    14: BILL_AMT3
-    15: BILL_AMT4
-    16: BILL_AMT5
-    17: BILL_AMT6
-    18: PAY_AMT1
-    19: PAY_AMT2
-    20: PAY_AMT3
-    21: PAY_AMT4
-    22: PAY_AMT5
-    23: PAY_AMT6
-    24: default payment next month
-  units:
-    0: null
-    1: null
-    2: null
-    3: null
-    4: null
-    5: null
-    6: null
-    7: null
-    8: null
-    9: null
-    10: null
-    11: null
-    12: null
-    13: null
-    14: null
-    15: null
-    16: null
-    17: null
-    18: null
-    19: null
-    20: null
-    21: null
-    22: null
-    23: null
-    24: null
-  missing_values:
-    0: 'no'
-    1: 'no'
-    2: 'no'
-    3: 'no'
-    4: 'no'
-    5: 'no'
-    6: 'no'
-    7: 'no'
-    8: 'no'
-    9: 'no'
-    10: 'no'
-    11: 'no'
-    12: 'no'
-    13: 'no'
-    14: 'no'
-    15: 'no'
-    16: 'no'
-    17: 'no'
-    18: 'no'
-    19: 'no'
-    20: 'no'
-    21: 'no'
-    22: 'no'
-    23: 'no'
-    24: 'no'
-sensitive_characteristics:
+dataset_name: Default of Credit Card Clients
+summary: This research aimed at the case of customers' default payments in Taiwan
+  and compares the predictive accuracy of probability of default among six data mining
+  methods.
+dataset_link: https://archive.ics.uci.edu/static/public/350/data.csv
+repository_link: ''
+authors:
+- I-Cheng Yeh
+publishing_organization: ''
+tasks:
+- Classification
+characteristics:
+- Multivariate
+num_instances: 30000
+num_features: 23
+feature_types:
+- Integer
+- Real
+target_col:
+- Y
+index_col:
+- ID
+has_missing_values: 'no'
+missing_values_symbol: null
+year_of_dataset_creation: 2009
+last_updated: Fri Mar 29 2024
+industry_types: Business
+publishing_poc: {}
+dataset_owners: {}
+dataset_authors: []
+funding_sources: null
+data_subjects: []
+dataset_snapshot:
+  Total Records: ''
+  Coverage: ''
+  Time Span: ''
+content_description: ''
+descriptive_statistics:
+  fields: []
+  stats:
+  - name: ''
+    values: []
+protected_characteristics:
 - Sex
 - Education Level
 - Marital Status
 - Age
+intentional_sensitive_data: null
+unintentional_sensitive_data: []
+security_privacy_handling: ''
+risks:
+- name: null
+  mitigation_strategy: ''
+maintenance_status: ''
+version_details:
+  current_version: ''
+  last_updated: Fri Mar 29 2024
+  release_date: 2009
+maintenance_plan: ''
+next_update:
+  version_affected: ''
+  next_data_update: ''
+  next_version: ''
+  next_version_update: ''
+expected_changes: ''
+primary_data_modality: ''
+sampling_data_points: []
+data_fields: "This research employed a binary variable, default payment (Yes = 1,\
+  \ No = 0), as the response variable. This study reviewed the literature and used\
+  \ the following 23 variables as explanatory variables:\r\nX1: Amount of the given\
+  \ credit (NT dollar): it includes both the individual consumer credit and his/her\
+  \ family (supplementary) credit.\r\nX2: Gender (1 = male; 2 = female).\r\nX3: Education\
+  \ (1 = graduate school; 2 = university; 3 = high school; 4 = others).\r\nX4: Marital\
+  \ status (1 = married; 2 = single; 3 = others).\r\nX5: Age (year).\r\nX6 - X11:\
+  \ History of past payment. We tracked the past monthly payment records (from April\
+  \ to September, 2005) as follows: X6 = the repayment status in September, 2005;\
+  \ X7 = the repayment status in August, 2005; . . .;X11 = the repayment status in\
+  \ April, 2005. The measurement scale for the repayment status is: -1 = pay duly;\
+  \ 1 = payment delay for one month; 2 = payment delay for two months; . . .; 8 =\
+  \ payment delay for eight months; 9 = payment delay for nine months and above.\r\
+  \nX12-X17: Amount of bill statement (NT dollar). X12 = amount of bill statement\
+  \ in September, 2005; X13 = amount of bill statement in August, 2005; . . .; X17\
+  \ = amount of bill statement in April, 2005. \r\nX18-X23: Amount of previous payment\
+  \ (NT dollar). X18 = amount paid in September, 2005; X19 = amount paid in August,\
+  \ 2005; . . .;X23 = amount paid in April, 2005.\r\n"
+typical_data_point: ''
+rai:
+  dataCollection: ''
+  dataCollectionType: ''
+  dataCollectionRawData: ''
+  dataAnnotationProtocol: ''
+  dataAnnotationPlatform: ''
+  dataAnnotationAnalysis: ''
+  dataUseCases: ''
+  dataBiases: ''
+  annotationsPerItem: ''
+  annotatorDemographics: ''
+uci_id: 350
+name: Default of Credit Card Clients
+repository_url: https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients
+data_url: https://archive.ics.uci.edu/static/public/350/data.csv
+abstract: This research aimed at the case of customers' default payments in Taiwan
+  and compares the predictive accuracy of probability of default among six data mining
+  methods.
+area: Business
+demographics:
+- Sex
+- Education Level
+- Marital Status
+- Age
+dataset_doi: 10.24432/C55S3H
+creators:
+- I-Cheng Yeh
+intro_paper:
+  ID: 365
+  type: NATIVE
+  title: The comparisons of data mining techniques for the predictive accuracy of
+    probability of default of credit card clients
+  authors: I. Yeh, Che-hui Lien
+  venue: Expert systems with applications
+  year: 2009
+  journal: null
+  DOI: 10.1016/j.eswa.2007.12.020
+  URL: https://www.semanticscholar.org/paper/1cacac4f0ea9fdff3cd88c151c94115a9fddcf33
+  sha: null
+  corpus: null
+  arxiv: null
+  mag: null
+  acl: null
+  pmid: null
+  pmcid: null
+additional_info:
+  summary: This research aimed at the case of customers' default payments in Taiwan
+    and compares the predictive accuracy of probability of default among six data
+    mining methods. From the perspective of risk management, the result of predictive
+    accuracy of the estimated probability of default will be more valuable than the
+    binary result of classification - credible or not credible clients. Because the
+    real probability of default is unknown, this study presented the novel Sorting
+    Smoothing Method to estimate the real probability of default. With the real probability
+    of default as the response variable (Y), and the predictive probability of default
+    as the independent variable (X), the simple linear regression result (Y = A +
+    BX) shows that the forecasting model produced by artificial neural network has
+    the highest coefficient of determination; its regression intercept (A) is close
+    to zero, and regression coefficient (B) to one. Therefore, among the six data
+    mining techniques, artificial neural network is the only one that can accurately
+    estimate the real probability of default.
+  purpose: null
+  funded_by: null
+  instances_represent: null
+  recommended_data_splits: null
+  sensitive_data: null
+  preprocessing_description: null
+  variable_info: "This research employed a binary variable, default payment (Yes =\
+    \ 1, No = 0), as the response variable. This study reviewed the literature and\
+    \ used the following 23 variables as explanatory variables:\r\nX1: Amount of the\
+    \ given credit (NT dollar): it includes both the individual consumer credit and\
+    \ his/her family (supplementary) credit.\r\nX2: Gender (1 = male; 2 = female).\r\
+    \nX3: Education (1 = graduate school; 2 = university; 3 = high school; 4 = others).\r\
+    \nX4: Marital status (1 = married; 2 = single; 3 = others).\r\nX5: Age (year).\r\
+    \nX6 - X11: History of past payment. We tracked the past monthly payment records\
+    \ (from April to September, 2005) as follows: X6 = the repayment status in September,\
+    \ 2005; X7 = the repayment status in August, 2005; . . .;X11 = the repayment status\
+    \ in April, 2005. The measurement scale for the repayment status is: -1 = pay\
+    \ duly; 1 = payment delay for one month; 2 = payment delay for two months; . .\
+    \ .; 8 = payment delay for eight months; 9 = payment delay for nine months and\
+    \ above.\r\nX12-X17: Amount of bill statement (NT dollar). X12 = amount of bill\
+    \ statement in September, 2005; X13 = amount of bill statement in August, 2005;\
+    \ . . .; X17 = amount of bill statement in April, 2005. \r\nX18-X23: Amount of\
+    \ previous payment (NT dollar). X18 = amount paid in September, 2005; X19 = amount\
+    \ paid in August, 2005; . . .;X23 = amount paid in April, 2005.\r\n"
+  citation: null
+id: 350

@@ -70,7 +70,7 @@ class CounterfactualGenerator:
 
 # %% Test the CounterfactualGenerator class
 """
-df = pd.read_csv('../../../data/codes-all.csv')
+df = pd.read_csv('data/codes-all.csv')
 vocabulary = df['Entity'].tolist()
 cf_generator = CounterfactualGenerator(vocabulary)
 sentence = "ARGENTINA 1-0 NETHERLANDS"

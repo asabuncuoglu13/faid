@@ -2,7 +2,7 @@ from os.path import join, exists
 from shutil import copy
 from datetime import datetime
 
-from faid.logging import update, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path
 
 exp_file_path = join(get_project_log_path(), "fairness.yml")
 exp_file_template_path = join(get_current_folder_path(), "templates/fairness.yml")
@@ -10,9 +10,9 @@ exp_file_template_path = join(get_current_folder_path(), "templates/fairness.yml
 def initialize_exp_log():
     if not exists(exp_file_path):
         copy(exp_file_template_path, exp_file_path)
-        print("Fairness experiment log created.")
+        success_msg("Fairness experiment log created.")
     else:
-        print("Fairness experiment log already exists.")
+        warning_msg("Fairness experiment log already exists. Logging will be appended to the existing file.")
 
 def get_fairness_log_path():
     """
@@ -80,7 +80,7 @@ class ExperimentContext:
                     metrics:dict=None):
 
         if name is None:
-            print("Please provide a name for the experiment")
+            warning_msg("Please provide a name for the experiment")
             return
 
         self.name = name            
@@ -232,7 +232,7 @@ def pretty_aisi_summary(filepath:str) -> dict:
     import json
     filepath = os.path.join(os.getcwd(), filepath)
     if not os.path.exists(filepath):
-        print(f"{filepath} not found")
+        error_msg(f"{filepath} not found")
         return
     # read json filepath
     with open(filepath) as f:

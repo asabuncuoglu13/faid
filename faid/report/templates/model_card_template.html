@@ -161,26 +161,115 @@
           <h3>Licenses</h3>
           <ul>{% for license in model_info.details.licenses %}{{ render_license(license) }}{% endfor %}</ul>
         {% endif %}
-      {% if model_info.details.architecture %}
-        <h2>Model Architecture</h2>
-        {{ model_info.details.architecture }}
+        {% if model_info.details.version %}
+          <h3>Version</h3>
+          <p>Name: {{ model_info.details.version.name }}</p>
+          <p>Date: {{ model_info.details.version.date }}</p>
+          <p>Diff: {{ model_info.details.version.diff }}</p>
+        {% endif %}
+        {% if model_info.details.documentation %}
+          <h3>Documentation</h3>
+          <p>{{ model_info.details.documentation }}</p>
+        {% endif %}
+        {% if model_info.details.references %}
+          <h3>References</h3>
+          <p>{{ model_info.details.references }}</p>
+        {% endif %}
+        {% if model_info.details.citation %}
+          <h3>Citation</h3>
+          <p>{{ model_info.details.citation }}</p>
+        {% endif %}
+        {% if model_info.details.path %}
+          <h3>Path</h3>
+          <p>{{ model_info.details.path }}</p>
+        {% endif %}
+        {% if model_info.details.architecture %}
+          <h2>Model Architecture</h2>
+          {{ model_info.details.architecture }}
+        {% endif %}
       {% endif %}
-      <h2>Considerations</h2>
-        {% if model_info.details.intended_users %}
+      {% if model_info.model_parameters %}
+        <h2>Model Parameters</h2>
+        {% if model_info.model_parameters.description %}
+          <h3>Description</h3>
+          <p>{{ model_info.model_parameters.description }}</p>
+        {% endif %}
+        {% if model_info.model_parameters.model_architecture %}
+          <h3>Model Architecture</h3>
+          <p>{{ model_info.model_parameters.model_architecture }}</p>
+        {% endif %}
+        {% if model_info.model_parameters.data %}
+          <h3>Data</h3>
+          {% for data in model_info.model_parameters.data %}
+            <p>Description: {{ data.description }}</p>
+            <p>Link: {{ data.link }}</p>
+            <p>Sensitive: {{ data.sensitive }}</p>
+            <p>Graphics: {{ data.graphics }}</p>
+          {% endfor %}
+        {% endif %}
+        {% if model_info.model_parameters.input_format %}
+          <h3>Input Format</h3>
+          <p>{{ model_info.model_parameters.input_format }}</p>
+        {% endif %}
+        {% if model_info.model_parameters.output_format %}
+          <h3>Output Format</h3>
+          <p>{{ model_info.model_parameters.output_format }}</p>
+        {% endif %}
+        {% if model_info.model_parameters.output_format_map %}
+          <h3>Output Format Map</h3>
+          <p>{{ model_info.model_parameters.output_format_map }}</p>
+        {% endif %}
+      {% endif %}
+      {% if model_info.quantitative_analysis %}
+        <h2>Quantitative Analysis</h2>
+        {% if model_info.quantitative_analysis.description %}
+          <h3>Description</h3>
+          <p>{{ model_info.quantitative_analysis.description }}</p>
+        {% endif %}
+        {% if model_info.quantitative_analysis.performance_metrics %}
+          <h3>Performance Metrics</h3>
+          {% for metric in model_info.quantitative_analysis.performance_metrics %}
+            <p>Description: {{ metric.description }}</p>
+            <p>Value: {{ metric.value }}</p>
+            <p>Slice: {{ metric.slice }}</p>
+            <p>Confidence Interval: {{ metric.confidence_interval.description }}</p>
+            <p>Lower Bound: {{ metric.confidence_interval.lower_bound }}</p>
+            <p>Upper Bound: {{ metric.confidence_interval.upper_bound }}</p>
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+      {% if model_info.considerations %}
+        <h2>Considerations</h2>
+        {% if model_info.considerations.description %}
+          <h3>Description</h3>
+          <p>{{ model_info.considerations.description }}</p>
+        {% endif %}
+        {% if model_info.considerations.intended_users %}
           <h3>Intended Users</h3>
-          {{ model_info.details.intended_users }}
+          <p>{{ model_info.considerations.intended_users }}</p>
         {% endif %}
-        {% if model_info.details.use_cases %}
+        {% if model_info.considerations.use_cases %}
           <h3>Use Cases</h3>
-          {{ model_info.details.use_cases }}
+          <p>{{ model_info.considerations.use_cases }}</p>
         {% endif %}
-        {% if model_info.details.limitations %}
+        {% if model_info.considerations.limitations %}
           <h3>Limitations</h3>
-          {{ model_info.details.limitations }}
+          <p>{{ model_info.considerations.limitations }}</p>
         {% endif %}
-        {% if model_info.details.ethics %}
+        {% if model_info.considerations.tradeoffs %}
+          <h3>Tradeoffs</h3>
+          <p>{{ model_info.considerations.tradeoffs }}</p>
+        {% endif %}
+        {% if model_info.considerations.ethical_considerations %}
           <h3>Ethical Considerations</h3>
-          {{ model_info.details.ethical_considerations }}
+          <p>{{ model_info.considerations.ethical_considerations }}</p>
+        {% endif %}
+        {% if model_info.considerations.risks %}
+          <h3>Risks</h3>
+          {% for risk in model_info.considerations.risks %}
+            <p>Name: {{ risk.name }}</p>
+            <p>Mitigation Strategy: {{ risk.mitigation_strategy }}</p>
+          {% endfor %}
         {% endif %}
       {% endif %}
   </div>

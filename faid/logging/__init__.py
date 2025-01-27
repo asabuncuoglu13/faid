@@ -21,11 +21,11 @@ from faid.logging.model_card_utils import (
 )
 
 from faid.logging.data_card_utils import (
-    DataCard,
     initialize_data_log,
     get_data_log_path,
     pretty_croissant,
     pretty_croissant_rai,
+    pretty_uci_metadata,
     add_data_entry,
     get_data_entry
 )
@@ -53,7 +53,7 @@ from faid.logging.transparency_utils import (
 )
 
 from faid.logging.logging import (
-    init
+    init_log
 )
 
 from faid.logging.utils import (
@@ -62,7 +62,9 @@ from faid.logging.utils import (
 )
 
 # Bring information from one to another
-from faid.logging.conversion import (
+from faid.logging.sync import (
+    get_fairness_entities_from_data,
+    get_fairness_entities_from_model,
     sync_risk_to_model,
     sync_data_to_model,
     sync_usecase_to_model,
@@ -79,7 +81,7 @@ from faid.logging.conversion import (
 
 __all__ = [
     #logging
-    'init',
+    'init_log',
     # message
     'error_msg',
     'success_msg',
@@ -98,13 +100,13 @@ __all__ = [
     'initialize_model_log',
     'pretty_aisi_summary',
     # data_card_utils
-    'DataCard',
     'initialize_data_log',
     'get_data_log_path',
     'add_data_entry',
     'get_data_entry',
     'pretty_croissant',
     'pretty_croissant_rai',
+    'pretty_uci_metadata',
     # experiment_utils
     'ExperimentContext',
     'get_fairness_log_path',
@@ -121,7 +123,9 @@ __all__ = [
     'get_transparency_log_path',
     'add_transparency_entry',
     'get_transparency_entry',
-    # conversion
+    # sync
+    'get_fairness_entities_from_data',
+    'get_fairness_entities_from_model',
     'sync_risk_to_model',
     'sync_data_to_model',
     'sync_usecase_to_model',

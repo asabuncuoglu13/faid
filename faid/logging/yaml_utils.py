@@ -3,7 +3,7 @@
 import os
 import yaml
 from yaml.parser import ParserError
-from .message import error_msg, warning_msg
+from faid.logging import error_msg, warning_msg
 
 slash = '\\' if os.name == "nt" else "/"
 
@@ -27,7 +27,7 @@ def generate(dataDict, filename:str=None, return_result=False):
   Generate a yaml file 
   """
   if not filename:
-    print("No file path provided. Please define a file path.")
+    error_msg("No file path provided. Please define a file path.")
     return
 
   if not os.path.exists(get_project_log_path()):
@@ -77,7 +77,7 @@ def update(yamlData, key:str=None, filename:str=None):
   try:
     existing_dataDict[key] = yamlData
   except KeyError:
-    print(f"Key {key} not found in the yaml file")
+    error_msg(f"Key {key} not found in the yaml file")
     existing_dataDict.update({key: yamlData})
   
   try:

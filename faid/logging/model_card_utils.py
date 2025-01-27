@@ -1,10 +1,9 @@
 from os.path import join, exists
-from json import dumps
 import re
 from collections import defaultdict
 from shutil import copy
 
-from faid.logging import error_msg, update, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path
 
 model_file_path = join(get_project_log_path(), "model.yml")
 model_file_template_path = join(get_current_folder_path(), "templates/model.yml")
@@ -13,9 +12,9 @@ model_info_key = "model_info"
 def initialize_model_log():
     if not exists(model_file_path):
         copy(model_file_template_path, model_file_path)
-        print("Model log file created.")
+        success_msg("Model log file created.")
     else:
-        print("Model log file already exists.")
+        warning_msg("Model log file already exists.  Logging will be appended to the existing file.")
 
 def get_model_log_file_path():
     return model_file_path
@@ -152,7 +151,7 @@ def convert_to_hf_model_card(data, lookup_table):
         if key in lookup_table:
             converted_data[lookup_table[key]] = value
         else:
-            print(f"Warning: No mapping found for key '{key}'")
+            warning_msg(f"Warning: No mapping found for key '{key}'")
     return converted_data
 
 # Function to map from schema2 to schema1
@@ -164,7 +163,7 @@ def convert_to_google_model_card(data, lookup_table):
         if key in reversed_lookup:
             converted_data[reversed_lookup[key]] = value
         else:
-            print(f"Warning: No mapping found for key '{key}'")
+            warning_msg(f"Warning: No mapping found for key '{key}'")
     return converted_data
 
 # Example JSON data in schema1
@@ -215,9 +214,33 @@ class ModelCard:
             """
             Sets a specific detail in the model details.
             """
+            details_schema = {
+                "name": "",
+                "overview": "",
+                "documentation": "",
+                "owners": [
+                    {
+                        "name": "",
+                        "contact": ""
+                    }
+                ],
+                "version": {
+                    "name": "",
+                    "date": "",
+                    "diff": ""
+                },
+                "license": {
+                    "identifier": "",
+                    "custom_text": ""
+                },
+                "references": "",
+                "citation": "",
+                "path": ""
+            }
             if "model_details" not in self.model_info:
-                self.model_info["model_details"] = {}
-            self.model_info["model_details"][detail_key] = detail_value
+                self.model_info["model_details"] = details_schema
+            details_schema[detail_key] = detail_value
+            self.model_info["model_details"] = details_schema
 
         def get_model_parameter(self, parameter_key):
             """
@@ -229,9 +252,24 @@ class ModelCard:
             """
             Sets a specific parameter in the model parameters.
             """
-            if "model_parameters" not in self.model_info:
-                self.model_info["model_parameters"] = {}
-            self.model_info["model_parameters"][parameter_key] = parameter_value
+            model_params = {}
+            {
+                "description": "",
+                "model_architecture": "",
+                "data": [
+                    {
+                        "description": "",
+                        "link": "",
+                        "sensitive": "",
+                        "graphics": ""
+                    }
+                ],
+                "input_format": "",
+                "output_format": "",
+                "output_format_map": ""
+            }
+            model_params[parameter_key] = parameter_value
+            self.model_info["model_parameters"] = model_params
 
         def get_quantitative_analysis(self, metric_key):
             """
@@ -249,6 +287,18 @@ class ModelCard:
             """
             if "quantitative_analysis" not in self.model_info:
                 self.model_info["quantitative_analysis"] = {"performance_metrics": []}
+            
+            metric_schema = {
+                "description": "",
+                "value": "",
+                "slice": "",
+                "confidence_interval": {
+                    "description": "",
+                    "lower_bound": "",
+                    "upper_bound": ""
+                }
+            }
+            metric = {**metric_schema, **metric}
             self.model_info["quantitative_analysis"]["performance_metrics"].append(metric)
 
         def get_consideration(self, consideration_key):
@@ -262,18 +312,38 @@ class ModelCard:
             """
             Adds a new consideration to the considerations section.
             """
+            risk_schema = {
+                "name": "",
+                "mitigation_strategy": ""
+            }
+            consideration_schema = {
+                "description": "",
+                "intended_users": "",
+                "use_cases": "",
+                "limitations": "",
+                "tradeoffs": "",
+                "ethical_considerations": "",
+                "risks": [
+                    risk_schema
+                ]
+            }
             if "considerations" not in self.model_info:
-                self.model_info["considerations"] = {}
-            if consideration_key not in self.model_info["considerations"]:
-                self.model_info["considerations"][consideration_key] = []
-            self.model_info["considerations"][consideration_key].append(consideration)
+                self.model_info["considerations"] = consideration_schema
+            # if consideration_key is "risks", it should comply with schema
+            if consideration_key == "risks":
+                risks = self.model_info["considerations"].get("risks", [])
+                consideration = {**risk_schema, **consideration}
+                risks.append(consideration)
+                self.model_info["considerations"]["risks"] = risks
+            else:
+                self.model_info["considerations"][consideration_key] = consideration
 
         def save(self):
             """
             Saves the model information to the model log file.
             """
             update(self.model_info, key=model_info_key, filename=model_file_path)
-            print("Model info saved to the model log file.")
+            success_msg("Model info saved to the model log file.")
         
         def to_dict(self):
             """

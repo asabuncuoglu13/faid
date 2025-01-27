@@ -170,3 +170,5 @@ logs/
 notebooks/reference
 reports/
 model/
+
+*/rag-giskard/data/*

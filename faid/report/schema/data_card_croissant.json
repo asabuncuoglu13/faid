@@ -38,7 +38,7 @@
         }
       }
     },
-    "sensitivity_types": { "type": "array", "items": { "type": "string" } },
+    "protected_characteristics": { "type": "array", "items": { "type": "string" } },
     "intentional_sensitive_data": {
       "type": "array",
       "items": {

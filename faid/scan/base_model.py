@@ -1,5 +1,5 @@
 # %%
-from ..logging.message import error_msg
+from faid.logging import error_msg
 
 # %%
 def get_base_model_name_from_hf(model_name: str):
@@ -24,7 +24,7 @@ def get_fairness_score(model_name: str, html=False):
     from thefuzz import fuzz
     from thefuzz import process
 
-    path = __file__.replace('base_model.py', '../data/HELM-Fairness.csv')
+    path = __file__.replace('base_model.py', './data/HELM-Fairness.csv')
     benchmark = pd.read_csv(path)
     model_names = benchmark['Model'].unique()
 
@@ -45,14 +45,14 @@ def get_fairness_score(model_name: str, html=False):
 def get_fairness_metric_explanations():
     import pandas as pd
 
-    path = __file__.replace('base_model.py', '../data/evals.csv')
+    path = __file__.replace('base_model.py', './data/evals.csv')
     benchmark = pd.read_csv(path)
 
     return benchmark
 
 # %% display benchmark as a dropdown html
 
-def fairness_metric_dropdown():
+def fairness_benchmark_dropdown():
 
     df = get_fairness_metric_explanations()
 

@@ -32,12 +32,39 @@ model_info:
     - text: growth is strong and we have plenty of liquidity
   model_details:
     name: BERT
+    overview: ''
+    documentation: ''
+    owners:
+    - name: ''
+      contact: ''
+    version:
+      name: ''
+      date: ''
+      diff: ''
+    license:
+      identifier: ''
+      custom_text: ''
+    references: ''
+    citation: ''
+    path: ''
   model_parameters:
     num_layers: 12
   quantitative_analysis:
     performance_metrics:
-    - type: accuracy
+    - description: accuracy
       value: 0.95
+      slice: ''
+      confidence_interval:
+        description: ''
+        lower_bound: ''
+        upper_bound: ''
   considerations:
-    ethical_considerations:
-    - This model is not fair.
+    description: ''
+    intended_users: ''
+    use_cases: ''
+    limitations: ''
+    tradeoffs: ''
+    ethical_considerations: This model is not fair.
+    risks:
+    - name: ''
+      mitigation_strategy: ''
