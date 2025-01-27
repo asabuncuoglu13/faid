@@ -23,10 +23,10 @@ def get_fairness_entities_from_model():
 
 def get_fairness_entities_from_data():
     return {
-        "summary": get_data_entry("dataset_info").get('summary', ''),
-        "protected_characteristics": get_data_entry("dataset_info").get('protected_characteristics', ''),
-        "intentional_sensitive_data": get_data_entry("dataset_info").get('intentional_sensitive_data', ''),
-        "unintentional_sensitive_data": get_data_entry("dataset_info").get('unintentional_sensitive_data', ''),
+        "summary": get_data_entry('summary'),
+        "protected_characteristics": get_data_entry('protected_characteristics'),
+        "intentional_sensitive_data": get_data_entry('intentional_sensitive_data'),
+        "unintentional_sensitive_data": get_data_entry('unintentional_sensitive_data'),
         "rai": get_data_entry("rai"),
     }
 
@@ -44,11 +44,9 @@ def sync_model_to_risk():
 
 def sync_model_to_data():
     model_data = get_model_entry("data")
-    add_data_entry({
-        "summary": model_data.get('description', ''),
-        "dataset_link": model_data.get('link', ''),
-        "protected_characteristics": model_data.get('sensitive', ''),
-    })
+    add_data_entry("summary", model_data.get('description', ''))
+    add_data_entry("dataset_link", model_data.get('link', ''))
+    add_data_entry("protected_characteristics", model_data.get('sensitive', ''))
 
 def sync_model_to_usecase():
     # Implement the logic to sync model to usecase

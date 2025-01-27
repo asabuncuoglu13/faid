@@ -5,7 +5,6 @@ from faid.logging import error_msg, warning_msg, success_msg, update, load, get_
 
 data_file_path = join(get_project_log_path(), "data.yml")
 data_file_template_path = join(get_current_folder_path(), "templates/data.yml")
-data_info_key = "dataset_info"
 
 def initialize_data_log():
     if not exists(data_file_path):
@@ -17,7 +16,7 @@ def initialize_data_log():
 def get_data_log_path():
     return data_file_path
 
-def add_data_entry(entry, key:str="dataset_info"):
+def add_data_entry(key:str, entry:any):
     """
     Add a data entry to the data card
     """
@@ -30,48 +29,15 @@ def add_data_entry(entry, key:str="dataset_info"):
     update(entry, key=key, filename=data_file_path)
     print(f"Added {key} to data card")
 
-def get_data_entry(key:str=None):
+def get_data_entry(key:str):
     if key is None:
         return load(data_file_path)
     else:
         try:
             return load(data_file_path)[key]
-        except KeyError:
+        except AttributeError | KeyError:
             error_msg(f"Key {key} not found in the metadata file")
             return None
-        except AttributeError:
-            error_msg(f"Key {key} not found in the metadata file")
-            return None
-
-class DataCard:
-    
-    def __init__(self, dataset_info:dict=None, rai:dict=None):
-        self.dataset_name = dataset_info
-        self.rai = rai
-
-    def to_dict(self):
-        """
-        Returns the data information as a dictionary.
-        """
-        return {
-            "dataset_info": self.dataset_info,
-            "rai": self.rai
-        }
-
-    def save(self):
-        """
-        Saves the data information to the data log file.
-        """
-        update(self.to_dict(), key=data_info_key, filename=data_file_path)
-        success_msg("Data info saved to the data log file.")
-
-    def validate(self, schema):
-        """
-        Validates the data information against a schema.
-        """
-        from jsonschema import validate
-        validate(instance=self.to_dict(), schema=schema)
-
 
 def pretty_croissant(ds) -> dict:
     """
@@ -83,7 +49,7 @@ def pretty_croissant(ds) -> dict:
     records = ds.records("conversations")
 
     df = pd.DataFrame(list(itertools.islice(records, 10)))
-    dataset_info = {
+    return {
         "dataset_name": metadata.get("name", ""),
         "summary": metadata.get("description", ""),
         "dataset_link": metadata.get("url", ""),
@@ -105,13 +71,12 @@ def pretty_croissant(ds) -> dict:
         "sampling_data_points": [df.head().to_dict()],
         "data_fields": df.keys().tolist()
     }
-    return dataset_info
 
 def pretty_croissant_rai(metadata) -> dict:
     """
     Gets the ML Croissant metadata dict and returns another dict with our report format
     """
-    dataset_info = {
+    return {
         "dataCollection": metadata.get("dataCollection", ""),
         "dataCollectionType": metadata.get("dataCollectionType", ""),
         "dataCollectionRawData": metadata.get("dataCollectionRawData", ""),
@@ -123,13 +88,12 @@ def pretty_croissant_rai(metadata) -> dict:
         "annotationsPerItem": metadata.get("annotationsPerItem", ""),
         "annotatorDemographics": metadata.get("annotatorDemographics", "")
     }
-    return dataset_info
 
 def pretty_uci_metadata(metadata) -> dict:
     """
     Gets the UCI metadata dict and returns another dict with our report format
     """
-    dataset_info = {
+    return {
         "id": metadata.get("uci_id", ""),
         "dataset_name": metadata.get("name", ""),
         "repository_url": metadata.get("repository_url", ""),
@@ -157,4 +121,3 @@ def pretty_uci_metadata(metadata) -> dict:
         "intentional_sensitive_data": metadata.get("additional_info", "").get("sensitive_data", ""),
         "data_fields": metadata.get("additional_info", "").get("variable_info", []),
     }
-    return dataset_info

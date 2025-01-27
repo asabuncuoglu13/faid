@@ -21,7 +21,6 @@ from faid.logging.model_card_utils import (
 )
 
 from faid.logging.data_card_utils import (
-    DataCard,
     initialize_data_log,
     get_data_log_path,
     pretty_croissant,
@@ -101,7 +100,6 @@ __all__ = [
     'initialize_model_log',
     'pretty_aisi_summary',
     # data_card_utils
-    'DataCard',
     'initialize_data_log',
     'get_data_log_path',
     'add_data_entry',
