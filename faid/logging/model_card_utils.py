@@ -1,5 +1,4 @@
 from os.path import join, exists
-from json import dumps
 import re
 from collections import defaultdict
 from shutil import copy
