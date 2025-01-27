@@ -1,5 +1,12 @@
 name: financial-sentiment-analysis-finbert-fairness
 context:
+  authors: []
+  start_time: ''
+  description: ''
+  tags:
+  - financial-sentiment-analysis
+  - sentiment-analysis
+  hardware: {}
   license_info:
   - - captum
     - BSD-3
@@ -3271,42 +3278,17 @@ context:
     - BSD
   - - transformers
     - Apache 2.0 License
-  tags:
-  - financial-sentiment-analysis
-  - sentiment-analysis
 data:
-  sample:
-    0:
-      text: growth is strong and we have plenty of liquidity.
-      label: Positive
-      score: 1.0
-    1:
-      text: there is a shortage of capital, and we need extra financing.
-      label: Negative
-      score: 0.9952379465103149
-    2:
-      text: formulation patents might protect Vasotec to a limited extent.
-      label: Neutral
-      score: 0.9979718327522278
+  sample: []
   variable_profile: null
+  sensitive_characteristics: null
+  nominal_features: null
+  continuous_features: null
 model:
   name: ''
 sample_data:
   tps: []
-  fps:
-  - Summary: consumer spending plunges 13.6 percent in April. that was the biggest
-      drop since the government started tracking series in 1959. consumer spending
-      accounts for more than two-thirds of economic activity. economists polled by
-      Reuters had forecast consumer spending plummeting 12.6 percent. a spokesman
-      for the u.s. government said the data was not available.
-    Sentiment: Negative
-  - Summary: RBI governor announces measures to help economy fight challenges brought
-      on by COVID-19 pandemic. this was the governor's second press conference after
-      he earlier announced a 75 basis point cut in repo rate. experts say the measures
-      will ease the liquidity situation 'quite a bit' a vaccine works by mimicking
-      a natural infection. a vaccine also helps quickly build herd immunity to put
-      an end to the pandemic.
-    Sentiment: Positive
+  fps: []
   tns: []
   fns: []
 bias_metrics:

@@ -215,9 +215,33 @@ class ModelCard:
             """
             Sets a specific detail in the model details.
             """
+            details_schema = {
+                "name": "",
+                "overview": "",
+                "documentation": "",
+                "owners": [
+                    {
+                        "name": "",
+                        "contact": ""
+                    }
+                ],
+                "version": {
+                    "name": "",
+                    "date": "",
+                    "diff": ""
+                },
+                "license": {
+                    "identifier": "",
+                    "custom_text": ""
+                },
+                "references": "",
+                "citation": "",
+                "path": ""
+            }
             if "model_details" not in self.model_info:
-                self.model_info["model_details"] = {}
-            self.model_info["model_details"][detail_key] = detail_value
+                self.model_info["model_details"] = details_schema
+            details_schema[detail_key] = detail_value
+            self.model_info["model_details"] = details_schema
 
         def get_model_parameter(self, parameter_key):
             """
@@ -229,9 +253,24 @@ class ModelCard:
             """
             Sets a specific parameter in the model parameters.
             """
-            if "model_parameters" not in self.model_info:
-                self.model_info["model_parameters"] = {}
-            self.model_info["model_parameters"][parameter_key] = parameter_value
+            model_params = {}
+            {
+                "description": "",
+                "model_architecture": "",
+                "data": [
+                    {
+                        "description": "",
+                        "link": "",
+                        "sensitive": "",
+                        "graphics": ""
+                    }
+                ],
+                "input_format": "",
+                "output_format": "",
+                "output_format_map": ""
+            }
+            model_params[parameter_key] = parameter_value
+            self.model_info["model_parameters"] = model_params
 
         def get_quantitative_analysis(self, metric_key):
             """
@@ -249,6 +288,18 @@ class ModelCard:
             """
             if "quantitative_analysis" not in self.model_info:
                 self.model_info["quantitative_analysis"] = {"performance_metrics": []}
+            
+            metric_schema = {
+                "description": "",
+                "value": "",
+                "slice": "",
+                "confidence_interval": {
+                    "description": "",
+                    "lower_bound": "",
+                    "upper_bound": ""
+                }
+            }
+            metric = {**metric_schema, **metric}
             self.model_info["quantitative_analysis"]["performance_metrics"].append(metric)
 
         def get_consideration(self, consideration_key):
@@ -262,11 +313,31 @@ class ModelCard:
             """
             Adds a new consideration to the considerations section.
             """
+            risk_schema = {
+                "name": "",
+                "mitigation_strategy": ""
+            }
+            consideration_schema = {
+                "description": "",
+                "intended_users": "",
+                "use_cases": "",
+                "limitations": "",
+                "tradeoffs": "",
+                "ethical_considerations": "",
+                "risks": [
+                    risk_schema
+                ]
+            }
             if "considerations" not in self.model_info:
-                self.model_info["considerations"] = {}
-            if consideration_key not in self.model_info["considerations"]:
-                self.model_info["considerations"][consideration_key] = []
-            self.model_info["considerations"][consideration_key].append(consideration)
+                self.model_info["considerations"] = consideration_schema
+            # if consideration_key is "risks", it should comply with schema
+            if consideration_key == "risks":
+                risks = self.model_info["considerations"].get("risks", [])
+                consideration = {**risk_schema, **consideration}
+                risks.append(consideration)
+                self.model_info["considerations"]["risks"] = risks
+            else:
+                self.model_info["considerations"][consideration_key] = consideration
 
         def save(self):
             """
