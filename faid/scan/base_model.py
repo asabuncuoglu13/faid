@@ -24,7 +24,7 @@ def get_fairness_score(model_name: str, html=False):
     from thefuzz import fuzz
     from thefuzz import process
 
-    path = __file__.replace('base_model.py', '../data/HELM-Fairness.csv')
+    path = __file__.replace('base_model.py', './data/HELM-Fairness.csv')
     benchmark = pd.read_csv(path)
     model_names = benchmark['Model'].unique()
 
@@ -45,7 +45,7 @@ def get_fairness_score(model_name: str, html=False):
 def get_fairness_metric_explanations():
     import pandas as pd
 
-    path = __file__.replace('base_model.py', '../data/evals.csv')
+    path = __file__.replace('base_model.py', './data/evals.csv')
     benchmark = pd.read_csv(path)
 
     return benchmark
