@@ -266,7 +266,7 @@ class ModelCard:
             }
 
             self.model_info = load(model_file_path)["model_info"]
-            print("Model info is loaded from the model log file.")
+            #print("Model info is loaded from the model log file.")
 
         def get_model_info(self):
             """

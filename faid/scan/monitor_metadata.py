@@ -2,8 +2,6 @@ from faid.logging import (
     error_msg, 
     warning_msg,
     success_msg,
-    load,
-    get_fairness_entities_from_data,
     get_fairness_entities_from_model,
     ModelCard,
 )
@@ -38,6 +36,8 @@ def test_model_metadata_values():
             else:
                 success_msg(f"Value for {metric.get('name')} is within the confidence interval")
         except (ValueError, TypeError):
-            warning_msg(f"Value or confidence interval bounds for {metric.get('name')} are not convertible to floats.")
+            # skip the metric if the value or confidence interval bounds are not convertible to floats
+            # warning_msg(f"Value or confidence interval bounds for {metric.get('name')} are not convertible to floats.")
+            pass
 
 

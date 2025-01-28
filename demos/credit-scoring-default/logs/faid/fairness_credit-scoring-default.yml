@@ -37,3 +37,28 @@ bias_metrics:
         label: ''
         notes: ''
         sg_params: {}
+    unmitigated_sex_group_metrics:
+      count:
+        female: 6330.0
+        male: 4170.0
+      balanced_accuracy:
+        female: 0.7530521095061158
+        male: 0.8728868606291745
+      balanced_acc_error:
+        female: 0.012827940285655622
+        male: 0.01167737279164617
+      selection_rate:
+        female: 0.36824644549763036
+        male: 0.3134292565947242
+      false_positive_rate:
+        female: 0.26038948002409157
+        male: 0.13923654568210264
+      false_positive_error:
+        female: 0.012187399784263038
+        male: 0.012002486221351121
+      false_negative_rate:
+        female: 0.2335063009636768
+        male: 0.11498973305954825
+      false_negative_error:
+        female: 0.02257634811894809
+        male: 0.02003458174673456

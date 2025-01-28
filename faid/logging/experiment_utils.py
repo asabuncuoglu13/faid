@@ -167,6 +167,13 @@ class ExperimentContext:
         update(yamlData=self.metrics, key="bias_metrics", filename=self.filename)
         print(f"Added {key} to project metadata under ['bias_metrics']['groups'] and log updated")
 
+    def get_metric_entry(self, key:str=None):
+        if key is None:
+            return self.metrics
+        if self.metrics.get(key, None) is None:
+            return self.metrics.get("groups").get(key, None)
+        return self.metrics.get(key, None)
+
     def add_entry(self, entry):
         from captum.attr import visualization as viz
         if isinstance(entry, viz.VisualizationDataRecord):
