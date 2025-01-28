@@ -12,24 +12,6 @@ from faid.logging import (
 model_file_path = get_model_log_file_path()
 risk_file_path = get_risk_register_log_path()
 
-def get_fairness_entities_from_model():
-    return {
-        "model_parameters" : {
-            "data": get_model_entry("model_parameters").get('data', ''),
-        },
-        "quantitative_analysis": get_model_entry("quantitative_analysis"),
-        "considerations": get_model_entry("considerations")
-    }
-
-def get_fairness_entities_from_data():
-    return {
-        "summary": get_data_entry('summary'),
-        "protected_characteristics": get_data_entry('protected_characteristics'),
-        "intentional_sensitive_data": get_data_entry('intentional_sensitive_data'),
-        "unintentional_sensitive_data": get_data_entry('unintentional_sensitive_data'),
-        "rai": get_data_entry("rai"),
-    }
-
 def sync_model_to_risk():
     model_risks = get_model_entry("considerations").get('risks', [])
     

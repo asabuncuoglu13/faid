@@ -1,14 +1,62 @@
 model_info:
-  name: ""
-  description: ""
-  details:
+  model_details:
+    name: ''
+    overview: null
+    documentation: null
     owners:
-      - name: ""
-        contact: ""
-    licenses:
-      - ""
-    architecture: ""
-    intended_users: ""
-    use_cases: ""
-    limitations: ""
-    ethical_considerations: ""
+    - name: ''
+      contact: ''
+    version:
+      name: null
+      date: null
+      diff: null
+    license:
+      identifier: null
+      custom_text: null
+    references: null
+    citation: null
+    path: null
+  model_parameters:
+    description: null
+    model_architecture:
+      learning_rate: 0.03
+      min_samples_leaf: 10
+      max_depth: 3
+      random_state: 1234
+    data:
+    - description: ''
+      link: null
+      sensitive: null
+      graphics: null
+    input_format: null
+    output_format: null
+    output_format_map: null
+  quantitative_analysis:
+    description: null
+    performance_metrics:
+    - name: null
+      description: null
+      value: null
+      slice: null
+      confidence_interval:
+        description: Explain your interval selection methodology. e.g. <https://fairlearn.org/v0.11/user_guide/assessment/confidence_interval_estimation.html>
+        lower_bound: null
+        upper_bound: null
+    - name: ROC AUC Score
+      description: ROC AUC Score is the area under the ROC curve
+      value: '0.878'
+      slice: ''
+      confidence_interval:
+        description: .95 confidence interval for the ROC AUC score
+        lower_bound: '0.870'
+        upper_bound: '0.887'
+  considerations:
+    description: null
+    intended_users: ''
+    use_cases: ''
+    limitations: ''
+    tradeoffs: null
+    ethical_considerations: ''
+    risks:
+    - name: null
+      mitigation_strategy: null

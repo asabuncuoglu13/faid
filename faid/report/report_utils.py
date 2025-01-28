@@ -1,4 +1,3 @@
-# %%
 from jinja2 import Environment, FileSystemLoader
 from faid.report import get_faid_report_folder
 from faid.logging import (

@@ -9,7 +9,7 @@ context:
 data:
   sample: []
   variable_profile:
-  sensitive_characteristics:
+  protected_characteristics:
   nominal_features:
   continuous_features:
 model:
