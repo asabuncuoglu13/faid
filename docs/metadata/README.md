@@ -1,4 +1,4 @@
-# Using Metadata Information for Fairness Monitoring
+# Metadata Overview: Formats and Flow
 
 Logging, updating, monitoring, and testing metadata can support developers in continuous monitoring of fairness as well as other safety characteristics. 
 
