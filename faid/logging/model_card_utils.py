@@ -32,6 +32,17 @@ def get_model_entry(key:str=None):
         except KeyError:
             error_msg(f"Key {key} not found in the metadata file")
             return None
+        
+def get_fairness_entities_from_model():
+    m = ModelCard()
+    model_info = get_model_entry("model_info")
+    return {
+        "model_parameters" : {
+            "data": model_info.get("model_parameters", m.model_params_schema).get('data', None),
+        },
+        "quantitative_analysis": model_info.get("quantitative_analysis", m.quantitive_analysis_schema),
+        "considerations": model_info.get("considerations", m.consideration_schema)
+    }
 
 lookup_table = {
     "schema_version": "Not directly mapped; can be inferred from the Hugging Face spec.",
@@ -182,39 +193,10 @@ schema1_data = {
 #print("Reverted Schema1 Data:", dumps(reverted_schema1_data, indent=2))
 
 
-class ModelCard:
-        def __init__(self, model_info:dict={}):
+class ModelCard:        
+        def __init__(self):
             # if model log file exists, load the metadata
-            if model_info:
-                self.model_info = model_info
-                print("Model info is created with the provided dictionary.")
-            else:
-                self.model_info = load(model_file_path)["model_info"]
-                print("Model info is loaded from the model log file.")
-
-        def get_model_info(self):
-            """
-            Returns the entire model information.
-            """
-            return self.model_info
-
-        def set_model_info(self, new_info):
-            """
-            Sets the model information with new info.
-            """
-            self.model_info = new_info
-
-        def get_model_detail(self, detail_key):
-            """
-            Returns a specific detail from the model details.
-            """
-            return self.model_info.get("model_details", {}).get(detail_key, None)
-
-        def set_model_detail(self, detail_key, detail_value):
-            """
-            Sets a specific detail in the model details.
-            """
-            details_schema = {
+            self.details_schema = {
                 "name": "",
                 "overview": "",
                 "documentation": "",
@@ -237,23 +219,7 @@ class ModelCard:
                 "citation": "",
                 "path": ""
             }
-            if "model_details" not in self.model_info:
-                self.model_info["model_details"] = details_schema
-            details_schema[detail_key] = detail_value
-            self.model_info["model_details"] = details_schema
-
-        def get_model_parameter(self, parameter_key):
-            """
-            Returns a specific parameter from the model parameters.
-            """
-            return self.model_info.get("model_parameters", {}).get(parameter_key, None)
-
-        def set_model_parameter(self, parameter_key, parameter_value):
-            """
-            Sets a specific parameter in the model parameters.
-            """
-            model_params = {}
-            {
+            self.model_params_schema = {
                 "description": "",
                 "model_architecture": "",
                 "data": [
@@ -268,27 +234,8 @@ class ModelCard:
                 "output_format": "",
                 "output_format_map": ""
             }
-            model_params[parameter_key] = parameter_value
-            self.model_info["model_parameters"] = model_params
-
-        def get_quantitative_analysis(self, metric_key):
-            """
-            Returns a specific metric from the quantitative analysis.
-            """
-            metrics = self.model_info.get("quantitative_analysis", {}).get("performance_metrics", [])
-            for metric in metrics:
-                if metric.get("type") == metric_key:
-                    return metric
-            return None
-
-        def add_quantitative_metric(self, metric):
-            """
-            Adds a new metric to the quantitative analysis.
-            """
-            if "quantitative_analysis" not in self.model_info:
-                self.model_info["quantitative_analysis"] = {"performance_metrics": []}
-            
-            metric_schema = {
+            self.performance_metric_schema = {
+                "name": "",
                 "description": "",
                 "value": "",
                 "slice": "",
@@ -298,25 +245,15 @@ class ModelCard:
                     "upper_bound": ""
                 }
             }
-            metric = {**metric_schema, **metric}
-            self.model_info["quantitative_analysis"]["performance_metrics"].append(metric)
-
-        def get_consideration(self, consideration_key):
-            """
-            Returns a specific consideration from the considerations section.
-            """
-            considerations = self.model_info.get("considerations", {}).get(consideration_key, [])
-            return considerations
-
-        def add_consideration(self, consideration_key, consideration):
-            """
-            Adds a new consideration to the considerations section.
-            """
-            risk_schema = {
+            self.quantitive_analysis_schema = {
+                "description": "",
+                "performance_metrics": [self.performance_metric_schema]
+            }
+            self.risk_schema = {
                 "name": "",
                 "mitigation_strategy": ""
             }
-            consideration_schema = {
+            self.consideration_schema = {
                 "description": "",
                 "intended_users": "",
                 "use_cases": "",
@@ -324,15 +261,115 @@ class ModelCard:
                 "tradeoffs": "",
                 "ethical_considerations": "",
                 "risks": [
-                    risk_schema
+                    self.risk_schema
                 ]
             }
+
+            self.model_info = load(model_file_path)["model_info"]
+            #print("Model info is loaded from the model log file.")
+
+        def get_model_info(self):
+            """
+            Returns the entire model information.
+            """
+            return self.model_info
+
+        def set_model_info(self, model_info:dict):
+            """
+            Sets the model information with new info.
+            """
+            self.model_info = model_info
+
+        def get_model_details(self):
+            """
+            Returns a specific detail from the model details.
+            """
+            return self.model_info.get("model_details", self.details_schema)
+
+        def set_model_details(self, details, detail_key:str=None):
+            """
+            Sets a specific detail in the model details.
+            """
+            details = self.model_info.get("model_details", self.details_schema)
+            if detail_key is None:
+                self.model_info["model_details"] = details
+            else:
+                self.model_info["model_details"][detail_key] = details
+
+        def get_model_parameters(self):
+            """
+            Returns a specific parameter from the model parameters.
+            """
+            return self.model_info.get("model_parameters", self.model_params_schema)
+
+        def set_model_parameters(self, parameter_value, parameter_key:str=None):
+            """
+            Sets a specific parameter in the model parameters.
+            """
+            model_params = self.model_info.get("model_parameters", self.model_params_schema)
+            if parameter_key is None:
+                self.model_info["model_parameters"] = model_params
+            else:
+                self.model_info["model_parameters"][parameter_key] = parameter_value
+
+        def get_quantitative_analysis(self):
+            """
+            Returns a specific metric from the quantitative analysis.
+            """
+            return self.model_info.get("quantitative_analysis", self.quantitive_analysis_schema)
+
+        def get_performance_metric(self, metric_name):
+            """
+            Returns a specific metric from the quantitative analysis.
+            """
+            metrics = self.model_info.get("quantitative_analysis", self.quantitive_analysis_schema).get("performance_metrics", [self.performance_metric_schema])
+            for metric in metrics:
+                if metric.get("name") == metric_name:
+                    return metric
+                else:
+                    error_msg(f"Metric {metric_name} not found in the model log file.")
+                    return None
+
+        def add_quantitative_analysis_metric(self, metric:dict):
+            """
+            Adds a new metric to the quantitative analysis.
+            If a metric with the same name already exists, it will be updated with the new value.
+            """
+            quantitative_analysis = self.model_info.get("quantitative_analysis", self.quantitive_analysis_schema)
+            metrics = quantitative_analysis.get("performance_metrics", [])
+            
+            metric_name = metric.get("name")
+            if not metric_name:
+                error_msg("Metric must have a name.")
+                return
+            
+            for i, existing_metric in enumerate(metrics):
+                if existing_metric.get("name") == metric_name:
+                    metrics[i] = {**existing_metric, **metric}
+                    warning_msg(f"Metric {metric_name} already exists. It has been updated with the new value.")
+                    break
+            else:
+                metrics.append(metric)
+            
+            self.model_info["quantitative_analysis"]["performance_metrics"] = metrics
+
+        def get_considerations(self):
+            """
+            Returns a specific consideration from the considerations section.
+            """
+            return self.model_info.get("considerations", self.consideration_schema)
+
+        def add_consideration(self, consideration_key, consideration):
+            """
+            Adds a new consideration to the considerations section.
+            """
+            
             if "considerations" not in self.model_info:
-                self.model_info["considerations"] = consideration_schema
+                self.model_info["considerations"] = self.consideration_schema
             # if consideration_key is "risks", it should comply with schema
             if consideration_key == "risks":
-                risks = self.model_info["considerations"].get("risks", [])
-                consideration = {**risk_schema, **consideration}
+                risks = self.model_info["considerations"].get("risks", self.risk_schema)
+                consideration = {**self.risk_schema, **consideration}
                 risks.append(consideration)
                 self.model_info["considerations"]["risks"] = risks
             else:

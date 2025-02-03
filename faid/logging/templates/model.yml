@@ -30,7 +30,8 @@ model_info:
   quantitative_analysis:
     description:
     performance_metrics:
-      - description:
+      - name:
+        description:
         value:
         slice:
         confidence_interval:

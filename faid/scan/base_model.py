@@ -1,8 +1,12 @@
-# %%
 from faid.logging import error_msg
+"""
+This module provides functions to get the base model name from Hugging Face model card metadata and to get the fairness score of a model from the Stanford HELM Leaderboard.
+"""
 
-# %%
 def get_base_model_name_from_hf(model_name: str):
+    """
+    Get the base model name from the Hugging Face model card metadata or from the model config.
+    """
     from huggingface_hub import ModelCard
     card = ModelCard.load(model_name)
 
@@ -17,14 +21,15 @@ def get_base_model_name_from_hf(model_name: str):
         print(f'Base model information from HF config: {config.model_type}')
         return config.model_type
     
-
-# %%
 def get_fairness_score(model_name: str, html=False):
+    """
+    Get the fairness score of a model from the Stanford HELM Leaderboard. The function uses thefuzz library to find the closest match to the model name in the leaderboard.
+    """
     import pandas as pd
     from thefuzz import fuzz
     from thefuzz import process
 
-    path = __file__.replace('base_model.py', './data/HELM-Fairness.csv')
+    path = __file__.replace('base_model.py', 'data/HELM-Fairness.csv')
     benchmark = pd.read_csv(path)
     model_names = benchmark['Model'].unique()
 
@@ -40,20 +45,22 @@ def get_fairness_score(model_name: str, html=False):
     else:
         print(f'Could not find a fairness score for {model_name}. Check https://crfm.stanford.edu/helm/ (Stanford HELM Leaderboard) for a list of models')
         return None
-    
-# %%
+
 def get_fairness_metric_explanations():
+    """
+    Get the explanations of the fairness metrics used in the Stanford HELM Leaderboard.
+    """
     import pandas as pd
 
-    path = __file__.replace('base_model.py', './data/evals.csv')
+    path = __file__.replace('base_model.py', 'data/evals.csv')
     benchmark = pd.read_csv(path)
 
     return benchmark
 
-# %% display benchmark as a dropdown html
-
 def fairness_benchmark_dropdown():
-
+    """
+    Display the fairness benchmark as a dropdown menu in Jupyter Notebook.
+    """
     df = get_fairness_metric_explanations()
 
     html_code = """
@@ -100,11 +107,5 @@ def fairness_benchmark_dropdown():
         print("In Jupyter Notebook, this function displays the dropdown menu. In other environments, it returns the HTML code.")
         return html_code
     else:
-        from IPython.display import display, HTML, Javascript
+        from IPython.display import display, HTML
         display(HTML(html_code))
-
-# %% test use case
-# html_out = get_fairness_score(get_base_model_name_from_hf("NousResearch/Llama-2-13b-hf"), html=True)
-
-
-# %%

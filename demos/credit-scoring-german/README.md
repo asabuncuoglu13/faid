@@ -1,0 +1,3 @@
+# Gender Bias Mitigation
+
+> #TODO: The `gender_bias_mitigation.ipynb` notebook demonstrates techniques for identifying and mitigating gender bias in credit scoring models. It is a tutorial by Sony (<https://github.com/sony/nnabla-examples/tree/master/responsible_ai/gender_bias_mitigation>). It might be useful to compare the differences and similarities while examining the Taiwanese and German datasets.

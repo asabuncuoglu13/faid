@@ -77,7 +77,7 @@ def update(yamlData, key:str=None, filename:str=None):
   try:
     existing_dataDict[key] = yamlData
   except KeyError:
-    error_msg(f"Key {key} not found in the yaml file")
+    error_msg(f"Key {key} not found in the yaml file. Creating the key and updating the file.")
     existing_dataDict.update({key: yamlData})
   
   try:

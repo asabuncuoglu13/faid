@@ -1,18 +1,28 @@
 # FAID (Fair AI Development) Wiki
 
-- Find technical diagrams here: [Digrams Folder](./diagram/)
-  
-## Wiki Docs
-
+**Metadata Standards and Formats:**
+- [Overview of Metadata Recording](./metadata/README.md)
 - [Managing Metadata](./managing-metadata.md)
 
+**Fairness-Oriented Risk Assessment:**
+- [Self Assessment](./SELF-ASSESSMENT.md)
+- [Management of Fairness-Related AI Risks](https://doi.org/10.5281/zenodo.14795320)
 
-We used pandoc tool to create documentation from Word documents:
+**Technical Diagrams:**
 
-```
-# You can create html from md or docx or other formats
-pandoc test1.md -t html -s -o test1.html
-pandoc test1.docx -t html -s -o test1.html
-```
+- Stages in ML Development
 
+![](./media/mldev-overview-wlibs.png)
 
+- Structured Assurance
+
+![](./media/structured-evidence-collection.png)
+
+- From Metadata to Reports
+
+![](./media/reporting.png)
+![](./media/metadataflow.png)
+
+- Fairness Ontology (obtained from https://github.com/frankj-rpi/fairness-metrics-ontology)
+
+![](./media/FairnessOntologyFull.png)

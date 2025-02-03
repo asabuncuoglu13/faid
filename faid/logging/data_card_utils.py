@@ -38,6 +38,15 @@ def get_data_entry(key:str=None):
         except AttributeError | KeyError:
             error_msg(f"Key {key} not found in the metadata file")
             return None
+        
+def get_fairness_entities_from_data():
+    return {
+        "summary": get_data_entry('summary'),
+        "protected_characteristics": get_data_entry('protected_characteristics'),
+        "intentional_sensitive_data": get_data_entry('intentional_sensitive_data'),
+        "unintentional_sensitive_data": get_data_entry('unintentional_sensitive_data'),
+        "rai": get_data_entry("rai"),
+    }
 
 def pretty_croissant(ds) -> dict:
     """
