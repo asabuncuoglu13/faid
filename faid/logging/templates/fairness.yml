@@ -21,15 +21,15 @@ sample_data:
   fns: []
 bias_metrics:
   groups:
-    group_name:
-      description: ""
-      label: ""
-      metrics:
-        - name: ""
-          description: ""
-          value: 0
-          threshold: 0
-          bigger_is_better: ""
-          label: ""
-          notes: ""
-          sg_params: {}
+    group_name: ""
+    description: ""
+    label: ""
+    metrics:
+      - name: ""
+        description: ""
+        value: 0
+        threshold: 0
+        bigger_is_better: ""
+        label: ""
+        notes: ""
+        sg_params: {}

@@ -52,7 +52,7 @@ FAID (Fair AI Development) is an open-source fairness monitoring and management 
 
 ## Data Protection Checklist
 
-*The below list is adopted from ICO <https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance/accountability-and-governance/data-protection-by-design-and-default/>. You can also customise this checklist for integrating other open-source software based on your needs.*
+*The below list is adopted from ICO <https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/guide-to-accountability-and-governance>. You can also customise this checklist for integrating other open-source software based on your needs.*
 
 - [ ] We thoroughly analyse the dataflow after integrating FAID to detect possible data protection issues as part of the design and implementation of our systems, services, products and business practices.
 - [ ] We make data protection rules an essential component of the core functionality of our processing systems and services. We ensured that FAID is working under these rules.
