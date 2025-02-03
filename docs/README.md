@@ -5,7 +5,7 @@
 - [Managing Metadata](./managing-metadata.md)
 
 **Fairness-Oriented Risk Assessment:**
--
+- 
 
 **Technical Diagrams:**
 
