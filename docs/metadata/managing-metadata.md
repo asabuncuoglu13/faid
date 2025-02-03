@@ -78,7 +78,9 @@ faidlog.add_data_entry(key="duplicate rows", entry=data["table"]["n_duplicates"]
 ```
 
 ## Update Fairness Metadata
-FAID expects you to follow a standard recording format in fairness metric reporting. Although it will not generate an error, it will be unhappy about it and will warn you. Let's say, you want to record statistical parity difference. The resulting YAML file should look like this:
+FAID expects you to follow a standard recording format in fairness metric reporting. Although it will not generate an error, it will be unhappy about it and will warn you. You can use Fairness Metrics Ontology (<https://github.com/frankj-rpi/fairness-metrics-ontology/tree/main>) as the standard relational map of fairness notions and metrics.
+
+Let's say, you want to record statistical parity difference. The resulting YAML file should look like this:
 
 ```yaml
 name: "statistical parity difference"

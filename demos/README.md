@@ -7,7 +7,7 @@ Although the logging format and process is standardised for any ML development, 
 ## List of Tutorials
 
 **Tabular Model - Evaluation:**
-- [credit-scoring-default/demo_credit_loan_decisions.ipynb](demos/credit-scoring-default/demo_credit_loan_decisions.ipynb): Demonstrates fairness evaluation in credit loan decision models.
+- [credit-scoring-fairlearn/demo_credit_loan_decisions.ipynb](demos/credit-scoring-fairlearn/demo_credit_loan_decisions.ipynb): Demonstrates fairness evaluation in credit loan decision models using the fairlearn library.
 - [adult-subgroupdiscovery/fairsd_usage.ipynb](demos/adult-subgroupdiscovery/fairsd_usage.ipynb): Shows the usage of fairness-aware subgroup discovery in practice.
 
 **Text Model - Evaluation:**
