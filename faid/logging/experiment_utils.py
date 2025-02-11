@@ -67,6 +67,31 @@ def get_exp_ctx(experiment_name:str) -> 'ExperimentContext':
                                         sample_data=dataDict["sample_data"],
                                         model=dataDict["model"])
 
+def pretty_aisi_summary(filepath:str) -> dict:
+    import os
+    import json
+    filepath = os.path.join(os.getcwd(), filepath)
+    if not os.path.exists(filepath):
+        error_msg(f"{filepath} not found")
+        return
+    # read json filepath
+    with open(filepath) as f:
+        data = json.load(f)
+    summary = {
+        "name": data["eval"]["task_id"],
+        "description": str(data["plan"]),
+        "start_time": data["eval"]["created"],
+        "data": data["eval"]["dataset"],
+        "model": data["eval"]["model"],
+        "metrics": {
+            "total_samples": data["results"]["total_samples"],
+            "completed_samples": data["results"]["completed_samples"],
+            "scores": data["results"]["scores"]
+            },
+        "sample_results": data["results"]["sample_reductions"][0]["samples"][:5]
+    }
+    return summary
+
 class ExperimentContext:
     """
     A class to represent an experiment context.
@@ -253,28 +278,3 @@ class ExperimentContext:
         if key is None:
             return self.model
         return self.model.get(key, None)
-        
-def pretty_aisi_summary(filepath:str) -> dict:
-    import os
-    import json
-    filepath = os.path.join(os.getcwd(), filepath)
-    if not os.path.exists(filepath):
-        error_msg(f"{filepath} not found")
-        return
-    # read json filepath
-    with open(filepath) as f:
-        data = json.load(f)
-    summary = {
-        "name": data["eval"]["task_id"],
-        "description": str(data["plan"]),
-        "start_time": data["eval"]["created"],
-        "data": data["eval"]["dataset"],
-        "model": data["eval"]["model"],
-        "metrics": {
-            "total_samples": data["results"]["total_samples"],
-            "completed_samples": data["results"]["completed_samples"],
-            "scores": data["results"]["scores"]
-            },
-        "sample_results": data["results"]["sample_reductions"][0]["samples"][:5]
-    }
-    return summary

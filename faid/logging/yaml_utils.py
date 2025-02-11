@@ -52,7 +52,7 @@ def generate(dataDict, filename:str=None, return_result=False):
     yaml.safe_dump(dataDict, file, sort_keys=False, default_flow_style=False)
 
 # %%
-def update(yamlData, key:str=None, filename:str=None):
+def update(yaml_data, key:str=None, filename:str=None):
   """
   Update a yaml file
   """
@@ -61,8 +61,8 @@ def update(yamlData, key:str=None, filename:str=None):
   
   if not os.path.exists(filename):
     warning_msg(f"File {filename} not found. Creating a new file.")
-    yamlData = {key: yamlData}
-    generate(yamlData, filename)
+    yaml_data = {key: yaml_data}
+    generate(yaml_data, filename)
     return
   
   existing_dataDict = load(filename)
@@ -71,14 +71,16 @@ def update(yamlData, key:str=None, filename:str=None):
     existing_dataDict = {}
   
   if key is None:
-    generate(yamlData, filename)
+    generate(yaml_data, filename)
     return
 
   try:
-    existing_dataDict[key] = yamlData
+    if isinstance(yaml_data, dict):
+      yaml_data = {**existing_dataDict[key], **yaml_data}  
+    existing_dataDict[key] = yaml_data
   except KeyError:
     error_msg(f"Key {key} not found in the yaml file. Creating the key and updating the file.")
-    existing_dataDict.update({key: yamlData})
+    existing_dataDict.update({key: yaml_data})
   
   try:
     generate(existing_dataDict, filename)

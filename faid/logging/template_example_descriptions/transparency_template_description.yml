@@ -54,9 +54,9 @@ tier_2_model_specification_nae_detection:
   dataset_purposes: "Training and evaluation"
 
 tier_2_model_specification_suicide_and_self_harm_ideation_content_detection:
-  model_name: "Suicide Ideation Detection Model"
+  model_name: "Self-harm Detection Model"
   model_version: "1.0"
-  model_task: "Detecting suicide and self-harm ideation"
+  model_task: "Detecting self-harm before happening"
   model_input: "Text data"
   model_output: "Ideation detected or not"
   model_architecture: "CNN-based model"

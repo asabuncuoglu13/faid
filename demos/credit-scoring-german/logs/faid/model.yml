@@ -1,14 +1,50 @@
 model_info:
-  name: ""
-  description: ""
-  details:
+  model_details:
+    name: ""
+    overview:
+    documentation:
     owners:
       - name: ""
         contact: ""
-    licenses:
-      - ""
-    architecture: ""
+    version:
+      name:
+      date:
+      diff:
+    license:
+      identifier:
+      custom_text:
+    references:
+    citation:
+    path:
+  model_parameters:
+    description:
+    model_architecture: ""
+    data:
+      - description: ""
+        link:
+        sensitive:
+        graphics:
+    input_format:
+    output_format:
+    output_format_map:
+  quantitative_analysis:
+    description:
+    performance_metrics:
+      - name:
+        description:
+        value:
+        slice:
+        confidence_interval:
+          description: "Explain your interval selection methodology. e.g. <https://fairlearn.org/v0.11/user_guide/assessment/confidence_interval_estimation.html>"
+          lower_bound:
+          upper_bound:
+  considerations:
+    description:
     intended_users: ""
     use_cases: ""
     limitations: ""
+    tradeoffs:
     ethical_considerations: ""
+    risks:
+      - name:
+        mitigation_strategy:
