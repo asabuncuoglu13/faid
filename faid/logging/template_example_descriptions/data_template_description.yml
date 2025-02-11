@@ -1,76 +1,73 @@
-dataset_name: "Example Dataset"  # The name of the dataset
-summary: "This dataset contains information about..."  # A brief summary of the dataset
-dataset_link: "http://example.com/dataset"  # Link to the dataset
-repository_link: "http://github.com/example/repo"  # Link to the repository containing the dataset
-authors: "John Doe, Jane Smith"  # Authors of the dataset
-publishing_organization: "Example Organization"  # Organization that published the dataset
-tasks: ["classification", "regression"]  # List of tasks the dataset can be used for
-characteristics: ["tabular", "time-series"]  # Characteristics of the dataset
-num_instances: "1000"  # Number of instances in the dataset
-num_features: "20"  # Number of features in the dataset
-feature_types: ["numerical", "categorical"]  # Types of features in the dataset
-target_col: "target"  # Column name of the target variable
-index_col: "id"  # Column name of the index
-has_missing_values: "yes"  # Indicates if the dataset has missing values
-missing_values_symbol: "NaN"  # Symbol used for missing values
-year_of_dataset_creation: "2020"  # Year the dataset was created
-last_updated: "2023-01-01"  # Date when the dataset was last updated
-industry_types: ["healthcare", "finance"]  # Industries related to the dataset
-publishing_poc:  # Point of contact for publishing
-  name: "John Doe"
-  email: "john.doe@example.com"
-dataset_owners:  # Owners of the dataset
-  name: "Jane Smith"
-  email: "jane.smith@example.com"
-dataset_authors:  # Authors of the dataset
-  - name: "John Doe"
-    affiliation: "Example University"
-  - name: "Jane Smith"
-    affiliation: "Example Organization"
-funding_sources: ["Example Grant", "Example Fund"]  # Sources of funding for the dataset
-data_subjects: ["patients", "customers"]  # Subjects of the data
-dataset_snapshot:  # Snapshot of the dataset
-  Total Records: "1000"
-  Coverage: "Global"
-  Time Span: "2010-2020"
-content_description: "This dataset includes..."  # Description of the dataset content
-descriptive_statistics:  # Descriptive statistics of the dataset
-  fields: ["mean", "median", "std"]
+id: "unique_dataset_id" # Unique identifier for the dataset
+description:
+  name: "Example Dataset" # Name of the dataset
+  summary: "This dataset contains information about..." # Brief summary of the dataset
+  dataset_link: "http://example.com/dataset" # Link to the dataset
+  repository_link: "http://example.com/repository" # Link to the repository where the dataset is stored
+  intro_paper: "http://example.com/paper" # Link to the introductory paper of the dataset
+  publishing_organization: "Example Organization" # Organization that published the dataset
+  tasks: ["classification", "regression"] # Tasks that can be performed with the dataset
+  characteristics: ["structured", "time-series"] # Characteristics of the dataset
+  feature_types: ["numerical", "categorical"] # Types of features in the dataset
+  target_col: "target" # Column name of the target variable
+  index_col: "id" # Column name of the index variable
+  year_of_dataset_creation: "2023" # Year the dataset was created
+  last_updated: "2023-10-01" # Date when the dataset was last updated
+  industry_types: ["healthcare", "finance"] # Industries related to the dataset
+  publishing_poc: {"name": "John Doe", "email": "john.doe@example.com"} # Point of contact for publishing
+  owners: [{"name": "Jane Smith", "email": "jane.smith@example.com"}] # Owners of the dataset
+  authors: [{"name": "John Doe", "email": "john.doe@example.com"}] # Authors of the dataset
+  funding_sources: ["Grant XYZ", "Organization ABC"] # Sources of funding for the dataset
+content:
+  description: "Detailed description of the dataset..." # Detailed description of the dataset
+  primary_data_modality: "text" # Primary data modality (e.g., text, image, audio)
+  sampling_data_points: ["random", "stratified"] # Methods used for sampling data points
+  data_fields: ["field1", "field2"] # Fields in the dataset
+  typical_data_point: "Example data point..." # Example of a typical data point
+  data_subjects: ["patients", "customers"] # Subjects of the data
+  dataset_snapshot:
+    Total Records: "10000" # Total number of records in the dataset
+    Coverage: "global" # Coverage of the dataset
+    Time Span: "2010-2023" # Time span of the dataset
+descriptive_statistics:
+  num_instances: "10000" # Number of instances in the dataset
+  num_features: "20" # Number of features in the dataset
+  has_missing_values: "yes" # Indicates if the dataset has missing values
+  missing_values_symbol: "NA" # Symbol used for missing values
+  fields: ["field1", "field2"] # Fields in the dataset
   stats:
-    - name: "age"
-      values: [30, 35, 5]
-protected_characteristics: ["race", "gender"]  # Protected characteristics in the dataset
-intentional_sensitive_data:  # Intentional sensitive data in the dataset
-  - name: "social_security_number"
-    description: "Contains SSNs of individuals"
-unintentional_sensitive_data: ["email", "phone_number"]  # Unintentional sensitive data in the dataset
-security_privacy_handling: "Data is anonymized and encrypted"  # Security and privacy handling measures
-risks:  # Risks associated with the dataset
-  - name: "Data Breach"
-    mitigation_strategy: "Encryption and access control"
-maintenance_status: "active"  # Maintenance status of the dataset
-version_details:  # Version details of the dataset
-  current_version: "1.0"
-  last_updated: "2023-01-01"
-  release_date: "2023-01-01"
-maintenance_plan: "Regular updates every 6 months"  # Maintenance plan for the dataset
-next_update:  # Details of the next update
-  version_affected: "1.0"
-  next_data_update: "2023-06-01"
-  next_version: "1.1"
-  next_version_update: "2023-06-01"
-expected_changes: "Addition of new features"  # Expected changes in the next update
-primary_data_modality: "tabular"  # Primary modality of the data
-sampling_data_points: ["random", "stratified"]  # Sampling methods used for data points
-data_fields: ["age", "income", "gender"]  # Fields in the dataset
-typical_data_point: "age: 30, income: 50000, gender: male"  # Example of a typical data point
-collection_protocol:  # Protocol for data collection
-  data_collection: "Survey"
-  data_collection_type: "Self-reported"
-  data_collection_raw_data: "Raw survey responses"
-  data_annotation_protocol: "Manual annotation"
-  data_annotation_platform: "Example Platform"
-  data_annotation_analysis: "Statistical analysis"
-  annotations_per_item: "3"
-  annotator_demographics: "Diverse group of annotators"
-  data_use_cases: "Research, analysis"
+    - name: "mean"
+      values: [5.0, 10.0] # Example values for the mean of each field
+sensitive_data:
+  protected_characteristics: ["age", "gender"] # Protected characteristics in the dataset
+  intentional_sensitive_data:
+    - name: "income"
+      description: "Income data is sensitive because..." # Description of why the data is sensitive
+  unintentional_sensitive_data: ["location"] # Unintentional sensitive data
+  security_privacy_handling: "Data is anonymized and encrypted..." # How the data is handled for security and privacy
+risks:
+  - name: "Data leakage"
+    mitigation_strategy: "Implement strict access controls..." # Strategy to mitigate the risk
+version_details:
+  current_version: "1.0.0" # Current version of the dataset
+  last_updated: "2023-10-01" # Date when the dataset was last updated
+  release_date: "2023-01-01" # Release date of the current version
+  maintenance_status: "active" # Maintenance status of the dataset
+  maintenance_plan: "Update quarterly..." # Maintenance plan for the dataset
+  next_update:
+    version_affected: "1.0.0" # Version affected by the next update
+    next_data_update: "2023-12-01" # Date of the next data update
+    next_version: "1.1.0" # Next version of the dataset
+    next_version_update: "2023-12-01" # Date of the next version update
+  expected_changes: "Add new features and update records..." # Expected changes in the next update
+# it is based on ML-Croissant:RAI Fields
+collection_protocol:
+  data_collection: "Data collected from surveys..." # Description of the data collection process
+  data_collection_type: "survey" # Type of data collection
+  data_collection_raw_data: "Raw data files..." # Description of the raw data collected
+  data_annotation_protocol: "Annotations done by experts..." # Protocol for data annotation
+  data_annotation_platform: "Annotation platform used..." # Platform used for data annotation
+  data_annotation_analysis: "Analysis of annotations..." # Analysis of the annotations
+  annotations_per_item: "3" # Number of annotations per item
+  annotator_demographics: "Demographics of annotators..." # Demographics of the annotators
+  data_use_cases: "Use cases for the data..." # Use cases for the data
