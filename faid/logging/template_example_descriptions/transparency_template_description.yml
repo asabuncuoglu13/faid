@@ -1,0 +1,93 @@
+tier_1_information:
+  name: "Transparency Project"
+  description: "A project aimed at increasing transparency in AI models."
+  website_url: "https://transparency.example.com"
+  contact_email: "contact@transparency.example.com"
+
+tier_2_owner_and_responsibility:
+  organisation_or_department: "AI Transparency Department"
+  team: "Transparency Team"
+  senior_responsible_owner: "John Doe"
+  external_supplier_involvement: "None"
+
+tier_2_description_and_rationale:
+  detailed_description: "This project provides detailed descriptions of AI models used in various applications."
+  scope: "Global"
+  benefit: "Increased trust and understanding of AI models."
+  previous_process: "Manual documentation"
+  alternatives_considered: "Automated documentation tools"
+
+tier_2_decision_making_process:
+  process_integration: "Integrated into the development lifecycle"
+  provided_information: "Detailed model specifications and usage guidelines"
+  frequency_and_scale_of_usage: "Used in every project phase"
+  human_decisions_and_review: "Reviewed by senior AI experts"
+  required_training: "Training on transparency guidelines"
+  appeals_and_review: "Regular reviews and feedback sessions"
+
+tier_2_tool_specification:
+  system_architecture: "Microservices architecture"
+  phase: "Development"
+  maintenance: "Regular updates and bug fixes"
+  models: "Various AI models for different tasks"
+
+tier_2_model_specification_complaint_detection:
+  model_name: "Complaint Detection Model"
+  model_version: "1.0"
+  model_task: "Detecting complaints in customer feedback"
+  model_input: "Text data"
+  model_output: "Complaint or not"
+  model_architecture: "Transformer-based model"
+  model_performance: "Accuracy: 95%"
+  datasets: "Customer feedback dataset"
+  dataset_purposes: "Training and evaluation"
+
+tier_2_model_specification_nae_detection:
+  model_name: "NAE Detection Model"
+  model_version: "1.0"
+  model_task: "Detecting non-appropriate expressions"
+  model_input: "Text data"
+  model_output: "Appropriate or not"
+  model_architecture: "LSTM-based model"
+  model_performance: "Accuracy: 92%"
+  datasets: "Social media comments dataset"
+  dataset_purposes: "Training and evaluation"
+
+tier_2_model_specification_suicide_and_self_harm_ideation_content_detection:
+  model_name: "Suicide Ideation Detection Model"
+  model_version: "1.0"
+  model_task: "Detecting suicide and self-harm ideation"
+  model_input: "Text data"
+  model_output: "Ideation detected or not"
+  model_architecture: "CNN-based model"
+  model_performance: "Accuracy: 90%"
+  datasets: "Mental health forum posts dataset"
+  dataset_purposes: "Training and evaluation"
+
+tier_2_model_specification_names_identification:
+  model_name: "Names Identification Model"
+  model_version: "1.0"
+  model_task: "Identifying names in text"
+  model_input: "Text data"
+  model_output: "Names identified"
+  model_architecture: "BiLSTM-CRF model"
+  model_performance: "Accuracy: 93%"
+  datasets: "Annotated text dataset"
+  dataset_purposes: "Training and evaluation"
+
+tier_2_data_specification:
+  source_data_name: "Customer Feedback Data"
+  data_modality: "Text"
+  data_description: "Feedback collected from customers"
+  data_quantities: "100,000 entries"
+  sensitive_attributes: "Customer names, email addresses"
+  data_completeness_and_representative-ness: "Complete and representative of the customer base"
+  source_data_url: "https://data.example.com/customer_feedback"
+  data_collection: "Collected via online surveys"
+  data_cleaning: "Removed duplicates and irrelevant entries"
+  data_sharing_agreements: "Agreements with data providers"
+  data_access_and_storage: "Stored in secure cloud storage"
+
+tier_2_risks_mitigations_and_impact_assessments:
+  impact_assessment: "Assessment of the impact on user privacy and data security"
+  risks_and_mitigations: "Identified risks and corresponding mitigation strategies"

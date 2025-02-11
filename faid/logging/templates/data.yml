@@ -56,14 +56,14 @@ primary_data_modality: ""
 sampling_data_points: []
 data_fields: []
 typical_data_point: ""
-rai:
-  dataCollection: ""
-  dataCollectionType: ""
-  dataCollectionRawData: ""
-  dataAnnotationProtocol: ""
-  dataAnnotationPlatform: ""
-  dataAnnotationAnalysis: ""
-  dataUseCases: ""
-  dataBiases: ""
-  annotationsPerItem: ""
-  annotatorDemographics: ""
+# it is based on ML-Croissant:RAI Fields
+collection_protocol:
+  data_collection: ""
+  data_collection_type: ""
+  data_collection_raw_data: "" 
+  data_annotation_protocol: ""
+  data_annotation_platform: ""
+  data_annotation_analysis: ""
+  annotations_per_item: ""
+  annotator_demographics: ""
+  data_use_cases: ""
