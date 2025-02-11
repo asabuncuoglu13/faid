@@ -3,7 +3,7 @@ from faid.report import get_faid_report_folder
 from faid.logging import (
     load, 
     get_data_entry, 
-    get_fairness_log_path,
+    get_fairness_experiment_log_path,
     get_data_log_path,
     get_model_log_file_path,
     get_risk_register_log_path,
@@ -27,7 +27,7 @@ def generate_experiment_overview_report(project_info:dict=None):
     """
     # for each file starts with fairness_, generate the report
     if project_info is None:
-        fairness_files = get_fairness_log_path()
+        fairness_files = get_fairness_experiment_log_path()
         if isinstance(fairness_files, list):
             for file in fairness_files:
                 project_info = load(file)

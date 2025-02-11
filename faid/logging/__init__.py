@@ -17,8 +17,7 @@ from faid.logging.model_card_utils import (
     initialize_model_log,
     get_model_log_file_path,
     add_model_entry,
-    get_model_entry,
-    get_fairness_entities_from_model
+    get_model_entry
 )
 
 from faid.logging.data_card_utils import (
@@ -29,14 +28,13 @@ from faid.logging.data_card_utils import (
     pretty_croissant_rai,
     pretty_uci_metadata,
     add_data_entry,
-    get_data_entry,
-    get_fairness_entities_from_data
+    get_data_entry
 )
 
 from faid.logging.experiment_utils import (
     ExperimentContext,
     initialize_exp_log,
-    get_fairness_log_path,
+    get_fairness_experiment_log_path,
     get_exp_ctx,
     pretty_aisi_summary
 )
@@ -97,7 +95,6 @@ __all__ = [
     'get_model_log_file_path',
     'add_model_entry',
     'get_model_entry',
-    'get_fairness_entities_from_model',
     'ModelCard',
     'initialize_model_log',
     'pretty_aisi_summary',
@@ -107,13 +104,12 @@ __all__ = [
     'get_data_log_path',
     'add_data_entry',
     'get_data_entry',
-    'get_fairness_entities_from_data',
     'pretty_croissant',
     'pretty_croissant_rai',
     'pretty_uci_metadata',
     # experiment_utils
     'ExperimentContext',
-    'get_fairness_log_path',
+    'get_fairness_experiment_log_path',
     'initialize_exp_log',
     'get_exp_ctx',
     'pretty_aisi_summary',

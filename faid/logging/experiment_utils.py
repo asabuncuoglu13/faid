@@ -14,7 +14,7 @@ def initialize_exp_log():
     else:
         warning_msg("Fairness experiment log already exists. Logging will be appended to the existing file.")
 
-def get_fairness_log_path():
+def get_fairness_experiment_log_path():
     """
     Returns the path to the fairness log file
     """

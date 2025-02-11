@@ -37,7 +37,13 @@ descriptive_statistics:
   fields: []
   stats:
     - name: ""
-      values: []
+      description: ""
+      value: 0
+      threshold: 0
+      bigger_is_better: ""
+      label: ""
+      notes: ""
+      sg_params: {}
 sensitive_data:
   protected_characteristics: []
   intentional_sensitive_data:

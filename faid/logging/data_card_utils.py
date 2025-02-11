@@ -38,15 +38,6 @@ def get_data_entry(key:str=None):
         except AttributeError | KeyError:
             error_msg(f"Key {key} not found in the metadata file")
             return None
-        
-def get_fairness_entities_from_data():
-    return {
-        "summary": get_data_entry('description').get('summary', ''),
-        "protected_characteristics": get_data_entry('sensitive_data').get('protected_characteristics', []),
-        "intentional_sensitive_data": get_data_entry('senstive_data').get('intentional_sensitive_data', []),
-        "unintentional_sensitive_data": get_data_entry('senstive_data').get('unintentional_sensitive_data', []),
-        "collection_protocol": get_data_entry("collection_protocol")
-    }
 
 def pretty_croissant(ds) -> dict:
     """
@@ -185,7 +176,13 @@ class DataCard:
             "fields": [],
             "stats": [{
                 "name": "",
-                "values": []
+                "description": "",
+                "value": 0,
+                "threshold": 0,
+                "bigger_is_better": "",
+                "label": "",
+                "notes": "",
+                "sg_params": {}
             }]
         }
         self.sensitive_data_schema = {

@@ -36,8 +36,27 @@ descriptive_statistics:
   missing_values_symbol: "NA" # Symbol used for missing values
   fields: ["field1", "field2"] # Fields in the dataset
   stats:
-    - name: "mean"
-      values: [5.0, 10.0] # Example values for the mean of each field
+    - name: "mean_age"
+      description: "Mean age of the individuals in the dataset"
+      value: 35.5
+      threshold: 30
+      bigger_is_better: "no"
+      label: "Mean Age"
+      notes: "Calculated from the age field"
+      sg_params: {}
+    - name: "median_income_disparity"
+      description: "Disparity in median income between different subgroups"
+      value: 55000
+      threshold: 50000
+      bigger_is_better: "yes"
+      label: "Median Income Disparity"
+      notes: "Calculated from the income field across different subgroups"
+      sg_params: 
+        subgroup: "gender"
+        disparity_measure: "difference"
+        reference_group: "male"
+        comparison_group: "female"
+        currency: "USD"
 sensitive_data:
   protected_characteristics: ["age", "gender"] # Protected characteristics in the dataset
   intentional_sensitive_data:
