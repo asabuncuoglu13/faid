@@ -86,11 +86,11 @@ Let's say, you want to record statistical parity difference. The resulting YAML 
 name: "statistical parity difference"
 description: "Statistical parity difference is the difference in approval rates between two groups."
 value: -0.108
-threshold: 0 \# 0 indicates perfect fairness, select this value based on your business case, regulatory requirements, and statistical significance.
-bigger\_is\_better: false
-label: "statistical\_parity\_difference"
+threshold: 0 # 0 indicates perfect fairness, select this value based on your business case, regulatory requirements, and statistical significance.
+bigger_is_better: false
+label: "statistical_parity_difference"
 notes: ""
-sg\_params: \{\} \# we don't have any additonal subgroups in this case
+sg_params: {} # we don't have any additonal subgroups in this case
 ```
 
 To include your statistical parity difference testing, first you need to create an a `ExperimentContext`, than save the bias metric. Note that bias metric should be recorded under a `group`. As all fairness testing is about being fair among "priviliged" and "unpriviliged" groups (e.g. male, female), recording follows this scheme.
