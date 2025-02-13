@@ -6,11 +6,16 @@ from faid.logging import error_msg, warning_msg, success_msg, update, load, get_
 
 exp_file_path = join(get_project_log_path(), "fairness.yml")
 exp_file_template_path = join(get_current_folder_path(), "templates/fairness.yml")
+exp_file_template_with_description_path = join(get_current_folder_path(), "template_example_descriptions/fairness_template_description.yml")
 
-def initialize_exp_log():
+def initialize_exp_log(test:bool=False):
     if not exists(exp_file_path):
-        copy(exp_file_template_path, exp_file_path)
-        success_msg("Fairness experiment log created.")
+        if(test):
+            copy(exp_file_template_with_description_path, exp_file_path)
+            success_msg("Fairness experiment log created with sample descriptions.")
+        else:
+            copy(exp_file_template_path, exp_file_path)
+            success_msg("Fairness experiment log created.")
     else:
         warning_msg("Fairness experiment log already exists. Logging will be appended to the existing file.")
 

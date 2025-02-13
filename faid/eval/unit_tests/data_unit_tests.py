@@ -33,7 +33,7 @@ def test_fairness_stats_of_data():
                     error_msg(f"TEST: {name} FAIL")
 
 
-def test_fairness_by_unawareness():
+def test_sensitive_characteristics_featuring_in_data():
     data = get_data_entry('sensitive_data').get('protected_characteristics', [])
     if len(data) == 0:
         warning_msg("The data does not contain any protected characteristic data. Please check any proxy variables that can correlate with protected characteristics.")

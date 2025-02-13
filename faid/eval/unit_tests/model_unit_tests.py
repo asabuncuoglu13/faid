@@ -2,7 +2,7 @@ from faid.logging import ModelCard, get_model_entry, warning_msg, error_msg, suc
 
 def get_fairness_entities_from_model():
     m = ModelCard()
-    model_info = get_model_entry("model_info")
+    model_info = get_model_entry()
     return {
         "model_parameters" : {
             "data": model_info.get("model_parameters", m.model_params_schema).get('data', None),
@@ -20,13 +20,14 @@ def test_fairness_stats_of_model():
             name = stat.get("name")
             value = stat.get("value")
             interval = stat.get("confidence_interval")
-            print(f"The success interval is defined based on: {interval["description"]}")
+            interval_description = interval["description"]
+            print(f"The success interval is defined based on: {interval_description}")
             if value >= interval["lower_bound"] and value <= interval["upper_bound"]:
                 success_msg(f"TEST: {name}: PASS")
             else:
                 error_msg(f"TEST: {name} FAIL")
 
-def test_fairness_by_unawareness():
+def test_sensitive_characteristics_featuring_in_model():
     data = get_model_entry('model_parameters').get('data', [])
     if len(data) == 0:
         warning_msg("The model metadata does not contain any data-related information. Please check if the model is being used in a way that is unaware of the sensitive data.")

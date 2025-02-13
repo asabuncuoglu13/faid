@@ -5,11 +5,16 @@ from faid.logging import error_msg, warning_msg, success_msg, update, load, get_
 
 data_file_path = join(get_project_log_path(), "data.yml")
 data_file_template_path = join(get_current_folder_path(), "templates/data.yml")
+data_file_template_with_description_path = join(get_current_folder_path(), "template_example_descriptions/data_template_description.yml")
 
-def initialize_data_log():
+def initialize_data_log(test:bool=False):
     if not exists(data_file_path):
-        copy(data_file_template_path, data_file_path)
-        success_msg("Data log file created.")
+        if test:
+            copy(data_file_template_with_description_path, data_file_path)
+            success_msg("Data log file created with sample descriptions.")
+        else:
+            copy(data_file_template_path, data_file_path)
+            success_msg("Data log file created.")
     else:
         warning_msg("Data log file already exists. Logging will be appended to the existing file.")
 
@@ -322,7 +327,8 @@ class DataCard:
         """
         Saves the data information to the data log file.
         """
-        update(self.data_info, filename=data_file_path)
+        for key, value in self.data_info.items():
+            update(value, key=key, filename=data_file_path)
         success_msg("Data info saved to the data log file.")
 
     def to_dict(self):

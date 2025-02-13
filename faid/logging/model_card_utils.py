@@ -7,19 +7,25 @@ from faid.logging import error_msg, warning_msg, success_msg, update, load, get_
 
 model_file_path = join(get_project_log_path(), "model.yml")
 model_file_template_path = join(get_current_folder_path(), "templates/model.yml")
-model_info_key = "model_info"
+model_file_template_with_description_path = join(get_current_folder_path(), "template_example_descriptions/model_template_description.yml")
 
-def initialize_model_log():
+def initialize_model_log(test:bool=False):
     if not exists(model_file_path):
-        copy(model_file_template_path, model_file_path)
-        success_msg("Model log file created.")
+        if test:
+            copy(model_file_template_with_description_path, model_file_path)
+            success_msg("Model log file created with example descriptions.")
+        else:
+            copy(model_file_template_path, model_file_path)
+            success_msg("Model log file created.")
     else:
         warning_msg("Model log file already exists.  Logging will be appended to the existing file.")
 
 def get_model_log_file_path():
     return model_file_path
 
-def add_model_entry(params:dict, key:str="model_info"):
+def add_model_entry(params:dict, key:str):
+    if key is None:
+        key= "model_details"
     update(params, key=key, filename=model_file_path)
     print(f"Added {key} to model card")
 
@@ -254,7 +260,7 @@ class ModelCard:
                 ]
             }
 
-            self.model_info = load(model_file_path)["model_info"]
+            self.model_info = load(model_file_path)
             #print("Model info is loaded from the model log file.")
 
         def get_model_info(self):
@@ -368,7 +374,8 @@ class ModelCard:
             """
             Saves the model information to the model log file.
             """
-            update(self.model_info, key=model_info_key, filename=model_file_path)
+            for key, value in self.model_info.items():
+                    update(value, key=key, filename=model_file_path)
             success_msg("Model info saved to the model log file.")
         
         def to_dict(self):
