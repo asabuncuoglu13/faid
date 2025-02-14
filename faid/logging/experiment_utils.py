@@ -184,25 +184,25 @@ class ExperimentContext:
     def add_context_entry(self, key:str, entry):
         self.context = load(self.filename)["context"]
         self.context[key] = entry
-        update(yamlData=self.context, key="context", filename=self.filename)
+        update(yaml_data=self.context, key="context", filename=self.filename)
         print(f"Added {key} to project metadata under ['context'] and log updated")
 
     def add_data_entry(self, key:str, entry):
         self.data = load(self.filename)["data"]
         self.data[key] = entry
-        update(yamlData=self.data, key="data", filename=self.filename)
+        update(yaml_data=self.data, key="data", filename=self.filename)
         print(f"Added {key} to project metadata under ['data'] and log updated")
     
     def add_sample_data_entry(self, key:str, entry):
         self.sample_data = load(self.filename)["sample_data"]
         self.sample_data[key] = entry
-        update(yamlData=self.sample_data, key="sample_data", filename=self.filename)
+        update(yaml_data=self.sample_data, key="sample_data", filename=self.filename)
         print(f"Added {key} to project metadata under ['sample_data'] and log updated")
     
     def add_model_entry(self, key:str, entry):
         self.model = load(self.filename)["model"]
         self.model[key] = entry
-        update(yamlData=self.model, key="model", filename=self.filename)
+        update(yaml_data=self.model, key="model", filename=self.filename)
         print(f"Added {key} to project metadata under ['model'] and log updated")
     
     def add_metric_entry(self, entry:dict={}):
@@ -214,7 +214,7 @@ class ExperimentContext:
             error_msg("Entry does not comply with the metrics schema. Call .metrics_schema to see the schema.")
             return
         self.metrics = entry
-        update(yamlData=self.metrics, key="bias_metrics", filename=self.filename)
+        update(yaml_data=self.metrics, key="bias_metrics", filename=self.filename)
         print("Added the metrics to project metadata under ['bias_metrics'] and log updated")
 
     def get_metric_entry(self, key:str=None):
@@ -261,7 +261,7 @@ class ExperimentContext:
         expCtx["tags"] = self.context.tags
         expCtx["authors"] = self.context.authors
         expCtx["hardware"] = self.context.hardware
-        update(yamlData=expCtx, key="context", filename=self.filename)
+        update(yaml_data=expCtx, key="context", filename=self.filename)
 
 
     def get_context_entry(self, key:str=None):
