@@ -2,7 +2,7 @@
 
 **Metadata Standards and Formats:**
 - [Overview of Metadata Recording](./metadata/README.md)
-- [Managing Metadata](./managing-metadata.md)
+- [Managing Metadata](./METADATA.md)
 
 **Fairness-Oriented Risk Assessment:**
 - [Self Assessment](./SELF-ASSESSMENT.md)

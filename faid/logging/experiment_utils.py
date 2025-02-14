@@ -6,15 +6,20 @@ from faid.logging import error_msg, warning_msg, success_msg, update, load, get_
 
 exp_file_path = join(get_project_log_path(), "fairness.yml")
 exp_file_template_path = join(get_current_folder_path(), "templates/fairness.yml")
+exp_file_template_with_description_path = join(get_current_folder_path(), "template_example_descriptions/fairness_template_description.yml")
 
-def initialize_exp_log():
+def initialize_exp_log(test:bool=False):
     if not exists(exp_file_path):
-        copy(exp_file_template_path, exp_file_path)
-        success_msg("Fairness experiment log created.")
+        if(test):
+            copy(exp_file_template_with_description_path, exp_file_path)
+            success_msg("Fairness experiment log created with sample descriptions.")
+        else:
+            copy(exp_file_template_path, exp_file_path)
+            success_msg("Fairness experiment log created.")
     else:
         warning_msg("Fairness experiment log already exists. Logging will be appended to the existing file.")
 
-def get_fairness_log_path():
+def get_fairness_experiment_log_path():
     """
     Returns the path to the fairness log file
     """
@@ -66,6 +71,31 @@ def get_exp_ctx(experiment_name:str) -> 'ExperimentContext':
                                         data=dataDict["data"],
                                         sample_data=dataDict["sample_data"],
                                         model=dataDict["model"])
+
+def pretty_aisi_summary(filepath:str) -> dict:
+    import os
+    import json
+    filepath = os.path.join(os.getcwd(), filepath)
+    if not os.path.exists(filepath):
+        error_msg(f"{filepath} not found")
+        return
+    # read json filepath
+    with open(filepath) as f:
+        data = json.load(f)
+    summary = {
+        "name": data["eval"]["task_id"],
+        "description": str(data["plan"]),
+        "start_time": data["eval"]["created"],
+        "data": data["eval"]["dataset"],
+        "model": data["eval"]["model"],
+        "metrics": {
+            "total_samples": data["results"]["total_samples"],
+            "completed_samples": data["results"]["completed_samples"],
+            "scores": data["results"]["scores"]
+            },
+        "sample_results": data["results"]["sample_reductions"][0]["samples"][:5]
+    }
+    return summary
 
 class ExperimentContext:
     """
@@ -154,25 +184,25 @@ class ExperimentContext:
     def add_context_entry(self, key:str, entry):
         self.context = load(self.filename)["context"]
         self.context[key] = entry
-        update(yamlData=self.context, key="context", filename=self.filename)
+        update(yaml_data=self.context, key="context", filename=self.filename)
         print(f"Added {key} to project metadata under ['context'] and log updated")
 
     def add_data_entry(self, key:str, entry):
         self.data = load(self.filename)["data"]
         self.data[key] = entry
-        update(yamlData=self.data, key="data", filename=self.filename)
+        update(yaml_data=self.data, key="data", filename=self.filename)
         print(f"Added {key} to project metadata under ['data'] and log updated")
     
     def add_sample_data_entry(self, key:str, entry):
         self.sample_data = load(self.filename)["sample_data"]
         self.sample_data[key] = entry
-        update(yamlData=self.sample_data, key="sample_data", filename=self.filename)
+        update(yaml_data=self.sample_data, key="sample_data", filename=self.filename)
         print(f"Added {key} to project metadata under ['sample_data'] and log updated")
     
     def add_model_entry(self, key:str, entry):
         self.model = load(self.filename)["model"]
         self.model[key] = entry
-        update(yamlData=self.model, key="model", filename=self.filename)
+        update(yaml_data=self.model, key="model", filename=self.filename)
         print(f"Added {key} to project metadata under ['model'] and log updated")
     
     def add_metric_entry(self, entry:dict={}):
@@ -184,7 +214,7 @@ class ExperimentContext:
             error_msg("Entry does not comply with the metrics schema. Call .metrics_schema to see the schema.")
             return
         self.metrics = entry
-        update(yamlData=self.metrics, key="bias_metrics", filename=self.filename)
+        update(yaml_data=self.metrics, key="bias_metrics", filename=self.filename)
         print("Added the metrics to project metadata under ['bias_metrics'] and log updated")
 
     def get_metric_entry(self, key:str=None):
@@ -231,7 +261,7 @@ class ExperimentContext:
         expCtx["tags"] = self.context.tags
         expCtx["authors"] = self.context.authors
         expCtx["hardware"] = self.context.hardware
-        update(yamlData=expCtx, key="context", filename=self.filename)
+        update(yaml_data=expCtx, key="context", filename=self.filename)
 
 
     def get_context_entry(self, key:str=None):
@@ -253,28 +283,3 @@ class ExperimentContext:
         if key is None:
             return self.model
         return self.model.get(key, None)
-        
-def pretty_aisi_summary(filepath:str) -> dict:
-    import os
-    import json
-    filepath = os.path.join(os.getcwd(), filepath)
-    if not os.path.exists(filepath):
-        error_msg(f"{filepath} not found")
-        return
-    # read json filepath
-    with open(filepath) as f:
-        data = json.load(f)
-    summary = {
-        "name": data["eval"]["task_id"],
-        "description": str(data["plan"]),
-        "start_time": data["eval"]["created"],
-        "data": data["eval"]["dataset"],
-        "model": data["eval"]["model"],
-        "metrics": {
-            "total_samples": data["results"]["total_samples"],
-            "completed_samples": data["results"]["completed_samples"],
-            "scores": data["results"]["scores"]
-            },
-        "sample_results": data["results"]["sample_reductions"][0]["samples"][:5]
-    }
-    return summary

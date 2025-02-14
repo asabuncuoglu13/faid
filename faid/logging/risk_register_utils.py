@@ -8,11 +8,16 @@ from faid.logging import error_msg, warning_msg, success_msg, update, load, get_
 
 risk_file_path = join(get_project_log_path(), "risks.yml")
 risk_file_template_path = join(get_current_folder_path(), "templates/risks.yml")
+risk_file_template_with_description_path = join(get_current_folder_path(), "template_example_descriptions/risks_template_description.yml")
 
-def initialize_risk_log():
+def initialize_risk_log(test:bool=False):
     if not exists(risk_file_path):
-        copy(risk_file_template_path, risk_file_path)
-        success_msg("Risks log file created.")
+        if test:
+            copy(risk_file_template_with_description_path, risk_file_path)
+            success_msg("Risks log file created with sample descriptions.")
+        else:
+            copy(risk_file_template_path, risk_file_path)
+            success_msg("Risks log file created.")
     else:
         warning_msg("Risks log file already exists. Logging will be appended to the existing file.")
 

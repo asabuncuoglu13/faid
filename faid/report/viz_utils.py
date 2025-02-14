@@ -9,7 +9,7 @@ import matplotlib
 
 from faid.logging import (
     load,
-    get_fairness_log_path
+    get_fairness_experiment_log_path
 )
 
 def figure_to_base64str(fig: matplotlib.figure.Figure) -> str:
@@ -97,7 +97,7 @@ def generate_fairness_log_completeness_label():
             f.write(str(fairness_logo))
         return
     
-    log_path = get_fairness_log_path()
+    log_path = get_fairness_experiment_log_path()
     log_completeness = calculate_log_completeness(log_path)
     fairness_logo = generate_fairness_logo(log_completeness)
     add_label_to_readme(fairness_logo)

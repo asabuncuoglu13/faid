@@ -1,0 +1,50 @@
+model_info:
+  model_details:
+    name: "Example Model"  # The name of the model
+    overview: "This model is designed to predict customer churn."  # A brief overview of the model
+    documentation: "https://example.com/model-docs"  # Link to the model's documentation
+    owners:
+      - name: "John Doe"  # Name of the model owner
+        contact: "john.doe@example.com"  # Contact information of the model owner
+    version:
+      name: "v1.0"  # Version name of the model
+      date: "2023-10-01"  # Release date of the model version
+      diff: "Initial release."  # Description of changes in this version
+    license:
+      identifier: "MIT"  # License identifier (e.g., MIT, Apache-2.0)
+      custom_text: "Custom license text if applicable."  # Custom license text if any
+    references: "https://example.com/references"  # References related to the model
+    citation: "Doe, J. (2023). Example Model. Example Journal."  # Citation for the model
+    path: "/models/example_model"  # Path to the model file or directory
+  model_parameters:
+    description: "Parameters used in the model."  # Description of the model parameters
+    model_architecture: "Neural Network"  # Architecture of the model
+    data:
+      - description: "Training data for the model."  # Description of the data
+        link: "https://example.com/data"  # Link to the data
+        sensitive: false  # Indicates if the data is sensitive
+        graphics: "https://example.com/data-graphics"  # Link to data graphics
+    input_format: "CSV"  # Format of the input data
+    output_format: "JSON"  # Format of the output data
+    output_format_map: "Mapping of output fields to their descriptions."  # Description of the output format map
+  quantitative_analysis:
+    description: "Quantitative analysis of the model's performance."  # Description of the quantitative analysis
+    performance_metrics:
+      - name: "Accuracy"  # Name of the performance metric
+        description: "The accuracy of the model."  # Description of the performance metric
+        value: 0.95  # Value of the performance metric
+        slice: "Overall"  # Data slice for the performance metric
+        confidence_interval:
+          description: "95% confidence interval for the accuracy."  # Description of the confidence interval
+          lower_bound: 0.93  # Lower bound of the confidence interval
+          upper_bound: 0.97  # Upper bound of the confidence interval
+  considerations:
+    description: "Considerations for using the model."  # Description of the considerations
+    intended_users: "Data scientists and analysts."  # Intended users of the model
+    use_cases: "Predicting customer churn."  # Use cases for the model
+    limitations: "The model may not perform well on small datasets."  # Limitations of the model
+    tradeoffs: "Higher accuracy may result in longer training times."  # Tradeoffs of using the model
+    ethical_considerations: "Ensure data privacy and fairness."  # Ethical considerations for the model
+    risks:
+      - name: "Data leakage"  # Name of the risk
+        mitigation_strategy: "Implement proper data handling procedures."  # Mitigation strategy for the risk
