@@ -28,7 +28,8 @@ def add_data_entry(key:str, entry:any):
     if type(entry) is dict:
         try:
             if entry.get("conformsTo") == 'http://mlcommons.org/croissant/RAI/1.0':
-                key="rai"
+                entry = pretty_croissant_rai(entry)
+                key = "collection_protocol"
         except AttributeError | KeyError:
             pass
     update(entry, key=key, filename=data_file_path)
