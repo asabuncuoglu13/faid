@@ -1,4 +1,9 @@
 risks:
+  0:
+    description: ''
+    impact: ''
+    likelihood: ''
+    mitigation: ''
   2:
     description: The model card information does not contain the model's training
       data information.
@@ -12,6 +17,11 @@ assumptions:
     impact: ''
     action: ''
 issues:
+  0:
+    description: ''
+    impact: ''
+    status: ''
+    action: ''
   2:
     description: The model card information does not contain the model's training
       data information.

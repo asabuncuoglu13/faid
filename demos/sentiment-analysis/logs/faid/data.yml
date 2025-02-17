@@ -1,69 +1,79 @@
-dataset_name: ""
-summary: ""
-dataset_link: ""
-repository_link: ""
-authors: ""
-publishing_organization: ""
-tasks: []
-characteristics: []
-num_instances: ""
-num_features: ""
-feature_types: []
-target_col: ""
-index_col: ""
-has_missing_values: ""
-missing_values_symbol: ""
-year_of_dataset_creation: ""
-last_updated: ""
-industry_types: []
-publishing_poc: {}
-dataset_owners: {}
-dataset_authors: []
-funding_sources: []
-data_subjects: []
-dataset_snapshot:
-  Total Records: ""
-  Coverage: ""
-  Time Span: ""
-content_description: ""
+id: ""
+description:
+  name: ""
+  summary: ""
+  dataset_link: ""
+  repository_link: ""
+  intro_paper: ""
+  publishing_organization: ""
+  tasks: []
+  characteristics: []
+  feature_types: []
+  target_col: ""
+  index_col: ""
+  year_of_dataset_creation: ""
+  last_updated: ""
+  industry_types: []
+  publishing_poc: {}
+  owners: []
+  authors: []
+  funding_sources: []
+content:
+  description: ""
+  primary_data_modality: ""
+  sampling_data_points: []
+  data_fields: []
+  typical_data_point: ""
+  data_subjects: []
+  dataset_snapshot:
+    Total Records: ""
+    Coverage: ""
+    Time Span: ""
 descriptive_statistics:
+  num_instances: ""
+  num_features: ""
+  has_missing_values: ""
+  missing_values_symbol: ""
   fields: []
   stats:
     - name: ""
-      values: []
-protected_characteristics: []
-intentional_sensitive_data:
-  - name: ""
-    description: ""
-unintentional_sensitive_data: []
-security_privacy_handling: ""
+      description: ""
+      value: 0
+      threshold: 0
+      bigger_is_better: ""
+      label: ""
+      notes: ""
+      sg_params: {}
+sensitive_data:
+  protected_characteristics: []
+  intentional_sensitive_data:
+    - name: ""
+      description: ""
+  unintentional_sensitive_data: []
+  security_privacy_handling: ""
 risks:
   - name:
     mitigation_strategy: ""
-maintenance_status: ""
 version_details:
   current_version: ""
   last_updated: ""
   release_date: ""
-maintenance_plan: ""
-next_update:
-  version_affected: ""
-  next_data_update: ""
-  next_version: ""
-  next_version_update: ""
-expected_changes: ""
-primary_data_modality: ""
-sampling_data_points: []
-data_fields: []
-typical_data_point: ""
-rai:
-  dataCollection: ""
-  dataCollectionType: ""
-  dataCollectionRawData: ""
-  dataAnnotationProtocol: ""
-  dataAnnotationPlatform: ""
-  dataAnnotationAnalysis: ""
-  dataUseCases: ""
-  dataBiases: ""
-  annotationsPerItem: ""
-  annotatorDemographics: ""
+  maintenance_status: ""
+  maintenance_plan: ""
+  next_update:
+    version_affected: ""
+    next_data_update: ""
+    next_version: ""
+    next_version_update: ""
+  expected_changes: ""
+# it is based on ML-Croissant:RAI Fields
+collection_protocol:
+  data_collection: ""
+  data_collection_type: ""
+  data_collection_raw_data: "" 
+  data_annotation_protocol: ""
+  data_annotation_platform: ""
+  data_annotation_analysis: ""
+  annotations_per_item: ""
+  annotator_demographics: ""
+  data_use_cases: ""

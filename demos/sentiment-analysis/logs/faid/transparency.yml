@@ -1,93 +1,62 @@
-Tier_1_Information:
-  Name: ""
-  Description: ""
-  Website_URL: ""
-  Contact_email: ""
+# The following example is based on <https://www.gov.uk/government/publications/guidance-for-organisations-using-the-algorithmic-transparency-recording-standard/algorithmic-transparency-recording-standard-guidance-for-public-sector-bodies>.
+# All values are placeholders based on the given example in the standard documentation and should be replaced with the relevant information.
+tier_1_information:
+  name: "Algorithm for secondary school place allocation"
+  description: "This algorithmic tool helps the council assign secondary school places to individual children."
+  website_url: "www.ycouncil.gov.uk/residents/children-education-and-families/school-admissions"
+  contact_email: "school-admissions@ycouncil.co.uk"
 
-Tier_2_Owner_and_Responsibility:
-  Organisation_or_department: ""
-  Team: ""
-  Senior_responsible_owner: ""
-  External_supplier_involvement: ""
+tier_2_owner_and_responsibility:
+  organisation_or_department: "Y council"
+  team: "School Admissions Team (Education division)"
+  senior_responsible_owner: "Head of Education Division"
+  external_supplier_involvement: "Yes"
 
-Tier_2_Description_and_Rationale:
-  Detailed_description: ""
-  Scope: ""
-  Benefit: ""
-  Previous_process: ""
-  Alternatives_considered: ""
+tier_2_description_and_rationale:
+  detailed_description: "This algorithmic tool has been designed to apply admissions criteria to automatically assign a school space to each child in the main annual admissions round."
+  scope: "This tool provides an initial allocation, but some individual circumstances will continue to be dealt with manually."
+  benefit: "Improve efficiency in allocation of school spaces, reduce error rate, enable potential future changes in admissions criteria."
+  previous_process: "The current process involves a mixture of manual and automated steps, managed through a complex set of internally developed spreadsheets."
+  alternatives_considered: "Retaining the current approach was considered, but rejected due to significant risk of failure in the event of staff changes."
 
-Tier_2_Decision_making_Process:
-  Process_integration: ""
-  Provided_information: ""
-  Frequency_and_scale_of_usage: ""
-  Human_decisions_and_review: ""
-  Required_training: ""
-  Appeals_and_review: ""
+tier_2_decision_making_process:
+  process_integration: "The algorithm replaces the previous system used for managing allocations, adding a significantly greater degree of automation."
+  provided_information: "The tool provides a recommendation for an allocation of children to available school places."
+  frequency_and_scale_of_usage: "Each year, the automated process makes approx. 3000 decisions."
+  human_decisions_and_review: "The automated process is reviewed every year to check its performance."
+  required_training: "Each officer using the tool goes through an onboarding process that trains them on how to use the tool."
+  appeals_and_review: "Existing appeals processes for school admissions will continue to apply."
 
-Tier_2_Tool_Specification:
-  System_architecture: ""
-  Phase: ""
-  Maintenance: ""
-  Models: ""
+tier_2_tool_specification:
+  system_architecture: "Find a system architecture diagram on our Github repository. Link: www.github.com/ycouncil/admissions-tool"
+  phase: "Production"
+  maintenance: "Maintenance and review of the tool occurs yearly prior to the operation of the tool."
+  models: "The tool features two models: Z-NET and Y-Admissions."
 
-Tier_2_Model_Specification_Complaint_Detection:
-  Model_name: ""
-  Model_version: ""
-  Model_task: ""
-  Model_input: ""
-  Model_output: ""
-  Model_architecture: ""
-  Model_performance: ""
-  Datasets: ""
-  Dataset_purposes: ""
+tier_2_model_specification_complaint_detection:
+  model_name: "Y-Admissions"
+  model_version: "v4.1"
+  model_task: "To allocate a fixed number of secondary school places to a set of applicants."
+  model_input: "A dataset containing information about school applicants and a dataset containing the number and types of places offered by local state schools."
+  model_output: "A dataset with school allocations for every applicant, along with brief written explanations for why each allocation has been given."
+  model_architecture: "Y-Admissions is an optimisation-based automated planning model."
+  model_performance: "Regular verification tests to ensure the model is executable and valid."
+  datasets: "Datasets containing information about school applicants and datasets containing the number and types of places offered by local state schools."
+  dataset_purposes: "Used to test the robustness and fairness of the model."
 
-Tier_2_Model_Specification_NAE_Detection:
-  Model_name: ""
-  Model_version: ""
-  Model_task: ""
-  Model_input: ""
-  Model_output: ""
-  Model_architecture: ""
-  Model_performance: ""
-  Datasets: ""
-  Dataset_purposes: ""
+tier_2_data_specification:
+  source_data_name: "Y Council school applicants"
+  data_modality: "Tabular"
+  data_description: "These data provide information about school applicants which is relevant to Y Council’s admissions policy."
+  data_quantities: "Each year, the dataset contains approximately 3000 samples with around 40 attributes each."
+  sensitive_attributes: "Name, Age, Address, Sex, Religion, Disability, Parent or guardian name(s)"
+  data_completeness_and_representative-ness: "Datasets are always ensured to be complete before being processed by the model."
+  source_data_url: "N/A - the data contains personal data and cannot be made public."
+  data_collection: "Collected retrospectively from existing schools and ongoing year-by-year data from students and schools."
+  data_cleaning: "Pre-processing and cleaning performed by AI Tools UK."
+  data_sharing_agreements: "A data sharing agreement has been put in place between Y Council and AI Tools UK."
+  data_access_and_storage: "Data access is restricted to the Y Council’s education department and schools. Data is stored in identifiable format for 4 years after which point it is anonymised."
 
-Tier_2_Model_Specification_Suicide_and_Self_harm_Ideation_Content_Detection:
-  Model_name: ""
-  Model_version: ""
-  Model_task: ""
-  Model_input: ""
-  Model_output: ""
-  Model_architecture: ""
-  Model_performance: ""
-  Datasets: ""
-  Dataset_purposes: ""
-
-Tier_2_Model_Specification_Names_identification:
-  Model_name: ""
-  Model_version: ""
-  Model_task: ""
-  Model_input: ""
-  Model_output: ""
-  Model_architecture: ""
-  Model_performance: ""
-  Datasets: ""
-  Dataset_purposes: ""
-
-Tier_2_Data_Specification:
-  Source_data_name: ""
-  Data_modality: ""
-  Data_description: ""
-  Data_quantities: ""
-  Sensitive_attributes: ""
-  Data_completeness_and_representative-ness: ""
-  Source_data_URL: ""
-  Data_collection: ""
-  Data_cleaning: ""
-  Data_sharing_agreements: ""
-  Data_access_and_storage: ""
-
-Tier_2_Risks_Mitigations_and_Impact_Assessments:
-  Impact_assessment: ""
-  Risks_and_mitigations: ""
+tier_2_risks_mitigations_and_impact_assessments:
+  impact_assessment: "See summary and full assessment under the link provided."
+  risks_and_mitigations: "The tool’s computation of travel time might not always accurately reflect real world travel times for individual children. The council has set out a clear definition of how travel time is calculated on our website."
