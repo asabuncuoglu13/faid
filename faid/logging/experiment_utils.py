@@ -139,19 +139,18 @@ class ExperimentContext:
             metrics = load(self.filename)["bias_metrics"]
         self.metrics = metrics
 
-        self.metrics_schema = {'groups': 
-                                {'group_name': '',
+        self.metrics_schema = {'group_name': '',
+                                'description': '', 
+                                'label': '',
+                                'metrics': [
+                                    {'name': '',
                                     'description': '',
+                                    'value': 0,
+                                    'threshold': 0,
+                                    'bigger_is_better': False,
                                     'label': '',
-                                    'metrics': [
-                                        {'name': '',
-                                        'description': '',
-                                        'value': 0,
-                                        'threshold': 0,
-                                        'bigger_is_better': False,
-                                        'label': '',
-                                        'notes': '',
-                                        'sg_params': {}}]}}
+                                    'notes': '',
+                                    'sg_params': {}}]}
         
         self.init_fairness_log()
 
@@ -206,14 +205,14 @@ class ExperimentContext:
         print(f"Added {key} to project metadata under ['model'] and log updated")
     
     def add_metric_entry(self, entry:dict={}):
-        self.metrics = load(self.filename)["bias_metrics"]
+        self.metrics = load(self.filename)["bias_metrics"]["groups"]
         if entry == {}:
             error_msg("Please provide an entry to add")
             return
         if entry.keys() != self.metrics_schema.keys():
             error_msg("Entry does not comply with the metrics schema. Call .metrics_schema to see the schema.")
             return
-        self.metrics = entry
+        self.metrics["groups"] = entry
         update(yaml_data=self.metrics, key="bias_metrics", filename=self.filename)
         print("Added the metrics to project metadata under ['bias_metrics'] and log updated")
 
