@@ -285,8 +285,8 @@ class ModelCard:
             """
             Sets a specific detail in the model details.
             """
-            details = self.model_info.get("model_details", self.details_schema)
             if detail_key is None:
+                details = {**self.model_info.get("model_details", self.details_schema), **details}
                 self.model_info["model_details"] = details
             else:
                 self.model_info["model_details"][detail_key] = details
@@ -301,8 +301,8 @@ class ModelCard:
             """
             Sets a specific parameter in the model parameters.
             """
-            model_params = self.model_info.get("model_parameters", self.model_params_schema)
             if parameter_key is None:
+                model_params = self.model_info.get("model_parameters", self.model_params_schema)
                 self.model_info["model_parameters"] = model_params
             else:
                 self.model_info["model_parameters"][parameter_key] = parameter_value
@@ -370,12 +370,14 @@ class ModelCard:
             else:
                 self.model_info["considerations"][consideration_key] = consideration
 
-        def save(self):
+        def save(self, print_values:bool=False):
             """
             Saves the model information to the model log file.
             """
             for key, value in self.model_info.items():
-                    update(value, key=key, filename=model_file_path)
+                if print_values:
+                    print(f"Key: {key}, Value: {value}")
+                update(value, key=key, filename=model_file_path)
             success_msg("Model info saved to the model log file.")
         
         def to_dict(self):

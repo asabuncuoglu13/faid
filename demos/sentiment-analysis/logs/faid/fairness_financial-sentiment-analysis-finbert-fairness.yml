@@ -3279,9 +3279,24 @@ context:
   - - transformers
     - Apache 2.0 License
 data:
-  sample: []
-  variable_profile: null
-  sensitive_characteristics: null
+  sample:
+    0:
+      text: growth is strong and we have plenty of liquidity.
+      label: Positive
+      score: 1.0
+    1:
+      text: there is a shortage of capital, and we need extra financing.
+      label: Negative
+      score: 0.9952379465103149
+    2:
+      text: formulation patents might protect Vasotec to a limited extent.
+      label: Neutral
+      score: 0.9979718327522278
+  variable_profile:
+    neutral: 2879
+    positive: 1363
+    negative: 604
+  protected_characteristics: null
   nominal_features: null
   continuous_features: null
 model:
@@ -3293,15 +3308,15 @@ sample_data:
   fns: []
 bias_metrics:
   groups:
-    group_name:
+    group_name: ''
+    description: ''
+    label: ''
+    metrics:
+    - name: ''
       description: ''
+      value: 0
+      threshold: 0
+      bigger_is_better: ''
       label: ''
-      metrics:
-      - name: ''
-        description: ''
-        value: 0
-        threshold: 0
-        bigger_is_better: ''
-        label: ''
-        notes: ''
-        sg_params: {}
+      notes: ''
+      sg_params: {}

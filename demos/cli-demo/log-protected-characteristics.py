@@ -76,7 +76,7 @@ def main(mod, data_path):
             selected_protected_fts = get_protected_characteristics(data)
         
         print(selected_protected_fts)
-        faidlog.add_data_entry(key="protected_characteristics", entry=selected_protected_fts)
+        faidlog.add_data_entry(key="sensitive_data", entry={"protected_characteristics" : selected_protected_fts})
         print(selected_protected_fts)
    
 if __name__ == "__main__":

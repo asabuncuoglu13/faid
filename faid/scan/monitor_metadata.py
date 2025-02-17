@@ -2,9 +2,10 @@ from faid.logging import (
     error_msg, 
     warning_msg,
     success_msg,
-    get_fairness_entities_from_model,
     ModelCard,
 )
+
+from faid.scan.unit_tests import get_fairness_entities_from_model
 
 def test_model_metadata_values():
     m = ModelCard()

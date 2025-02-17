@@ -1,70 +1,49 @@
-model_info:
-  name: yiyanghkust/finbert-tone
-  description: "\n`FinBERT` is a BERT model pre-trained on financial communication\
-    \ text. The purpose is to enhance financial NLP research and practice. It is trained\
-    \ on the following three financial communication corpus. The total corpora size\
-    \ is 4.9B tokens.\n- Corporate Reports 10-K & 10-Q: 2.5B tokens\n- Earnings Call\
-    \ Transcripts: 1.3B tokens\n- Analyst Reports: 1.1B tokens\n\nMore technical details\
-    \ on `FinBERT`: [Click Link](https://github.com/yya518/FinBERT)\n\nThis released\
-    \ `finbert-tone` model is the `FinBERT` model fine-tuned on 10,000 manually annotated\
-    \ (positive, negative, neutral) sentences from analyst reports. This model achieves\
-    \ superior performance on financial tone analysis task. If you are simply interested\
-    \ in using `FinBERT` for financial tone analysis, give it a try.\n\nIf you use\
-    \ the model in your academic work, please cite the following paper:\n\nHuang,\
-    \ Allen H., Hui Wang, and Yi Yang. \"FinBERT: A Large Language Model for Extracting\
-    \ Information from Financial Text.\" *Contemporary Accounting Research* (2022).\n\
-    \n\n# How to use \nYou can use this model with Transformers pipeline for sentiment\
-    \ analysis.\n```python\nfrom transformers import BertTokenizer, BertForSequenceClassification\n\
-    from transformers import pipeline\n\nfinbert = BertForSequenceClassification.from_pretrained('yiyanghkust/finbert-tone',num_labels=3)\n\
-    tokenizer = BertTokenizer.from_pretrained('yiyanghkust/finbert-tone')\n\nnlp =\
-    \ pipeline(\"sentiment-analysis\", model=finbert, tokenizer=tokenizer)\n\nsentences\
-    \ = [\"there is a shortage of capital, and we need extra financing\",  \n    \
-    \         \"growth is strong and we have plenty of liquidity\", \n           \
-    \  \"there are doubts about our finances\", \n             \"profits are flat\"\
-    ]\nresults = nlp(sentences)\nprint(results)  #LABEL_0: neutral; LABEL_1: positive;\
-    \ LABEL_2: negative\n\n```"
-  details:
-    language: en
-    tags:
-    - financial-sentiment-analysis
-    - sentiment-analysis
-    widget:
-    - text: growth is strong and we have plenty of liquidity
-  model_details:
-    name: BERT
-    overview: ''
-    documentation: ''
-    owners:
-    - name: ''
-      contact: ''
-    version:
-      name: ''
-      date: ''
-      diff: ''
-    license:
-      identifier: ''
-      custom_text: ''
-    references: ''
-    citation: ''
-    path: ''
-  model_parameters:
-    num_layers: 12
-  quantitative_analysis:
-    performance_metrics:
-    - description: accuracy
-      value: 0.95
-      slice: ''
-      confidence_interval:
-        description: ''
-        lower_bound: ''
-        upper_bound: ''
-  considerations:
-    description: ''
-    intended_users: ''
-    use_cases: ''
-    limitations: ''
-    tradeoffs: ''
-    ethical_considerations: This model is not fair.
-    risks:
-    - name: ''
-      mitigation_strategy: ''
+model_details:
+  name: ''
+  overview: null
+  documentation: null
+  owners:
+  - name: ''
+    contact: ''
+  version:
+    name: null
+    date: null
+    diff: null
+  license:
+    identifier: null
+    custom_text: null
+  references: null
+  citation: null
+  path: null
+model_parameters:
+  description: null
+  model_architecture: ''
+  data:
+  - description: ''
+    link: null
+    sensitive: null
+    graphics: null
+  input_format: null
+  output_format: null
+  output_format_map: null
+quantitative_analysis:
+  description: null
+  performance_metrics:
+  - name: null
+    description: null
+    value: null
+    slice: null
+    confidence_interval:
+      description: Explain your interval selection methodology. e.g. <https://fairlearn.org/v0.11/user_guide/assessment/confidence_interval_estimation.html>
+      lower_bound: null
+      upper_bound: null
+considerations:
+  description: null
+  intended_users: ''
+  use_cases: ''
+  limitations: ''
+  tradeoffs: null
+  ethical_considerations: ''
+  risks:
+  - name: null
+    mitigation_strategy: null

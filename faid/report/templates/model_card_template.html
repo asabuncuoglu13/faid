@@ -132,103 +132,103 @@
         .label { width: 30%; }
 </style>
 <title>
-  Model Card{% if model_info.name %} {{ name }} {% endif %}
+  Model Card{% if name %} {{ name }} {% endif %}
 </title>
 </head>
 <body>
   <div class="report-container">
-  <h1>Model Card: {% if model_info.name %} {{ model_info.name }}{% endif %}</h1>
-  {% if model_info.description %} 
+  <h1>Model Card: {% if name %} {{ name }}{% endif %}</h1>
+  {% if description %} 
   <div markdown="1">
-
-    {{ model_info.description|safe|striptags }}
-
+    {{ description|safe|striptags }}
   </div>
   {% endif %}
-    {% if model_info.details %}
+    {% if details %}
         <h2>Model Details</h2>
-        {% if model_info.details.owners %}
+        {% if details.owners %}
         <h3>Owners</h3>
-          {% if model_info.details.owners|length > 1 %}
-            {% for owner in model_info.details.owners %}
+          {% if details.owners|length > 1 %}
+            <ul>
+            {% for owner in details.owners %}
               <li>{{ owner.name }}, {{ owner.contact }}</li>
             {% endfor %}
+            </ul>
           {% else %}
-            {{ model_info.details.owners[0].name }}, {{ model_info.details.owners[0].contact }}
+            <p>{{ details.owners[0].name }}, {{ details.owners[0].contact }}</p>
           {% endif %}
         {% endif %}
-        {% if model_info.details.licenses %}
+        {% if details.licenses %}
           <h3>Licenses</h3>
-          <ul>{% for license in model_info.details.licenses %}{{ render_license(license) }}{% endfor %}</ul>
+          <ul>{% for license in details.licenses %}{{ render_license(license) }}{% endfor %}</ul>
         {% endif %}
-        {% if model_info.details.version %}
+        {% if details.version %}
           <h3>Version</h3>
-          <p>Name: {{ model_info.details.version.name }}</p>
-          <p>Date: {{ model_info.details.version.date }}</p>
-          <p>Diff: {{ model_info.details.version.diff }}</p>
+          <p>Name: {{ details.version.name }}</p>
+          <p>Date: {{ details.version.date }}</p>
+          <p>Diff: {{ details.version.diff }}</p>
         {% endif %}
-        {% if model_info.details.documentation %}
+        {% if details.documentation %}
           <h3>Documentation</h3>
-          <p>{{ model_info.details.documentation }}</p>
+          <p>{{ details.documentation }}</p>
         {% endif %}
-        {% if model_info.details.references %}
+        {% if details.references %}
           <h3>References</h3>
-          <p>{{ model_info.details.references }}</p>
+          <p>{{ details.references }}</p>
         {% endif %}
-        {% if model_info.details.citation %}
+        {% if details.citation %}
           <h3>Citation</h3>
-          <p>{{ model_info.details.citation }}</p>
+          <p>{{ details.citation }}</p>
         {% endif %}
-        {% if model_info.details.path %}
+        {% if details.path %}
           <h3>Path</h3>
-          <p>{{ model_info.details.path }}</p>
+          <p>{{ details.path }}</p>
         {% endif %}
-        {% if model_info.details.architecture %}
-          <h2>Model Architecture</h2>
-          {{ model_info.details.architecture }}
+        {% if details.architecture %}
+          <h3>Model Architecture</h3>
+          <p>{{ details.architecture }}</p>
         {% endif %}
       {% endif %}
-      {% if model_info.model_parameters %}
+      {% if model_parameters %}
         <h2>Model Parameters</h2>
-        {% if model_info.model_parameters.description %}
+        {% if model_parameters.description %}
           <h3>Description</h3>
-          <p>{{ model_info.model_parameters.description }}</p>
+          <p>{{ model_parameters.description }}</p>
         {% endif %}
-        {% if model_info.model_parameters.model_architecture %}
+        {% if model_parameters.model_architecture %}
           <h3>Model Architecture</h3>
-          <p>{{ model_info.model_parameters.model_architecture }}</p>
+          <p>{{ model_parameters.model_architecture }}</p>
         {% endif %}
-        {% if model_info.model_parameters.data %}
+        {% if model_parameters.data %}
           <h3>Data</h3>
-          {% for data in model_info.model_parameters.data %}
+          {% for data in model_parameters.data %}
             <p>Description: {{ data.description }}</p>
             <p>Link: {{ data.link }}</p>
             <p>Sensitive: {{ data.sensitive }}</p>
             <p>Graphics: {{ data.graphics }}</p>
           {% endfor %}
         {% endif %}
-        {% if model_info.model_parameters.input_format %}
+        {% if model_parameters.input_format %}
           <h3>Input Format</h3>
-          <p>{{ model_info.model_parameters.input_format }}</p>
+          <p>{{ model_parameters.input_format }}</p>
         {% endif %}
-        {% if model_info.model_parameters.output_format %}
+        {% if model_parameters.output_format %}
           <h3>Output Format</h3>
-          <p>{{ model_info.model_parameters.output_format }}</p>
+          <p>{{ model_parameters.output_format }}</p>
         {% endif %}
-        {% if model_info.model_parameters.output_format_map %}
+        {% if model_parameters.output_format_map %}
           <h3>Output Format Map</h3>
-          <p>{{ model_info.model_parameters.output_format_map }}</p>
+          <p>{{ model_parameters.output_format_map }}</p>
         {% endif %}
       {% endif %}
-      {% if model_info.quantitative_analysis %}
+      {% if quantitative_analysis %}
         <h2>Quantitative Analysis</h2>
-        {% if model_info.quantitative_analysis.description %}
+        {% if quantitative_analysis.description %}
           <h3>Description</h3>
-          <p>{{ model_info.quantitative_analysis.description }}</p>
+          <p>{{ quantitative_analysis.description }}</p>
         {% endif %}
-        {% if model_info.quantitative_analysis.performance_metrics %}
+        {% if quantitative_analysis.performance_metrics %}
           <h3>Performance Metrics</h3>
-          {% for metric in model_info.quantitative_analysis.performance_metrics %}
+          {% for metric in quantitative_analysis.performance_metrics %}
             <p>Description: {{ metric.description }}</p>
             <p>Value: {{ metric.value }}</p>
             <p>Slice: {{ metric.slice }}</p>
@@ -238,35 +238,35 @@
           {% endfor %}
         {% endif %}
       {% endif %}
-      {% if model_info.considerations %}
+      {% if considerations %}
         <h2>Considerations</h2>
-        {% if model_info.considerations.description %}
+        {% if considerations.description %}
           <h3>Description</h3>
-          <p>{{ model_info.considerations.description }}</p>
+          <p>{{ considerations.description }}</p>
         {% endif %}
-        {% if model_info.considerations.intended_users %}
+        {% if considerations.intended_users %}
           <h3>Intended Users</h3>
-          <p>{{ model_info.considerations.intended_users }}</p>
+          <p>{{ considerations.intended_users }}</p>
         {% endif %}
-        {% if model_info.considerations.use_cases %}
+        {% if considerations.use_cases %}
           <h3>Use Cases</h3>
-          <p>{{ model_info.considerations.use_cases }}</p>
+          <p>{{ considerations.use_cases }}</p>
         {% endif %}
-        {% if model_info.considerations.limitations %}
+        {% if considerations.limitations %}
           <h3>Limitations</h3>
-          <p>{{ model_info.considerations.limitations }}</p>
+          <p>{{ considerations.limitations }}</p>
         {% endif %}
-        {% if model_info.considerations.tradeoffs %}
+        {% if considerations.tradeoffs %}
           <h3>Tradeoffs</h3>
-          <p>{{ model_info.considerations.tradeoffs }}</p>
+          <p>{{ considerations.tradeoffs }}</p>
         {% endif %}
-        {% if model_info.considerations.ethical_considerations %}
+        {% if considerations.ethical_considerations %}
           <h3>Ethical Considerations</h3>
-          <p>{{ model_info.considerations.ethical_considerations }}</p>
+          <p>{{ considerations.ethical_considerations }}</p>
         {% endif %}
-        {% if model_info.considerations.risks %}
+        {% if considerations.risks %}
           <h3>Risks</h3>
-          {% for risk in model_info.considerations.risks %}
+          {% for risk in considerations.risks %}
             <p>Name: {{ risk.name }}</p>
             <p>Mitigation Strategy: {{ risk.mitigation_strategy }}</p>
           {% endfor %}
