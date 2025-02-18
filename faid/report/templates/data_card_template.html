@@ -198,9 +198,9 @@
         {% endif %}
         {% if content.dataset_snapshot %}
             <h2>Dataset Snapshot</h2>
-            <p><strong>Total Records:</strong> {{ content.dataset_snapshot['Total Records'] }}</p>
-            <p><strong>Coverage:</strong> {{ content.dataset_snapshot.Coverage }}</p>
-            <p><strong>Time Span:</strong> {{ content.dataset_snapshot['Time Span'] }}</p>
+            <p><strong>Total Records:</strong> {{ content.dataset_snapshot.total_records }}</p>
+            <p><strong>Coverage:</strong> {{ content.dataset_snapshot.coverage }}</p>
+            <p><strong>Time Span:</strong> {{ content.dataset_snapshot.time_span }}</p>
         {% endif %}
         <h2>Descriptive Statistics</h2>
         {% if descriptive_statistics %}

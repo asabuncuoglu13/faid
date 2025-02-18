@@ -26,9 +26,9 @@ content:
   typical_data_point: ""
   data_subjects: []
   dataset_snapshot:
-    Total Records: ""
-    Coverage: ""
-    Time Span: ""
+    total_records: ""
+    coverage: ""
+    time_span: ""
 descriptive_statistics:
   num_instances: ""
   num_features: ""

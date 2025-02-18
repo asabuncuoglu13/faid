@@ -71,9 +71,9 @@ def pretty_croissant(ds) -> dict:
             "data_subjects": metadata.get("data_subjects", []),
             "sampling_data_points": [df.head().to_dict()],
             "data_fields": df.keys().tolist(),
-            "Total Records": metadata.get("dataset_snapshot", {}).get("Total Records", ""),
-            "Coverage": metadata.get("dataset_snapshot", {}).get("Coverage", ""),
-            "Time Span": metadata.get("dataset_snapshot", {}).get("Time Span", "")
+            "total_records": metadata.get("dataset_snapshot", {}).get("total_records", ""),
+            "coverage": metadata.get("dataset_snapshot", {}).get("coverage", ""),
+            "time_span": metadata.get("dataset_snapshot", {}).get("time_span", "")
         }
     }
 
@@ -169,9 +169,9 @@ class DataCard:
             "typical_data_point": "",
             "data_subjects": [],
             "dataset_snapshot": {
-                "Total Records": "",
-                "Coverage": "",
-                "Time Span": ""
+                "total_records": "",
+                "coverage": "",
+                "time_span": ""
             }
         }
         self.descriptive_statistics_schema = {
