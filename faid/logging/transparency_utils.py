@@ -1,10 +1,7 @@
 from os.path import join, exists
-from json import dumps
-import re
-from collections import defaultdict
 from shutil import copy
 
-from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, load, get_project_log_path, get_current_folder_path
 
 transparency_file_path = join(get_project_log_path(), "transparency.yml")
 transparency_file_template_path = join(get_current_folder_path(), "template_example_descriptions/transparency_template_description.yml")
@@ -23,16 +20,9 @@ def initialize_transparency_log(test:bool=False):
 def get_transparency_log_path():
     return transparency_file_path
 
-def add_transparency_entry(params:dict, key:str="transparency_info"):
-    update(params, key=key, filename=transparency_file_path)
-    print(f"Added {key} to transparency metadata")
-
-def get_transparency_entry(key:str=None):
-    if key is None:
+def get_transparency_record():
+    try:
         return load(transparency_file_path)
-    else:
-        try:
-            return load(transparency_file_path)[key]
-        except KeyError:
-            error_msg(f"Key {key} not found in the metadata file")
-            return None
+    except FileNotFoundError:
+        error_msg("Transparency log file not found. Please create a transparency log file first.")
+        return None

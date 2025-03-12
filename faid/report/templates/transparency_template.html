@@ -150,138 +150,94 @@
     <div class="section">
         <h2>Tier 1 Information</h2>
         <div class="content">
-            <p><span class="key">Name:</span> {{ tier_1_information.name }}</p>
-            <p><span class="key">Description:</span> {{ tier_1_information.description }}</p>
-            <p><span class="key">Website URL:</span> <a href="{{ tier_1_information.website_url }}">{{ tier_1_information.website_url }}</a></p>
-            <p><span class="key">Contact Email:</span> <a href="mailto:{{ tier_1_information.contact_email }}">{{ tier_1_information.contact_email }}</a></p>
+            <p><span class="key">Name:</span> {{ information.name }}</p>
+            <p><span class="key">Description:</span> {{ information.description }}</p>
+            <p><span class="key">Website URL:</span> <a href="{{ information.website_url }}">{{ information.website_url }}</a></p>
+            <p><span class="key">Contact Email:</span> <a href="mailto:{{ information.contact_email }}">{{ information.contact_email }}</a></p>
         </div>
     </div>
 
     <div class="section">
         <h2>Tier 2 - Owner and Responsibility</h2>
         <div class="content">
-            <p><span class="key">Organisation or Department:</span> {{ tier_2_owner_and_responsibility.organisation_or_department }}</p>
-            <p><span class="key">Team:</span> {{ tier_2_owner_and_responsibility.team }}</p>
-            <p><span class="key">Senior Responsible Owner:</span> {{ tier_2_owner_and_responsibility.senior_responsible_owner }}</p>
-            <p><span class="key">External Supplier Involvement:</span> {{ tier_2_owner_and_responsibility.external_supplier_involvement }}</p>
+            <p><span class="key">Organisation or Department:</span> {{ owner_and_responsibility.organisation_or_department }}</p>
+            <p><span class="key">Team:</span> {{ owner_and_responsibility.team }}</p>
+            <p><span class="key">Senior Responsible Owner:</span> {{ owner_and_responsibility.senior_responsible_owner }}</p>
+            <p><span class="key">External Supplier Involvement:</span> {{ owner_and_responsibility.external_supplier_involvement }}</p>
+            <p><span class="key">Data Access Terms:</span> {{ owner_and_responsibility.data_access_terms }}</p>
         </div>
     </div>
 
     <div class="section">
         <h2>Tier 2 - Description and Rationale</h2>
         <div class="content">
-            <p><span class="key">Detailed Description:</span> {{ tier_2_description_and_rationale.detailed_description }}</p>
-            <p><span class="key">Scope:</span> {{ tier_2_description_and_rationale.scope }}</p>
-            <p><span class="key">Benefit:</span> {{ tier_2_description_and_rationale.benefit }}</p>
-            <p><span class="key">Previous Process:</span> {{ tier_2_description_and_rationale.previous_process }}</p>
-            <p><span class="key">Alternatives Considered:</span> {{ tier_2_description_and_rationale.alternatives_considered }}</p>
+            <p><span class="key">Detailed Description:</span> {{ description_and_rationale.detailed_description }}</p>
+            <p><span class="key">Scope:</span> {{ description_and_rationale.scope }}</p>
+            <p><span class="key">Benefit:</span> {{ description_and_rationale.benefit }}</p>
+            <p><span class="key">Previous Process:</span> {{ description_and_rationale.previous_process }}</p>
+            <p><span class="key">Alternatives Considered:</span> {{ description_and_rationale.alternatives_considered }}</p>
         </div>
     </div>
 
     <div class="section">
         <h2>Tier 2 - Decision Making Process</h2>
         <div class="content">
-            <p><span class="key">Process Integration:</span> {{ tier_2_decision_making_process.process_integration }}</p>
-            <p><span class="key">Provided Information:</span> {{ tier_2_decision_making_process.provided_information }}</p>
-            <p><span class="key">Frequency and Scale of Usage:</span> {{ tier_2_decision_making_process.frequency_and_scale_of_usage }}</p>
-            <p><span class="key">Human Decisions and Review:</span> {{ tier_2_decision_making_process.human_decisions_and_review }}</p>
-            <p><span class="key">Required Training:</span> {{ tier_2_decision_making_process.required_training }}</p>
-            <p><span class="key">Appeals and Review:</span> {{ tier_2_decision_making_process.appeals_and_review }}</p>
+            <p><span class="key">Process Integration:</span> {{ decision_making_process.process_integration }}</p>
+            <p><span class="key">Provided Information:</span> {{ decision_making_process.provided_information }}</p>
+            <p><span class="key">Frequency and Scale of Usage:</span> {{ decision_making_process.frequency_and_scale_of_usage }}</p>
+            <p><span class="key">Human Decisions and Review:</span> {{ decision_making_process.human_decisions_and_review }}</p>
+            <p><span class="key">Required Training:</span> {{ decision_making_process.required_training }}</p>
+            <p><span class="key">Appeals and Review:</span> {{ decision_making_process.appeals_and_review }}</p>
         </div>
     </div>
 
     <div class="section">
         <h2>Tier 2 - Tool Specification</h2>
         <div class="content">
-            <p><span class="key">System Architecture:</span> {{ tier_2_tool_specification.system_architecture }}</p>
-            <p><span class="key">Phase:</span> {{ tier_2_tool_specification.phase }}</p>
-            <p><span class="key">Maintenance:</span> {{ tier_2_tool_specification.maintenance }}</p>
-            <p><span class="key">Models:</span> {{ tier_2_tool_specification.models }}</p>
+            <p><span class="key">System Architecture:</span> {{ tool_specification.system_architecture }}</p>
+            <p><span class="key">Phase:</span> {{ tool_specification.phase }}</p>
+            <p><span class="key">Maintenance:</span> {{ tool_specification.maintenance }}</p>
+            <p><span class="key">Models:</span> {{ tool_specification.models }}</p>
         </div>
     </div>
 
     <div class="section">
-        <h2>Tier 2 - Model Specification: Complaint Detection</h2>
+        <h2>Tier 2 - Model Specification:</h2>
         <div class="content">
-            <p><span class="key">Model Name:</span> {{ tier_2_model_specification_complaint_detection.model_name }}</p>
-            <p><span class="key">Model Version:</span> {{ tier_2_model_specification_complaint_detection.model_version }}</p>
-            <p><span class="key">Model Task:</span> {{ tier_2_model_specification_complaint_detection.model_task }}</p>
-            <p><span class="key">Model Input:</span> {{ tier_2_model_specification_complaint_detection.model_input }}</p>
-            <p><span class="key">Model Output:</span> {{ tier_2_model_specification_complaint_detection.model_output }}</p>
-            <p><span class="key">Model Architecture:</span> {{ tier_2_model_specification_complaint_detection.model_architecture }}</p>
-            <p><span class="key">Model Performance:</span> {{ tier_2_model_specification_complaint_detection.model_performance }}</p>
-            <p><span class="key">Datasets:</span> {{ tier_2_model_specification_complaint_detection.datasets }}</p>
-            <p><span class="key">Dataset Purposes:</span> {{ tier_2_model_specification_complaint_detection.dataset_purposes }}</p>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>Tier 2 - Model Specification: NAE Detection</h2>
-        <div class="content">
-            <p><span class="key">Model Name:</span> {{ tier_2_model_specification_nae_detection.model_name }}</p>
-            <p><span class="key">Model Version:</span> {{ tier_2_model_specification_nae_detection.model_version }}</p>
-            <p><span class="key">Model Task:</span> {{ tier_2_model_specification_nae_detection.model_task }}</p>
-            <p><span class="key">Model Input:</span> {{ tier_2_model_specification_nae_detection.model_input }}</p>
-            <p><span class="key">Model Output:</span> {{ tier_2_model_specification_nae_detection.model_output }}</p>
-            <p><span class="key">Model Architecture:</span> {{ tier_2_model_specification_nae_detection.model_architecture }}</p>
-            <p><span class="key">Model Performance:</span> {{ tier_2_model_specification_nae_detection.model_performance }}</p>
-            <p><span class="key">Datasets:</span> {{ tier_2_model_specification_nae_detection.datasets }}</p>
-            <p><span class="key">Dataset Purposes:</span> {{ tier_2_model_specification_nae_detection.dataset_purposes }}</p>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>Tier 2 - Model Specification: Suicide and Self-harm Ideation Content Detection</h2>
-        <div class="content">
-            <p><span class="key">Model Name:</span> {{ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection.model_name }}</p>
-            <p><span class="key">Model Version:</span> {{ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection.model_version }}</p>
-            <p><span class="key">Model Task:</span> {{ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection.model_task }}</p>
-            <p><span class="key">Model Input:</span> {{ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection.model_input }}</p>
-            <p><span class="key">Model Output:</span> {{ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection.model_output }}</p>
-            <p><span class="key">Model Architecture:</span> {{ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection.model_architecture }}</p>
-            <p><span class="key">Model Performance:</span> {{ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection.model_performance }}</p>
-            <p><span class="key">Datasets:</span> {{ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection.datasets }}</p>
-            <p><span class="key">Dataset Purposes:</span> {{ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection.dataset_purposes }}</p>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>Tier 2 - Model Specification: Names Identification</h2>
-        <div class="content">
-            <p><span class="key">Model Name:</span> {{ tier_2_model_specification_names_identification.model_name }}</p>
-            <p><span class="key">Model Version:</span> {{ tier_2_model_specification_names_identification.model_version }}</p>
-            <p><span class="key">Model Task:</span> {{ tier_2_model_specification_names_identification.model_task }}</p>
-            <p><span class="key">Model Input:</span> {{ tier_2_model_specification_names_identification.model_input }}</p>
-            <p><span class="key">Model Output:</span> {{ tier_2_model_specification_names_identification.model_output }}</p>
-            <p><span class="key">Model Architecture:</span> {{ tier_2_model_specification_names_identification.model_architecture }}</p>
-            <p><span class="key">Model Performance:</span> {{ tier_2_model_specification_names_identification.model_performance }}</p>
-            <p><span class="key">Datasets:</span> {{ tier_2_model_specification_names_identification.datasets }}</p>
-            <p><span class="key">Dataset Purposes:</span> {{ tier_2_model_specification_names_identification.dataset_purposes }}</p>
+            <p><span class="key">Model Name:</span> {{ model_specification.model_name }}</p>
+            <p><span class="key">Model Version:</span> {{ model_specification.model_version }}</p>
+            <p><span class="key">Model Task:</span> {{ model_specification.model_task }}</p>
+            <p><span class="key">Model Input:</span> {{ model_specification.model_input }}</p>
+            <p><span class="key">Model Output:</span> {{ model_specification.model_output }}</p>
+            <p><span class="key">Model Architecture:</span> {{ model_specification.model_architecture }}</p>
+            <p><span class="key">Model Performance:</span> {{ model_specification.model_performance }}</p>
+            <p><span class="key">Datasets:</span> {{ model_specification.datasets }}</p>
+            <p><span class="key">Dataset Purposes:</span> {{ model_specification.dataset_purposes }}</p>
         </div>
     </div>
 
     <div class="section">
         <h2>Tier 2 - Data Specification</h2>
         <div class="content">
-            <p><span class="key">Source Data Name:</span> {{ tier_2_data_specification.source_data_name }}</p>
-            <p><span class="key">Data Modality:</span> {{ tier_2_data_specification.data_modality }}</p>
-            <p><span class="key">Data Description:</span> {{ tier_2_data_specification.data_description }}</p>
-            <p><span class="key">Data Quantities:</span> {{ tier_2_data_specification.data_quantities }}</p>
-            <p><span class="key">Sensitive Attributes:</span> {{ tier_2_data_specification.sensitive_attributes }}</p>
-            <p><span class="key">Data Completeness and Representativeness:</span> {{ tier_2_data_specification.data_completeness_and_representative_ness }}</p>
-            <p><span class="key">Source Data URL:</span> <a href="{{ tier_2_data_specification.source_data_url }}">{{ tier_2_data_specification.source_data_url }}</a></p>
-            <p><span class="key">Data Collection:</span> {{ tier_2_data_specification.data_collection }}</p>
-            <p><span class="key">Data Cleaning:</span> {{ tier_2_data_specification.data_cleaning }}</p>
-            <p><span class="key">Data Sharing Agreements:</span> {{ tier_2_data_specification.data_sharing_agreements }}</p>
-            <p><span class="key">Data Access and Storage:</span> {{ tier_2_data_specification.data_access_and_storage }}</p>
+            <p><span class="key">Source Data Name:</span> {{ data_specification.source_data_name }}</p>
+            <p><span class="key">Data Modality:</span> {{ data_specification.data_modality }}</p>
+            <p><span class="key">Data Description:</span> {{ data_specification.data_description }}</p>
+            <p><span class="key">Data Quantities:</span> {{ data_specification.data_quantities }}</p>
+            <p><span class="key">Sensitive Attributes:</span> {{ data_specification.sensitive_attributes }}</p>
+            <p><span class="key">Data Completeness and Representativeness:</span> {{ data_specification.data_completeness_and_representative_ness }}</p>
+            <p><span class="key">Source Data URL:</span> <a href="{{ data_specification.source_data_url }}">{{ data_specification.source_data_url }}</a></p>
+            <p><span class="key">Data Collection:</span> {{ data_specification.data_collection }}</p>
+            <p><span class="key">Data Cleaning:</span> {{ data_specification.data_cleaning }}</p>
+            <p><span class="key">Data Sharing Agreements:</span> {{ data_specification.data_sharing_agreements }}</p>
+            <p><span class="key">Data Access and Storage:</span> {{ data_specification.data_access_and_storage }}</p>
         </div>
     </div>
 
     <div class="section">
         <h2>Tier 2 - Risks, Mitigations, and Impact Assessments</h2>
         <div class="content">
-            <p><span class="key">Impact Assessment:</span> {{ tier_2_risks_mitigations_and_impact_assessments.impact_assessment }}</p>
-            <p><span class="key">Risks and Mitigations:</span> {{ tier_2_risks_mitigations_and_impact_assessments.risks_and_mitigations }}</p>
+            <p><span class="key">Impact Assessment:</span> {{ risks_mitigations_and_impact_assessments.impact_assessment }}</p>
+            <p><span class="key">Risks and Mitigations:</span> {{ risks_mitigations_and_impact_assessments.risks_and_mitigations }}</p>
         </div>
     </div>
 

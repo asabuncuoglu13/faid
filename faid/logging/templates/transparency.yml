@@ -1,23 +1,24 @@
-tier_1_information:
+information:
   name: ""
   description: ""
   website_url: ""
   contact_email: ""
 
-tier_2_owner_and_responsibility:
+owner_and_responsibility:
   organisation_or_department: ""
   team: ""
   senior_responsible_owner: ""
   external_supplier_involvement: ""
+  data_access_terms: ""
 
-tier_2_description_and_rationale:
+description_and_rationale:
   detailed_description: ""
   scope: ""
   benefit: ""
   previous_process: ""
   alternatives_considered: ""
 
-tier_2_decision_making_process:
+decision_making_process:
   process_integration: ""
   provided_information: ""
   frequency_and_scale_of_usage: ""
@@ -25,13 +26,13 @@ tier_2_decision_making_process:
   required_training: ""
   appeals_and_review: ""
 
-tier_2_tool_specification:
+tool_specification:
   system_architecture: ""
   phase: ""
   maintenance: ""
   models: ""
 
-tier_2_model_specification_complaint_detection:
+model_specification_complaint_detection:
   model_name: ""
   model_version: ""
   model_task: ""
@@ -42,7 +43,7 @@ tier_2_model_specification_complaint_detection:
   datasets: ""
   dataset_purposes: ""
 
-tier_2_model_specification_nae_detection:
+model_specification_nae_detection:
   model_name: ""
   model_version: ""
   model_task: ""
@@ -53,7 +54,7 @@ tier_2_model_specification_nae_detection:
   datasets: ""
   dataset_purposes: ""
 
-tier_2_model_specification_suicide_and_self_harm_ideation_content_detection:
+model_specification_suicide_and_self_harm_ideation_content_detection:
   model_name: ""
   model_version: ""
   model_task: ""
@@ -64,7 +65,7 @@ tier_2_model_specification_suicide_and_self_harm_ideation_content_detection:
   datasets: ""
   dataset_purposes: ""
 
-tier_2_model_specification_names_identification:
+model_specification_names_identification:
   model_name: ""
   model_version: ""
   model_task: ""
@@ -75,7 +76,7 @@ tier_2_model_specification_names_identification:
   datasets: ""
   dataset_purposes: ""
 
-tier_2_data_specification:
+data_specification:
   source_data_name: ""
   data_modality: ""
   data_description: ""
@@ -88,6 +89,6 @@ tier_2_data_specification:
   data_sharing_agreements: ""
   data_access_and_storage: ""
 
-tier_2_risks_mitigations_and_impact_assessments:
+risks_mitigations_and_impact_assessments:
   impact_assessment: ""
   risks_and_mitigations: ""
