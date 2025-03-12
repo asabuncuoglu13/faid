@@ -7,6 +7,8 @@ from faid.logging import (
     get_data_entry,
     get_risk_entries,
     add_risk_entry,
+    get_transparency_record,
+    add_transparency_entry
 )
 
 model_file_path = get_model_log_file_path()
@@ -85,8 +87,26 @@ def sync_risk_to_transparency():
 
 def sync_model_to_transparency():
     # Implement the logic to sync model to transparency
-    pass
+    model_info = get_model_entry()
+    model_data = model_info.get('model_parameters', '').get('data', '')
+    datasets = "".join([data.get('description', '') for data in model_data])
+    dataset_purposes = "".join([data.get('purpose', '') for data in model_data])
 
+    transparency_model_specification = {
+        "model_name": model_info.get('name', ''),
+        "model_version": "Name: " + model_info.get('version', '').get('name', '') + " | Date: " + model_info.get('version', '').get('date', '') + " | Diff: " + model_info.get('version', '').get('diff', ''),
+        "model_task": model_info.get('overview', ''),
+        "model_input": model_info.get('model_parameters', '').get('input_format', ''),
+        "model_output": model_info.get('model_parameters', '').get('output_format', ''),
+        "model_architecture": model_info.get('model_parameters', '').get('model_architecture', ''),
+        "model_performance": model_info.get('qualitative_analysis', '').to_string(),
+        "datasets": datasets,
+        "dataset_purposes": dataset_purposes
+    }
+
+    add_transparency_entry(key="model_specification", entry=transparency_model_specification)
+
+    
 def sync_usecase_to_model():
     # Implement the logic to sync usecase to model
     pass

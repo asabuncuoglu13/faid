@@ -1,7 +1,7 @@
 from os.path import join, exists
 from shutil import copy
 
-from faid.logging import error_msg, warning_msg, success_msg, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, load, get_project_log_path, get_current_folder_path, update
 
 transparency_file_path = join(get_project_log_path(), "transparency.yml")
 transparency_file_template_path = join(get_current_folder_path(), "template_example_descriptions/transparency_template_description.yml")
@@ -26,3 +26,7 @@ def get_transparency_record():
     except FileNotFoundError:
         error_msg("Transparency log file not found. Please create a transparency log file first.")
         return None
+
+def add_transparency_entry(key, entry):
+    update(entry, key, filename=transparency_file_path)
+    print(f"Added the transparency entry: {entry}.")

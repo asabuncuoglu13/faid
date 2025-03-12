@@ -23,6 +23,7 @@ model_parameters:
       link:
       sensitive:
       graphics:
+      purpose:
   input_format:
   output_format:
   output_format_map:

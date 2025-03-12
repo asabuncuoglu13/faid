@@ -56,7 +56,8 @@ from faid.logging.risk_register_utils import (
 from faid.logging.transparency_utils import (
     initialize_transparency_log,
     get_transparency_log_path,
-    get_transparency_record
+    get_transparency_record,
+    add_transparency_entry
 )
 
 from faid.logging.logging import (
@@ -134,6 +135,7 @@ __all__ = [
     'initialize_transparency_log',
     'get_transparency_log_path',
     'get_transparency_record',
+    'add_transparency_entry',
     # sync
     'sync_risk_to_model',
     'sync_data_to_model',
