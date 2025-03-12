@@ -5,7 +5,7 @@ from faid.logging import (
     add_model_entry,
     add_data_entry,
     get_data_entry,
-    get_risk_entry,
+    get_risk_entries,
     add_risk_entry,
 )
 
@@ -17,12 +17,11 @@ def sync_model_to_risk():
     
     # Sync the related entities
     for i, risk in enumerate(model_risks):
-       add_risk_entry({
-            'description': risk.get('name', ''),
-            'impact': '',  # Add logic to determine impact if needed
-            'likelihood': '',  # Add logic to determine likelihood if needed
-            'mitigation': risk.get('mitigation_strategy', '')
-        }, key='risks')
+       add_risk_entry(description= risk.get('name', ''), 
+                      impact= '',  # Add logic to determine impact if needed
+                      likelihood= '',  # Add logic to determine likelihood if needed
+                      mitigation= risk.get('mitigation_strategy', '')
+                      )
 
 def sync_model_to_data():
     model_data = get_model_entry("data")
@@ -60,7 +59,7 @@ def sync_data_to_transparency():
     pass
 
 def sync_risk_to_model():
-    risk_entry = get_risk_entry(key='risks')
+    risk_entry = get_risk_entries()
     model_risks = risk_entry.get('risks', [])
     
     # Sync the related entities
@@ -71,7 +70,7 @@ def sync_risk_to_model():
         }, key='considerations', filename=model_file_path)
 
 def sync_risk_to_data():
-    risk_entry = get_risk_entry(key='risks')
+    risk_entry = get_risk_entries()
     data_risks = risk_entry.get('risks', [])
 
     for i, risk in enumerate(data_risks):

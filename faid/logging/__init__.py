@@ -43,7 +43,14 @@ from faid.logging.risk_register_utils import (
     initialize_risk_log,
     get_risk_register_log_path,
     add_risk_entry,
-    get_risk_entry
+    get_risk_entries,
+    add_assumption_entry,
+    get_assumption_entries,
+    add_issue_entry,
+    get_issue_entries,
+    add_dependency_entry,
+    get_dependency_entries
+
 )
 
 from faid.logging.transparency_utils import (
@@ -117,7 +124,13 @@ __all__ = [
     'initialize_risk_log',
     'get_risk_register_log_path',
     'add_risk_entry',
-    'get_risk_entry',
+    'get_risk_entries',
+    'add_assumption_entry',
+    'get_assumption_entries',
+    'add_issue_entry',
+    'get_issue_entries',
+    'add_dependency_entry',
+    'get_dependency_entries',
     # transparency_utils
     'initialize_transparency_log',
     'get_transparency_log_path',
