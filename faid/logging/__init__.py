@@ -16,7 +16,6 @@ from faid.logging.model_card_utils import (
     ModelCard,
     initialize_model_log,
     get_model_log_file_path,
-    add_model_entry,
     get_model_entry
 )
 
@@ -27,7 +26,6 @@ from faid.logging.data_card_utils import (
     pretty_croissant,
     pretty_croissant_rai,
     pretty_uci_metadata,
-    add_data_entry,
     get_data_entry
 )
 
@@ -73,16 +71,12 @@ from faid.logging.utils import (
 from faid.logging.sync import (
     sync_risk_to_model,
     sync_data_to_model,
-    sync_usecase_to_model,
     sync_model_to_risk,
     sync_model_to_data,
-    sync_model_to_usecase,
     sync_risk_to_data,
-    sync_usecase_to_data,
     sync_risk_to_transparency,
     sync_data_to_transparency,
     sync_model_to_transparency,
-    sync_usecase_to_transparency,
 )
 
 __all__ = [
@@ -100,7 +94,6 @@ __all__ = [
     'get_current_folder_path',
     # model_card_utils
     'get_model_log_file_path',
-    'add_model_entry',
     'get_model_entry',
     'ModelCard',
     'initialize_model_log',
@@ -109,7 +102,6 @@ __all__ = [
     'DataCard',
     'initialize_data_log',
     'get_data_log_path',
-    'add_data_entry',
     'get_data_entry',
     'pretty_croissant',
     'pretty_croissant_rai',
@@ -139,16 +131,12 @@ __all__ = [
     # sync
     'sync_risk_to_model',
     'sync_data_to_model',
-    'sync_usecase_to_model',
     'sync_model_to_risk',
     'sync_model_to_data',
-    'sync_model_to_usecase',
     'sync_risk_to_data',
-    'sync_usecase_to_data',
     'sync_risk_to_transparency',
     'sync_data_to_transparency',
     'sync_model_to_transparency',
-    'sync_usecase_to_transparency',
     # utils
     'get_imported_libraries',
     'get_package_licenses'

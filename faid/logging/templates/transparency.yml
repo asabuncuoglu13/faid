@@ -32,40 +32,7 @@ tool_specification:
   maintenance: ""
   models: ""
 
-model_specification_complaint_detection:
-  model_name: ""
-  model_version: ""
-  model_task: ""
-  model_input: ""
-  model_output: ""
-  model_architecture: ""
-  model_performance: ""
-  datasets: ""
-  dataset_purposes: ""
-
-model_specification_nae_detection:
-  model_name: ""
-  model_version: ""
-  model_task: ""
-  model_input: ""
-  model_output: ""
-  model_architecture: ""
-  model_performance: ""
-  datasets: ""
-  dataset_purposes: ""
-
-model_specification_suicide_and_self_harm_ideation_content_detection:
-  model_name: ""
-  model_version: ""
-  model_task: ""
-  model_input: ""
-  model_output: ""
-  model_architecture: ""
-  model_performance: ""
-  datasets: ""
-  dataset_purposes: ""
-
-model_specification_names_identification:
+model_specification:
   model_name: ""
   model_version: ""
   model_task: ""

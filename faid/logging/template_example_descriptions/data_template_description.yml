@@ -62,7 +62,9 @@ sensitive_data:
   intentional_sensitive_data:
     - name: "income"
       description: "Income data is sensitive because..." # Description of why the data is sensitive
-  unintentional_sensitive_data: ["location"] # Unintentional sensitive data
+  unintentional_sensitive_data:
+    - name: "location"
+      description: "Location data is collected and used, however it is sensitive, because..." # Description of why the data is sensitive although it was not intended
   security_privacy_handling: "Data is anonymized and encrypted..." # How the data is handled for security and privacy
 risks:
   - name: "Data leakage"

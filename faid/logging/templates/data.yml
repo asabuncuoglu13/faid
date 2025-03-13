@@ -49,7 +49,9 @@ sensitive_data:
   intentional_sensitive_data:
     - name: ""
       description: ""
-  unintentional_sensitive_data: []
+  unintentional_sensitive_data:
+    - name: ""
+      description: ""
   security_privacy_handling: ""
 risks:
   - name:

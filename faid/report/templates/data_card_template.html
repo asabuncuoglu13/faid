@@ -239,7 +239,12 @@
                 </ul>
             {% endif %}
             {% if sensitive_data.unintentional_sensitive_data %}
-                <p><strong>Unintentional Sensitive Data:</strong> {{ sensitive_data.unintentional_sensitive_data | join(', ') }}</p>
+                <h3>Unintentional Sensitive Data</h3>
+                <ul>
+                {% for data in sensitive_data.unintentional_sensitive_data %}
+                    <li>{{ data.name }}: {{ data.description }}</li>
+                {% endfor %}
+                </ul>
             {% endif %}
             {% if sensitive_data.security_privacy_handling %}
                 <p><strong>Security Privacy Handling:</strong> {{ sensitive_data.security_privacy_handling }}</p>

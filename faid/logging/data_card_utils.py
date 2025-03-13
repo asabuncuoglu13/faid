@@ -21,20 +21,6 @@ def initialize_data_log(test:bool=False):
 def get_data_log_path():
     return data_file_path
 
-def add_data_entry(key:str, entry:any):
-    """
-    Add a data entry to the data card
-    """
-    if type(entry) is dict:
-        try:
-            if entry.get("conformsTo") == 'http://mlcommons.org/croissant/RAI/1.0':
-                entry = pretty_croissant_rai(entry)
-                key = "collection_protocol"
-        except AttributeError | KeyError:
-            pass
-    update(entry, key=key, filename=data_file_path)
-    print(f"Added {key} to data card")
-
 def get_data_entry(key:str=None):
     if key is None:
         return load(data_file_path)
@@ -193,7 +179,10 @@ class DataCard:
         }
         self.sensitive_data_schema = {
             "protected_characteristics": [],
-            "intentional_sensitive_data": [],
+            "intentional_sensitive_data": [{
+                "name": "",
+                "description": ""
+            }],
             "unintentional_sensitive_data": [{
                 "name": "",
                 "description": ""
@@ -240,6 +229,10 @@ class DataCard:
         """
         Sets the description section in the data information.
         """
+        existing_description = self.get_description()
+        for key in existing_description.keys():
+            if key not in description.keys():
+                description[key] = existing_description[key]
         self.data_info["description"] = description
 
     def get_content(self):
@@ -252,6 +245,10 @@ class DataCard:
         """
         Sets the content section in the data information.
         """
+        existing_content = self.get_content()
+        for key in existing_content.keys():
+            if key not in content.keys():
+                content[key] = existing_content[key]
         self.data_info["content"] = content
 
     def get_descriptive_statistics(self):
@@ -272,6 +269,10 @@ class DataCard:
         """
         Sets the descriptive statistics section in the data information.
         """
+        existing_descriptive_statistics = self.get_descriptive_statistics()
+        for key in existing_descriptive_statistics.keys():
+            if key not in descriptive_statistics.keys():
+                descriptive_statistics[key] = existing_descriptive_statistics[key]
         self.data_info["descriptive_statistics"] = descriptive_statistics
 
     def get_sensitive_data(self):
@@ -284,6 +285,11 @@ class DataCard:
         """
         Sets the sensitive data section in the data information.
         """
+        # if sensitive data dict is not compliant to schema, merge it with the schema
+        existing_sensitive_data = self.get_sensitive_data()
+        for key in existing_sensitive_data.keys():
+            if key not in sensitive_data.keys():
+                sensitive_data[key] = self.sensitive_data_schema[key]
         self.data_info["sensitive_data"] = sensitive_data
 
     def get_risks(self):
@@ -310,6 +316,10 @@ class DataCard:
         """
         Sets the version details section in the data information.
         """
+        existing_version_details = self.get_version_details()
+        for key in existing_version_details.keys():
+            if key not in version_details.keys():
+                version_details[key] = existing_version_details[key]
         self.data_info["version_details"] = version_details
 
     def get_collection_protocol(self):
@@ -322,6 +332,15 @@ class DataCard:
         """
         Sets the collection protocol section in the data information.
         """
+        existing_collection_protocol = self.get_collection_protocol()
+        try:
+            if collection_protocol.get("conformsTo") == 'http://mlcommons.org/croissant/RAI/1.0':
+                collection_protocol = pretty_croissant_rai(collection_protocol)
+        except AttributeError | KeyError:
+            pass
+        for key in existing_collection_protocol.keys():
+            if key not in collection_protocol.keys():
+                collection_protocol[key] = existing_collection_protocol[key]
         self.data_info["collection_protocol"] = collection_protocol
 
     def save(self):
