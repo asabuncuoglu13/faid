@@ -8,7 +8,7 @@ exp_file_path = join(get_project_log_path(), "fairness.yml")
 exp_file_template_path = join(get_current_folder_path(), "templates/fairness.yml")
 exp_file_template_with_description_path = join(get_current_folder_path(), "template_example_descriptions/fairness_template_description.yml")
 
-def initialize_exp_log(test:bool=False):
+def initialize_fairness_experiment_log(test:bool=False):
     if not exists(exp_file_path):
         if(test):
             copy(exp_file_template_with_description_path, exp_file_path)
@@ -60,18 +60,6 @@ def convert_experiment_filepath_format(filename:str) -> str:
     experiment_file_name = os.path.join(get_project_log_path(), f"fairness_{experiment_name}.yml")
     return experiment_file_name
 
-def get_exp_ctx(experiment_name:str) -> 'ExperimentContext':
-    """
-    Get the experiment context
-    """
-    dataDict = load(convert_experiment_filepath_format(experiment_name))
-
-    return ExperimentContext(name=dataDict["name"], 
-                                        context=dataDict["context"],
-                                        data=dataDict["data"],
-                                        sample_data=dataDict["sample_data"],
-                                        model=dataDict["model"])
-
 def pretty_aisi_summary(filepath:str) -> dict:
     import os
     import json
@@ -97,17 +85,12 @@ def pretty_aisi_summary(filepath:str) -> dict:
     }
     return summary
 
-class ExperimentContext:
+class FairnessExperimentRecord:
     """
-    A class to represent an experiment context.
+    A class to record fairness-related information throughout an experiment.
     """
 
-    def __init__(self, name:str=None, 
-                    context:dict=None,
-                    data:dict=None,
-                    sample_data:dict=None,
-                    model:dict=None,
-                    metrics:dict=None):
+    def __init__(self, name:str):
 
         if name is None:
             warning_msg("Please provide a name for the experiment")
@@ -118,26 +101,16 @@ class ExperimentContext:
         
         if not exists(self.filename):
             copy(exp_file_template_path, self.filename)
-            
-        if context is None:
-            context = load(self.filename)["context"]
-        self.context = context
-
-        if data is None:
-            data = load(self.filename)["data"]
-        self.data = data
-
-        if sample_data is None:
-            sample_data = load(self.filename)["sample_data"]
-        self.sample_data = sample_data
-
-        if model is None:
-            model = load(self.filename)["model"]
-        self.model = model
-
-        if metrics is None:
-            metrics = load(self.filename)["bias_metrics"]
-        self.metrics = metrics
+        
+        self.id = load(self.filename)["id"]
+        if self.id == "":
+            # define a unique id based on the current time
+            self.id = datetime.now().isoformat()
+        self.context = load(self.filename)["context"]
+        self.data = load(self.filename)["data"]
+        self.sample_data = load(self.filename)["sample_data"]
+        self.model = load(self.filename)["model"]
+        self.metrics = load(self.filename)["bias_metrics"]
 
         self.metrics_schema = {'group_name': '',
                                 'description': '', 

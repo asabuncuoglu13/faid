@@ -1,3 +1,4 @@
+id: "1"
 name: "Fairness Analysis Report"  # Name of the report
 context:
   authors: ["John Doe", "Jane Smith"]  # List of authors

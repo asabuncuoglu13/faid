@@ -242,12 +242,19 @@ class ModelCard:
                 "name": "",
                 "mitigation_strategy": ""
             }
+            self.fairness_experiment_record_schema = {
+                "id": "",
+                "summary": "",
+            }
             self.consideration_schema = {
                 "description": "",
                 "intended_users": "",
                 "use_cases": "",
                 "limitations": "",
                 "tradeoffs": "",
+                "fairness_experiments": [
+                    self.fairness_experiment_record_schema
+                    ],
                 "ethical_considerations": "",
                 "risks": [
                     self.risk_schema
@@ -343,6 +350,16 @@ class ModelCard:
                 metrics.append(metric)
             
             self.model_info["quantitative_analysis"]["performance_metrics"] = metrics
+
+        def add_fairness_experiment(self, experiment:dict):
+            """
+            Adds a new fairness experiment to the considerations section.
+            """
+            considerations = self.model_info.get("considerations", self.consideration_schema)
+            fairness_experiments = considerations.get("fairness_experiments", [])
+            fairness_experiments.append(experiment)
+            considerations["fairness_experiments"] = fairness_experiments
+            self.model_info["considerations"] = considerations
 
         def get_considerations(self):
             """

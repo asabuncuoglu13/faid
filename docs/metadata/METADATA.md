@@ -93,12 +93,12 @@ notes: ""
 sg_params: {} # we don't have any additonal subgroups in this case
 ```
 
-To include your statistical parity difference testing, first you need to create an a `ExperimentContext`, than save the bias metric. Note that bias metric should be recorded under a `group`. As all fairness testing is about being fair among "priviliged" and "unpriviliged" groups (e.g. male, female), recording follows this scheme.
+To include your statistical parity difference testing, first you need to create an a `FairnessExperimentRecord`, than save the bias metric. Note that bias metric should be recorded under a `group`. As all fairness testing is about being fair among "priviliged" and "unpriviliged" groups (e.g. male, female), recording follows this scheme.
 
 ```python
 from faid import logging as faidlog
 experiment_name = "credit-scoring-default"
-fairness_experiment = faidlog.ExperimentContext(experiment_name)
+fairness_experiment = faidlog.FairnessExperimentRecord(experiment_name)
 ...
 # The following code creates a metric frame using the fairness metrics included in fairlearn library
 metricframe_unmitigated = MetricFrame(

@@ -29,9 +29,9 @@ from faid.logging.data_card_utils import (
     get_data_entry
 )
 
-from faid.logging.experiment_utils import (
-    ExperimentContext,
-    initialize_exp_log,
+from faid.logging.fairness_utils import (
+    FairnessExperimentRecord,
+    initialize_fairness_experiment_log,
     get_fairness_experiment_log_path,
     get_exp_ctx,
     pretty_aisi_summary
@@ -72,7 +72,6 @@ from faid.logging.sync import (
     sync_risk_to_model,
     sync_data_to_model,
     sync_model_to_risk,
-    sync_model_to_data,
     sync_risk_to_data,
     sync_risk_to_transparency,
     sync_data_to_transparency,
@@ -106,10 +105,10 @@ __all__ = [
     'pretty_croissant',
     'pretty_croissant_rai',
     'pretty_uci_metadata',
-    # experiment_utils
-    'ExperimentContext',
+    # fairness_utils
+    'FairnessExperimentRecord',
     'get_fairness_experiment_log_path',
-    'initialize_exp_log',
+    'initialize_fairness_experiment_log',
     'get_exp_ctx',
     'pretty_aisi_summary',
     # risk_register_utils
@@ -132,7 +131,6 @@ __all__ = [
     'sync_risk_to_model',
     'sync_data_to_model',
     'sync_model_to_risk',
-    'sync_model_to_data',
     'sync_risk_to_data',
     'sync_risk_to_transparency',
     'sync_data_to_transparency',

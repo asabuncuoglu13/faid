@@ -44,6 +44,9 @@ considerations:
   use_cases: "Predicting customer churn."  # Use cases for the model
   limitations: "The model may not perform well on small datasets."  # Limitations of the model
   tradeoffs: "Higher accuracy may result in longer training times."  # Tradeoffs of using the model
+  fairness_experiments:
+    - id: "1"
+      summary: "The overview of fairness experiment with the id=1."
   ethical_considerations: "Ensure data privacy and fairness."  # Ethical considerations for the model
   risks:
     - name: "Data leakage"  # Name of the risk
