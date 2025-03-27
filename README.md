@@ -2,7 +2,7 @@
 
 > **Research Preview Disclaimer:** This repository contains code, data, and materials that are part of an ongoing research project. Please note that the work is in a **research preview** stage and may produce incomplete or inconsistent results. Use at your own discretion, and feel free to contribute or report any issues.
 
-This repository showcases the use of existing metadata for fairness monitoring. 
+This repository showcases leveraging the use of metadata in fairness monitoring. 
 
 > See all demos: [Demo List](./demos/README.md)
 

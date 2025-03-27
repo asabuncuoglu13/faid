@@ -202,14 +202,10 @@ class FairnessExperimentRecord:
 
     
     def add_metric_entry(self, entry:dict={}):
-        self.metrics = load(self.filename)["bias_metrics"]
-        if entry == {}:
-            error_msg("Please provide an entry to add")
-            return
-        if entry.keys() != self.metrics_schema.keys():
-            error_msg("Entry does not comply with the metrics schema. Call .metrics_schema to see the schema.")
-            return
-        self.metrics = entry
+        existing_metrics = load(self.filename)["bias_metrics"]
+        entry = {**self.metrics_schema, **entry}
+        existing_metrics.append(entry)
+        self.metrics = existing_metrics
         update(yaml_data=self.metrics, key="bias_metrics", filename=self.filename)
         print("Added the metrics to project metadata under ['bias_metrics'] and log updated")
 
