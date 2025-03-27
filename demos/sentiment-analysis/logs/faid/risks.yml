@@ -4,7 +4,7 @@ risks:
     impact: ''
     likelihood: ''
     mitigation: ''
-  2:
+  1:
     description: The model card information does not contain the model's training
       data information.
     impact: High
@@ -22,13 +22,6 @@ issues:
     impact: ''
     status: ''
     action: ''
-  2:
-    description: The model card information does not contain the model's training
-      data information.
-    impact: High
-    status: TODO
-    action: Add the training data information to the model card. You can find it from
-      their research paper.
 dependencies:
   0:
     description: ''

@@ -16,16 +16,25 @@ model_details:
   citation: null
   path: null
 model_parameters:
-  description: null
+  description: FinBERT is a pre-trained language model for financial sentiment analysis.
+    It is based on the BERT model architecture and is fine-tuned on a large financial
+    news dataset.
   model_architecture: ''
   data:
   - description: ''
     link: null
     sensitive: null
     graphics: null
+    purpose: null
   input_format: null
   output_format: null
   output_format_map: null
+  num_layers: 12
+  num_labels: 3
+  output_attentions: true
+  output_hidden_states: true
+  hidden_dropout_prob: 0.1
+  attention_probs_dropout_prob: 0.1
 quantitative_analysis:
   description: null
   performance_metrics:
@@ -43,6 +52,9 @@ considerations:
   use_cases: ''
   limitations: ''
   tradeoffs: null
+  fairness_experiments:
+  - id: ''
+    summary: ''
   ethical_considerations: ''
   risks:
   - name: null
