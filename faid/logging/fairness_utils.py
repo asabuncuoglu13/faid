@@ -1,14 +1,15 @@
 from os.path import join, exists
 from shutil import copy
 from datetime import datetime
+from fairlearn.metrics import MetricFrame
 
-from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path, ModelCard, DataCard
 
 exp_file_path = join(get_project_log_path(), "fairness.yml")
 exp_file_template_path = join(get_current_folder_path(), "templates/fairness.yml")
 exp_file_template_with_description_path = join(get_current_folder_path(), "template_example_descriptions/fairness_template_description.yml")
 
-def initialize_exp_log(test:bool=False):
+def initialize_fairness_experiment_log(test:bool=False):
     if not exists(exp_file_path):
         if(test):
             copy(exp_file_template_with_description_path, exp_file_path)
@@ -60,18 +61,6 @@ def convert_experiment_filepath_format(filename:str) -> str:
     experiment_file_name = os.path.join(get_project_log_path(), f"fairness_{experiment_name}.yml")
     return experiment_file_name
 
-def get_exp_ctx(experiment_name:str) -> 'ExperimentContext':
-    """
-    Get the experiment context
-    """
-    dataDict = load(convert_experiment_filepath_format(experiment_name))
-
-    return ExperimentContext(name=dataDict["name"], 
-                                        context=dataDict["context"],
-                                        data=dataDict["data"],
-                                        sample_data=dataDict["sample_data"],
-                                        model=dataDict["model"])
-
 def pretty_aisi_summary(filepath:str) -> dict:
     import os
     import json
@@ -97,17 +86,12 @@ def pretty_aisi_summary(filepath:str) -> dict:
     }
     return summary
 
-class ExperimentContext:
+class FairnessExperimentRecord:
     """
-    A class to represent an experiment context.
+    A class to record fairness-related information throughout an experiment.
     """
 
-    def __init__(self, name:str=None, 
-                    context:dict=None,
-                    data:dict=None,
-                    sample_data:dict=None,
-                    model:dict=None,
-                    metrics:dict=None):
+    def __init__(self, name:str):
 
         if name is None:
             warning_msg("Please provide a name for the experiment")
@@ -118,26 +102,16 @@ class ExperimentContext:
         
         if not exists(self.filename):
             copy(exp_file_template_path, self.filename)
-            
-        if context is None:
-            context = load(self.filename)["context"]
-        self.context = context
-
-        if data is None:
-            data = load(self.filename)["data"]
-        self.data = data
-
-        if sample_data is None:
-            sample_data = load(self.filename)["sample_data"]
-        self.sample_data = sample_data
-
-        if model is None:
-            model = load(self.filename)["model"]
-        self.model = model
-
-        if metrics is None:
-            metrics = load(self.filename)["bias_metrics"]
-        self.metrics = metrics
+        
+        self.id = load(self.filename)["id"]
+        if self.id == "":
+            # define a unique id based on the current time
+            self.id = datetime.now().isoformat()
+        self.context = load(self.filename)["context"]
+        self.data = load(self.filename)["data"]
+        self.sample_data = load(self.filename)["sample_data"]
+        self.model = load(self.filename)["model"]
+        self.metrics = load(self.filename)["bias_metrics"]
 
         self.metrics_schema = {'group_name': '',
                                 'description': '', 
@@ -203,16 +177,35 @@ class ExperimentContext:
         self.model[key] = entry
         update(yaml_data=self.model, key="model", filename=self.filename)
         print(f"Added {key} to project metadata under ['model'] and log updated")
+
+    def add_metric_entry_from_fairlearn(self, entry:MetricFrame):
+        groups = entry.by_group.transpose().to_dict()
+        groups["overall"] = entry.overall.to_dict()
+        m = []
+        for group, values in groups.items():
+            ms = self.metrics_schema.copy()
+            ms['group_name'] = group
+            msm = []
+            print("For the given Group: ", group)
+            print("======================")
+            for key, value in values.items():
+                print(key, value)
+                metric = ms['metrics'][0].copy()
+                metric['name'] = key
+                metric['value'] = value
+                msm.append(metric)
+            ms['metrics'] = msm
+            m.append(ms)
+        self.metrics = m
+        update(yaml_data=self.metrics, key="bias_metrics", filename=self.filename)
+        print("Added the metrics to project metadata under ['bias_metrics'] and log updated")
+
     
     def add_metric_entry(self, entry:dict={}):
-        self.metrics = load(self.filename)["bias_metrics"]["groups"]
-        if entry == {}:
-            error_msg("Please provide an entry to add")
-            return
-        if entry.keys() != self.metrics_schema.keys():
-            error_msg("Entry does not comply with the metrics schema. Call .metrics_schema to see the schema.")
-            return
-        self.metrics["groups"] = entry
+        existing_metrics = load(self.filename)["bias_metrics"]
+        entry = {**self.metrics_schema, **entry}
+        existing_metrics.append(entry)
+        self.metrics = existing_metrics
         update(yaml_data=self.metrics, key="bias_metrics", filename=self.filename)
         print("Added the metrics to project metadata under ['bias_metrics'] and log updated")
 
@@ -223,7 +216,7 @@ class ExperimentContext:
             return self.metrics.get("groups").get(key, None)
         return self.metrics.get(key, None)
 
-    def add_entry(self, entry):
+    def add_viz_entry(self, entry):
         from captum.attr import visualization as viz
         if isinstance(entry, viz.VisualizationDataRecord):
             entry_dict = {
@@ -282,3 +275,27 @@ class ExperimentContext:
         if key is None:
             return self.model
         return self.model.get(key, None)
+    
+    def summary_to_model_card(self):
+        """
+        Sync the fairness experiment summary to the model card
+        """
+        model_card = ModelCard()
+        model_card.add_fairness_experiment({
+            "id": self.id,
+            "summary": self.description
+            # Integrate a summariser for the whole experiment in future iterations
+        })
+        model_card.save()
+
+    def summary_to_data_card(self):
+        """
+        Sync the fairness experiment summary to the data card
+        """
+        data_card = DataCard()
+        data_card.add_fairness_experiment({
+            "id": self.id,
+            "summary": self.description
+            # Integrate a summariser for the whole experiment in future iterations
+        })
+        data_card.save()

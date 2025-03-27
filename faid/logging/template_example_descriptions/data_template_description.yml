@@ -26,9 +26,9 @@ content:
   typical_data_point: "Example data point..." # Example of a typical data point
   data_subjects: ["patients", "customers"] # Subjects of the data
   dataset_snapshot:
-    Total Records: "10000" # Total number of records in the dataset
-    Coverage: "global" # Coverage of the dataset
-    Time Span: "2010-2023" # Time span of the dataset
+    total_records: "10000" # Total number of records in the dataset
+    coverage: "global" # Coverage of the dataset
+    time_span: "2010-2023" # Time span of the dataset
 descriptive_statistics:
   num_instances: "10000" # Number of instances in the dataset
   num_features: "20" # Number of features in the dataset
@@ -62,7 +62,9 @@ sensitive_data:
   intentional_sensitive_data:
     - name: "income"
       description: "Income data is sensitive because..." # Description of why the data is sensitive
-  unintentional_sensitive_data: ["location"] # Unintentional sensitive data
+  unintentional_sensitive_data:
+    - name: "location"
+      description: "Location data is collected and used, however it is sensitive, because..." # Description of why the data is sensitive although it was not intended
   security_privacy_handling: "Data is anonymized and encrypted..." # How the data is handled for security and privacy
 risks:
   - name: "Data leakage"

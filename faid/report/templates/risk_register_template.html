@@ -149,13 +149,13 @@
             <th class="likelihood">Likelihood</th>
             <th class="mitigation">Mitigation</th>
         </tr>
-        {% if data.risks %}
-        {% for id in data.risks %}
+        {% if risks %}
+        {% for id in risks %}
         <tr>
-            <td class="description">{{ data.risks[id].description }}</td>
-            <td class="impact">{{ data.risks[id].impact }}</td>
-            <td class="likelihood">{{ data.risks[id].likelihood }}</td>
-            <td class="mitigation">{{ data.risks[id].mitigation }}</td>
+            <td class="description">{{ risks[id].description }}</td>
+            <td class="impact">{{ risks[id].impact }}</td>
+            <td class="likelihood">{{ risks[id].likelihood }}</td>
+            <td class="mitigation">{{ risks[id].mitigation }}</td>
         </tr>
         {% endfor %}
         {% endif %}
@@ -168,12 +168,12 @@
             <th class="impact">Impact</th>
             <th class="action">Action</th>
         </tr>
-        {% if data.assumptions %}
-        {% for id in data.assumptions %}
+        {% if assumptions %}
+        {% for id in assumptions %}
         <tr>
-            <td class="description">{{ data.assumptions[id].description }}</td>
-            <td class="impact">{{ data.assumptions[id].impact }}</td>
-            <td class="action">{{ data.assumptions[id].action }}</td>
+            <td class="description">{{ assumptions[id].description }}</td>
+            <td class="impact">{{ assumptions[id].impact }}</td>
+            <td class="action">{{ assumptions[id].action }}</td>
         </tr>
         {% endfor %}
         {% endif %}
@@ -188,14 +188,14 @@
             <th class="action">Action</th>
             <th>Report</th> <!-- New column for report buttons -->
         </tr>
-        {% if data.issues %}
-        {% for id in data.issues %}
+        {% if issues %}
+        {% for id in issues %}
         <tr id="issue{{ id }}">
-          <td class="description">{{ data.issues[id].description }}</td>
-          <td class="impact">{{ data.issues[id].impact }}</td>
-          <td class="status">{{ data.issues[id].status }}</td>
-          <td class="action">{{ data.issues[id].action }}</td>
-          <td><button onclick="formatAndCopyIssue('issue{{ id }}','{{ data.issues[id].description }}', '{{ data.issues[id].action }}')">Report Fairness Issue</button></td>
+          <td class="description">{{ issues[id].description }}</td>
+          <td class="impact">{{ issues[id].impact }}</td>
+          <td class="status">{{ issues[id].status }}</td>
+          <td class="action">{{ issues[id].action }}</td>
+          <td><button onclick="formatAndCopyIssue('issue{{ id }}','{{ issues[id].description }}', '{{ issues[id].action }}')">Report Fairness Issue</button></td>
         </tr>
         {% endfor %}
         {% endif %}
@@ -208,13 +208,13 @@
             <th class="status">Status</th>
             <th class="action">Action</th>
         </tr>
-        {% if data.dependencies %}
-        {% for id in data.dependencies %}
+        {% if dependencies %}
+        {% for id in dependencies %}
         <tr>
-            <td class="description">{{ data.dependencies[id].description }}</td>
-            <td class="impact">{{ data.dependencies[id].impact }}</td>
-            <td class="status">{{ data.dependencies[id].status }}</td>
-            <td class="action">{{ data.dependencies[id].action }}</td>
+            <td class="description">{{ dependencies[id].description }}</td>
+            <td class="impact">{{ dependencies[id].impact }}</td>
+            <td class="status">{{ dependencies[id].status }}</td>
+            <td class="action">{{ dependencies[id].action }}</td>
         </tr>
         {% endfor %}
         {% endif %}

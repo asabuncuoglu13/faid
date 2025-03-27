@@ -1,3 +1,0 @@
-# FAID's Named Entity Recognition Capabilities
-
-The `demo-ner.ipynb` notebook provides a demonstration of Named Entity Recognition (NER) using a pre-trained model. It includes steps for loading the model, processing text data, and extracting named entities such as persons, organizations, locations, and more. We can use this information to understand implicit bias occured in text datasets, and reveal potential representation bias.

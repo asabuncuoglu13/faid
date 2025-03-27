@@ -166,14 +166,25 @@
     <h1>Experiment Name: financial-sentiment-analysis-finbert-fairness</h1>
     <p></p>
 
-    <p>
-        
-        <span class="chip">financial-sentiment-analysis</span>
-        
-        <span class="chip">sentiment-analysis</span>
-        
-    </p>
+    
 
+    
+    
+    <h3>Data Sample</h3>
+    <ul>
+        
+        <li>(0, {'text': 'growth is strong and we have plenty of liquidity.', 'label': 'Positive', 'score': 1.0})</li>
+        
+        <li>(1, {'text': 'there is a shortage of capital, and we need extra financing.', 'label': 'Negative', 'score': 0.9952379465103149})</li>
+        
+        <li>(2, {'text': 'formulation patents might protect Vasotec to a limited extent.', 'label': 'Neutral', 'score': 0.9979718327522278})</li>
+        
+    </ul>
+    
+
+    
+    <h3>Variable Profile</h3>
+    <p>{'neutral': 2879, 'positive': 1363, 'negative': 604}</p>
     
 
     
@@ -181,13 +192,137 @@
     
 
     
-    <h2>Fairness Experiment Overview</h2>
-        
-        
 
-        
     
 
+    
+
+    
+    <h3>Bias Metrics</h3>
+    
+    <h4>Group: 0</h4>
+    <p></p>
+    <ul>
+        
+        <li>
+            <strong>accuracy</strong>: 0.8354935194416749 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>false positive rate</strong>: 0.05850706119704102 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>false negative rate</strong>: 0.4682080924855491 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>selection rate</strong>: 0.18095712861415753 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>count</strong>: 4012.0 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+    </ul>
+    
+    <h4>Group: 1</h4>
+    <p></p>
+    <ul>
+        
+        <li>
+            <strong>accuracy</strong>: 0.8704600484261501 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>false positive rate</strong>: 0.027888446215139442 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>false negative rate</strong>: 0.28703703703703703 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>selection rate</strong>: 0.2966101694915254 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>count</strong>: 826.0 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+    </ul>
+    
+    <h4>Group: overall</h4>
+    <p></p>
+    <ul>
+        
+        <li>
+            <strong>accuracy</strong>: 0.8414634146341463 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>false positive rate</strong>: 0.05408515535097814 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>false negative rate</strong>: 0.4251101321585903 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>selection rate</strong>: 0.2007027697395618 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+        <li>
+            <strong>count</strong>: 4838.0 (Threshold: 0, Bigger is Better: False)
+            <br>
+            <em></em>
+            
+        </li>
+        
+    </ul>
+    
     
     
     </div>

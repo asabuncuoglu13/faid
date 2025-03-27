@@ -23,6 +23,7 @@ model_parameters:
       link:
       sensitive:
       graphics:
+      purpose:
   input_format:
   output_format:
   output_format_map:
@@ -43,6 +44,9 @@ considerations:
   use_cases: ""
   limitations: ""
   tradeoffs:
+  fairness_experiments:
+    - id: ""
+      summary: ""
   ethical_considerations: ""
   risks:
     - name:

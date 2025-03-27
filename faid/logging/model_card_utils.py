@@ -23,12 +23,6 @@ def initialize_model_log(test:bool=False):
 def get_model_log_file_path():
     return model_file_path
 
-def add_model_entry(params:dict, key:str):
-    if key is None:
-        key= "model_details"
-    update(params, key=key, filename=model_file_path)
-    print(f"Added {key} to model card")
-
 def get_model_entry(key:str=None):
     if key is None:
         return load(model_file_path)
@@ -248,12 +242,19 @@ class ModelCard:
                 "name": "",
                 "mitigation_strategy": ""
             }
+            self.fairness_experiment_record_schema = {
+                "id": "",
+                "summary": "",
+            }
             self.consideration_schema = {
                 "description": "",
                 "intended_users": "",
                 "use_cases": "",
                 "limitations": "",
                 "tradeoffs": "",
+                "fairness_experiments": [
+                    self.fairness_experiment_record_schema
+                    ],
                 "ethical_considerations": "",
                 "risks": [
                     self.risk_schema
@@ -273,6 +274,8 @@ class ModelCard:
             """
             Sets the model information with new info.
             """
+            existing_model_info = self.model_info
+            self.model_info = {**existing_model_info, **model_info}
             self.model_info = model_info
 
         def get_model_details(self):
@@ -281,15 +284,15 @@ class ModelCard:
             """
             return self.model_info.get("model_details", self.details_schema)
 
-        def set_model_details(self, details, detail_key:str=None):
+        def set_model_details(self, details:dict):
             """
             Sets a specific detail in the model details.
             """
-            if detail_key is None:
-                details = {**self.model_info.get("model_details", self.details_schema), **details}
-                self.model_info["model_details"] = details
-            else:
-                self.model_info["model_details"][detail_key] = details
+            existing_details = self.model_info.get("model_details", self.details_schema)
+            for key in existing_details.keys():
+                if key not in details.keys():
+                    details[key] = existing_details[key]
+            self.model_info["model_details"] = details
 
         def get_model_parameters(self):
             """
@@ -297,15 +300,15 @@ class ModelCard:
             """
             return self.model_info.get("model_parameters", self.model_params_schema)
 
-        def set_model_parameters(self, parameter_value, parameter_key:str=None):
+        def set_model_parameters(self, parameters:dict):
             """
             Sets a specific parameter in the model parameters.
             """
-            if parameter_key is None:
-                model_params = self.model_info.get("model_parameters", self.model_params_schema)
-                self.model_info["model_parameters"] = model_params
-            else:
-                self.model_info["model_parameters"][parameter_key] = parameter_value
+            existing_parameters = self.model_info.get("model_parameters", self.model_params_schema)
+            for key in existing_parameters.keys():
+                if key not in parameters.keys():
+                    parameters[key] = existing_parameters[key]
+            self.model_info["model_parameters"] = parameters
 
         def get_quantitative_analysis(self):
             """
@@ -348,27 +351,41 @@ class ModelCard:
             
             self.model_info["quantitative_analysis"]["performance_metrics"] = metrics
 
+        def add_risk(self, risk:dict):
+            """
+            Adds a new risk to the considerations section.
+            """
+            considerations = self.model_info.get("considerations", self.consideration_schema)
+            risks = considerations.get("risks", [])
+            risks.append(risk)
+            considerations["risks"] = risks
+            self.model_info["considerations"] = considerations
+
+        def add_fairness_experiment(self, experiment:dict):
+            """
+            Adds a new fairness experiment to the considerations section.
+            """
+            considerations = self.model_info.get("considerations", self.consideration_schema)
+            fairness_experiments = considerations.get("fairness_experiments", [])
+            fairness_experiments.append(experiment)
+            considerations["fairness_experiments"] = fairness_experiments
+            self.model_info["considerations"] = considerations
+
         def get_considerations(self):
             """
             Returns a specific consideration from the considerations section.
             """
             return self.model_info.get("considerations", self.consideration_schema)
 
-        def add_consideration(self, consideration_key, consideration):
+        def set_considerations(self, considerations:dict):
             """
             Adds a new consideration to the considerations section.
             """
-            
-            if "considerations" not in self.model_info:
-                self.model_info["considerations"] = self.consideration_schema
-            # if consideration_key is "risks", it should comply with schema
-            if consideration_key == "risks":
-                risks = self.model_info["considerations"].get("risks", self.risk_schema)
-                consideration = {**self.risk_schema, **consideration}
-                risks.append(consideration)
-                self.model_info["considerations"]["risks"] = risks
-            else:
-                self.model_info["considerations"][consideration_key] = consideration
+            existing_considerations = self.model_info.get("considerations", self.consideration_schema)
+            for key in existing_considerations.keys():
+                if key not in considerations.keys():
+                    considerations[key] = existing_considerations[key]
+            self.model_info["considerations"] = considerations
 
         def save(self, print_values:bool=False):
             """

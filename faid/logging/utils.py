@@ -29,19 +29,23 @@ def get_imported_libraries():
 def get_package_licenses():
     import importlib.metadata
     root = os.getcwd()
-    with open(os.path.join(root, 'requirements.txt'), 'r') as f:
-        packages = f.read().splitlines()
-        packages = [pkg.split('==')[0] for pkg in packages if pkg]
-        try:
-            licenses = []
-            for package in packages:
-                metadata = importlib.metadata.metadata(package)
-                license = metadata.get('License')
-                if not license:
-                    license = metadata.get('Classifier', [])
-                    license_info = [line for line in license if line.startswith('License')]
-                    license = license_info[0] if license_info else 'License information not found'
-                licenses.append((package, license))
-        except importlib.metadata.PackageNotFoundError:
-            licenses.append((package, "Package not found")) 
+    try:
+        with open(os.path.join(root, 'requirements.txt'), 'r') as f:
+            packages = f.read().splitlines()
+            packages = [pkg.split('==')[0] for pkg in packages if pkg]
+            try:
+                licenses = []
+                for package in packages:
+                    metadata = importlib.metadata.metadata(package)
+                    license = metadata.get('License')
+                    if not license:
+                        license = metadata.get('Classifier', [])
+                        license_info = [line for line in license if line.startswith('License')]
+                        license = license_info[0] if license_info else 'License information not found'
+                    licenses.append((package, license))
+            except importlib.metadata.PackageNotFoundError:
+                licenses.append((package, "Package not found")) 
+    except FileNotFoundError:
+        print("`requirements.txt` not found. License info will be empty")
+        licenses = []
     return licenses

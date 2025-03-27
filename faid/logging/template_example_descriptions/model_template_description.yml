@@ -23,6 +23,7 @@ model_parameters:
       link: "https://example.com/data"  # Link to the data
       sensitive: false  # Indicates if the data is sensitive
       graphics: "https://example.com/data-graphics"  # Link to data graphics
+      purpose: "Used for training the model."  # Purpose of the data
   input_format: "CSV"  # Format of the input data
   output_format: "JSON"  # Format of the output data
   output_format_map: "Mapping of output fields to their descriptions."  # Description of the output format map
@@ -43,6 +44,9 @@ considerations:
   use_cases: "Predicting customer churn."  # Use cases for the model
   limitations: "The model may not perform well on small datasets."  # Limitations of the model
   tradeoffs: "Higher accuracy may result in longer training times."  # Tradeoffs of using the model
+  fairness_experiments:
+    - id: "1"
+      summary: "The overview of fairness experiment with the id=1."
   ethical_considerations: "Ensure data privacy and fairness."  # Ethical considerations for the model
   risks:
     - name: "Data leakage"  # Name of the risk

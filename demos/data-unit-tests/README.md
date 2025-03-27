@@ -32,3 +32,33 @@ A **data unit test** is a test designed to validate the quality, integrity, and 
    - Monitor feature correlations with sensitive attributes to avoid leakage.
 
 This notebook demonstrates sample data unit tests as well as using a specialised library (Great Expectations) for this purpose. [NOTE: My personal experience is using this library is an overkill. It is not easy to integrate it into workflows. However, it might be useful for some specific use cases.]
+
+## Create a Script for Metadata Management throughout CI/CD
+
+At some point, you need to create some scripts to include, test, and verify data in a script, so that CI/CD automation can produce the PASS/FAIL results.
+
+The `log-protected-characteristics.py` script is an example CLI script to showcase scanning a dataset for protected characteristics as defined by the UK Equality Act 2010 and saving it to metadata logs using FAID. The script allows users to select sensitive features from the dataset and logs these features for further analysis.
+
+The script also demonstrate using the `click` library in case you have access to a command-line interface interactively.  You can test this library using the following options:
+
+- **--mod**: Specifies the mode of operation. Available options are:
+  - `init`: Initialize the metadata files.
+  - `scan`: Scan the data for protected characteristics features.
+- **--data_path**: Specifies the path to the data file.
+
+### Usage
+
+To run the script, use the following command:
+
+```sh
+python log-protected-characteristics.py --mod scan-data --data_path path/to/your/data.csv
+```
+
+If the --data_path is not provided, the script will prompt the user to select a data file from the data folder.
+
+Example
+```sh
+python log-protected-characteristics.py --mod scan-data --data_path ../credit-scoring-german/data/german_credit_data.csv
+```
+
+This command scans the specified data file for protected characteristics and logs the selected features.

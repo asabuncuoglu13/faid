@@ -261,7 +261,7 @@ def transparency_report(transparency_data:dict={}, output_file:str="transparency
     # Load Jinja2 template
     current_folder_location = os.path.dirname(os.path.abspath(__file__))
     env = Environment(loader=FileSystemLoader(current_folder_location))
-    template = env.get_template('templates/transparency.html')
+    template = env.get_template('templates/transparency_template.html')
 
     if transparency_data == {}:  # Load the data from the yaml file
         try:

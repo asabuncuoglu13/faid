@@ -132,60 +132,57 @@
         .label { width: 30%; }
 </style>
 <title>
-  Model Card{% if name %} {{ name }} {% endif %}
+  Model Card{% if model_details.name %} {{ model_details.name }} {% endif %}
 </title>
 </head>
 <body>
   <div class="report-container">
-  <h1>Model Card: {% if name %} {{ name }}{% endif %}</h1>
-  {% if description %} 
+  <h1>Model Card: {% if model_details.name %} {{ model_details.name }}{% endif %}</h1>
+  {% if model_details.overview %} 
   <div markdown="1">
-    {{ description|safe|striptags }}
+    {{ model_details.overview|safe|striptags }}
   </div>
   {% endif %}
-    {% if details %}
+    {% if model_details %}
         <h2>Model Details</h2>
-        {% if details.owners %}
+        {% if model_details.owners %}
         <h3>Owners</h3>
-          {% if details.owners|length > 1 %}
+          {% if model_details.owners|length > 1 %}
             <ul>
-            {% for owner in details.owners %}
+            {% for owner in model_details.owners %}
               <li>{{ owner.name }}, {{ owner.contact }}</li>
             {% endfor %}
             </ul>
           {% else %}
-            <p>{{ details.owners[0].name }}, {{ details.owners[0].contact }}</p>
+            <p>{{ model_details.owners[0].name }}, {{ model_details.owners[0].contact }}</p>
           {% endif %}
         {% endif %}
-        {% if details.licenses %}
-          <h3>Licenses</h3>
-          <ul>{% for license in details.licenses %}{{ render_license(license) }}{% endfor %}</ul>
+        {% if model_details.license %}
+          <h3>License</h3>
+          <p>Identifier: {{ model_details.license.identifier }}</p>
+          <p>Custom Text: {{ model_details.license.custom_text }}</p>
         {% endif %}
-        {% if details.version %}
+        {% if model_details.version %}
           <h3>Version</h3>
-          <p>Name: {{ details.version.name }}</p>
-          <p>Date: {{ details.version.date }}</p>
-          <p>Diff: {{ details.version.diff }}</p>
+          <p>Name: {{ model_details.version.name }}</p>
+          <p>Date: {{ model_details.version.date }}</p>
+          <p>Diff: {{ model_details.version.diff }}</p>
         {% endif %}
-        {% if details.documentation %}
+        {% if model_details.documentation %}
           <h3>Documentation</h3>
-          <p>{{ details.documentation }}</p>
+          <p>{{ model_details.documentation }}</p>
         {% endif %}
-        {% if details.references %}
+        {% if model_details.references %}
           <h3>References</h3>
-          <p>{{ details.references }}</p>
+          <p>{{ model_details.references }}</p>
         {% endif %}
-        {% if details.citation %}
+        {% if model_details.citation %}
           <h3>Citation</h3>
-          <p>{{ details.citation }}</p>
+          <p>{{ model_details.citation }}</p>
         {% endif %}
-        {% if details.path %}
+        {% if model_details.path %}
           <h3>Path</h3>
-          <p>{{ details.path }}</p>
-        {% endif %}
-        {% if details.architecture %}
-          <h3>Model Architecture</h3>
-          <p>{{ details.architecture }}</p>
+          <p>{{ model_details.path }}</p>
         {% endif %}
       {% endif %}
       {% if model_parameters %}
@@ -205,6 +202,7 @@
             <p>Link: {{ data.link }}</p>
             <p>Sensitive: {{ data.sensitive }}</p>
             <p>Graphics: {{ data.graphics }}</p>
+            <p>Purpose: {{ data.purpose }}</p>
           {% endfor %}
         {% endif %}
         {% if model_parameters.input_format %}
@@ -229,6 +227,7 @@
         {% if quantitative_analysis.performance_metrics %}
           <h3>Performance Metrics</h3>
           {% for metric in quantitative_analysis.performance_metrics %}
+            <p>Name: {{ metric.name }}</p>
             <p>Description: {{ metric.description }}</p>
             <p>Value: {{ metric.value }}</p>
             <p>Slice: {{ metric.slice }}</p>
