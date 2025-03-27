@@ -24,8 +24,7 @@ sample_data:
   tns: [80, 90]  # True negatives
   fns: [5, 7]  # False negatives
 bias_metrics:
-  groups:
-    group_name: "Gender"  # Name of the group
+  - group_name: "Gender"  # Name of the group
     description: "Bias metrics for gender"  # Description of the group
     label: "gender"  # Label for the group
     metrics:

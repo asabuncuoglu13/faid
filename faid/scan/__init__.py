@@ -6,7 +6,7 @@ from faid.scan.base_model import (
 )
 
 from faid.scan.monitor_metadata import (
-    test_model_metadata_values
+    test_model_quantitative_metrics
 )
 
 __all__ = [
@@ -14,7 +14,7 @@ __all__ = [
     'get_base_model_name_from_hf',
     'get_fairness_score',
     'get_fairness_metric_explanations',
-    'fairness_benchmark_dropdown'
+    'fairness_benchmark_dropdown',
     # monitoring metadata values
-    'test_model_metadata_values'
+    'test_model_quantitative_metrics'
 ]

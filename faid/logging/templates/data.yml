@@ -56,6 +56,9 @@ sensitive_data:
 risks:
   - name:
     mitigation_strategy: ""
+fairness_experiments:
+  - id:
+    summary: ""
 version_details:
   current_version: ""
   last_updated: ""

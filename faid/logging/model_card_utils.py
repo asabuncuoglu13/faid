@@ -351,6 +351,16 @@ class ModelCard:
             
             self.model_info["quantitative_analysis"]["performance_metrics"] = metrics
 
+        def add_risk(self, risk:dict):
+            """
+            Adds a new risk to the considerations section.
+            """
+            considerations = self.model_info.get("considerations", self.consideration_schema)
+            risks = considerations.get("risks", [])
+            risks.append(risk)
+            considerations["risks"] = risks
+            self.model_info["considerations"] = considerations
+
         def add_fairness_experiment(self, experiment:dict):
             """
             Adds a new fairness experiment to the considerations section.

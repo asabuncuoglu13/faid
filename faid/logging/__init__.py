@@ -33,7 +33,6 @@ from faid.logging.fairness_utils import (
     FairnessExperimentRecord,
     initialize_fairness_experiment_log,
     get_fairness_experiment_log_path,
-    get_exp_ctx,
     pretty_aisi_summary
 )
 

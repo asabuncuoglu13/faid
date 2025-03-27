@@ -7,7 +7,7 @@ from faid.logging import (
 
 from faid.scan.unit_tests import get_fairness_entities_from_model
 
-def test_model_metadata_values():
+def test_model_quantitative_metrics():
     m = ModelCard()
     fdata_schema = {
         "model_parameters" : m.model_params_schema,

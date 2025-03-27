@@ -306,6 +306,20 @@ class DataCard:
         risks.append(risk)
         self.data_info["risks"] = risks
 
+    def get_fairness_experiments(self):
+        """
+        Returns the fairness experiments section from the data information.
+        """
+        return self.data_info.get("fairness_experiments", [])
+
+    def add_fairness_experiment(self, fairness_experiment: dict):
+        """
+        Adds a new fairness experiment to the fairness experiments section.
+        """
+        fairness_experiments = self.data_info.get("fairness_experiments", [])
+        fairness_experiments.append(fairness_experiment)
+        self.data_info["fairness_experiments"] = fairness_experiments
+
     def get_version_details(self):
         """
         Returns the version details section from the data information.

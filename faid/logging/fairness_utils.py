@@ -1,8 +1,9 @@
 from os.path import join, exists
 from shutil import copy
 from datetime import datetime
+from fairlearn.metrics import MetricFrame
 
-from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path
+from faid.logging import error_msg, warning_msg, success_msg, update, load, get_project_log_path, get_current_folder_path, ModelCard, DataCard
 
 exp_file_path = join(get_project_log_path(), "fairness.yml")
 exp_file_template_path = join(get_current_folder_path(), "templates/fairness.yml")
@@ -176,16 +177,39 @@ class FairnessExperimentRecord:
         self.model[key] = entry
         update(yaml_data=self.model, key="model", filename=self.filename)
         print(f"Added {key} to project metadata under ['model'] and log updated")
+
+    def add_metric_entry_from_fairlearn(self, entry:MetricFrame):
+        groups = entry.by_group.transpose().to_dict()
+        groups["overall"] = entry.overall.to_dict()
+        m = []
+        for group, values in groups.items():
+            ms = self.metrics_schema.copy()
+            ms['group_name'] = group
+            msm = []
+            print("For the given Group: ", group)
+            print("======================")
+            for key, value in values.items():
+                print(key, value)
+                metric = ms['metrics'][0].copy()
+                metric['name'] = key
+                metric['value'] = value
+                msm.append(metric)
+            ms['metrics'] = msm
+            m.append(ms)
+        self.metrics = m
+        update(yaml_data=self.metrics, key="bias_metrics", filename=self.filename)
+        print("Added the metrics to project metadata under ['bias_metrics'] and log updated")
+
     
     def add_metric_entry(self, entry:dict={}):
-        self.metrics = load(self.filename)["bias_metrics"]["groups"]
+        self.metrics = load(self.filename)["bias_metrics"]
         if entry == {}:
             error_msg("Please provide an entry to add")
             return
         if entry.keys() != self.metrics_schema.keys():
             error_msg("Entry does not comply with the metrics schema. Call .metrics_schema to see the schema.")
             return
-        self.metrics["groups"] = entry
+        self.metrics = entry
         update(yaml_data=self.metrics, key="bias_metrics", filename=self.filename)
         print("Added the metrics to project metadata under ['bias_metrics'] and log updated")
 
@@ -196,7 +220,7 @@ class FairnessExperimentRecord:
             return self.metrics.get("groups").get(key, None)
         return self.metrics.get(key, None)
 
-    def add_entry(self, entry):
+    def add_viz_entry(self, entry):
         from captum.attr import visualization as viz
         if isinstance(entry, viz.VisualizationDataRecord):
             entry_dict = {
@@ -255,3 +279,27 @@ class FairnessExperimentRecord:
         if key is None:
             return self.model
         return self.model.get(key, None)
+    
+    def summary_to_model_card(self):
+        """
+        Sync the fairness experiment summary to the model card
+        """
+        model_card = ModelCard()
+        model_card.add_fairness_experiment({
+            "id": self.id,
+            "summary": self.description
+            # Integrate a summariser for the whole experiment in future iterations
+        })
+        model_card.save()
+
+    def summary_to_data_card(self):
+        """
+        Sync the fairness experiment summary to the data card
+        """
+        data_card = DataCard()
+        data_card.add_fairness_experiment({
+            "id": self.id,
+            "summary": self.description
+            # Integrate a summariser for the whole experiment in future iterations
+        })
+        data_card.save()

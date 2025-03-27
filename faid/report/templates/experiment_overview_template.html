@@ -166,12 +166,6 @@
     <h1>Experiment Name: {{ name }}</h1>
     <p>{{ context.description }}</p>
 
-    <p>
-        {% for tag in context.tags %}
-        <span class="chip">{{ tag }}</span>
-        {% endfor %}
-    </p>
-
     {% if context.authors %}
     <h3>Project Owners</h3>
     {% for author in context.authors %}
@@ -183,55 +177,93 @@
     <h3>Training System Specs Overview</h3>
     <p>{{ context.hardware }} <span id="hardware">&#9432;</span></p>
     {% endif %}
-
-    {% if sample_data %}
-    <h2>Sample Data</h2>
-    {{ sample_data }}
+    {% if data.sample %}
+    <h3>Data Sample</h3>
+    <ul>
+        {% for key, value in data.sample.items() %}
+        <li>{{ key, value }}</li>
+        {% endfor %}
+    </ul>
     {% endif %}
 
-    {% if data %}
-    <h2>Fairness Experiment Overview</h2>
-        
-        {% if data.metrics %}
-        <h3>Model Metrics</h3>
-        <table>
-            <tr>
-                <th class="metric">Metric</th>
-                <th class="value">Value</th>
-            </tr>
-            {% for metric, value in data.metrics.items() %}
-            <tr>
-                <td class="metric">{{ metric }}</td>
-                <td class="value">{{ value }}</td>
-            </tr>
-            {% endfor %}
-            
-        </table>
-        {% endif %}
-
-        {% if data.bygroup_metrics %}
-        <h3>Fairness Metrics by Group</h3>
-            {% for metric, groups in data.bygroup_metrics.items() %}
-            <h4>{{ metric }}</h4>
-            <table>
-                <tr>
-                    <th class="metric">Group</th>
-                    <th class="value">Value</th>
-                </tr>
-                {% for group, value in groups.items() %}
-                <tr>
-                    <td class="metric">{{ group }}</td>
-                    <td class="value">{{ value }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-            {% endfor %}
-        {% endif %}
+    {% if data.variable_profile %}
+    <h3>Variable Profile</h3>
+    <p>{{ data.variable_profile }}</p>
     {% endif %}
 
-    {% if captum_records %}
-    <h2>Token Level Importance</h2>
-    {{ captum_records }}
+    {% if data.protected_characteristics %}
+    <h3>Protected Characteristics</h3>
+    <ul>
+        {% for characteristic in data.protected_characteristics %}
+        <li>{{ characteristic }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if data.nominal_features %}
+    <h3>Nominal Features</h3>
+    <ul>
+        {% for feature in data.nominal_features %}
+        <li>{{ feature }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if data.continuous_features %}
+    <h3>Continuous Features</h3>
+    <ul>
+        {% for feature in data.continuous_features %}
+        <li>{{ feature }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if model.name %}
+    <h3>Model Name</h3>
+    <p>{{ model.name }}</p>
+    {% endif %}
+
+    {% if sample_data.tps or sample_data.fps or sample_data.tns or sample_data.fns %}
+    <h3>Sample Data Metrics</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>True Positives</th>
+                <th>False Positives</th>
+                <th>True Negatives</th>
+                <th>False Negatives</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ sample_data.tps | join(', ') }}</td>
+                <td>{{ sample_data.fps | join(', ') }}</td>
+                <td>{{ sample_data.tns | join(', ') }}</td>
+                <td>{{ sample_data.fns | join(', ') }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if bias_metrics %}
+    <h3>Bias Metrics</h3>
+    {% for group in bias_metrics %}
+    <h4>Group: {{ group.group_name }}</h4>
+    <p>{{ group.description }}</p>
+    <ul>
+        {% for metric in group.metrics %}
+        <li>
+            <strong>{{ metric.name }}</strong>: {{ metric.value }} (Threshold: {{ metric.threshold }}, Bigger is Better: {{ metric.bigger_is_better }})
+            <br>
+            <em>{{ metric.description }}</em>
+            {% if metric.notes %}
+            <br>
+            <small>Notes: {{ metric.notes }}</small>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
     {% endif %}
     
     </div>
